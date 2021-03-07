@@ -1,0 +1,43 @@
+{
+    "name": "weikit/weikit",
+    "description": "Weikit.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "CallMeZ",
+            "email": "callme-z@qq.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "ext-gd": "*",
+        "laravel/sanctum": "^2.9.0",
+        "intervention/image": "^2.5.0",
+        "guzzlehttp/guzzle": "^7.2.0",
+        "livewire/livewire": "^2.4",
+        "nwidart/laravel-modules": "^8.2.0"
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+        "files": [
+            "src/Helpers/general.php",
+            "src/Helpers/captcha.php",
+            "src/Helpers/user.php"
+        ],
+        "psr-4": {
+            "Weikit\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Weikit\\Providers\\WeikitServiceProvider",
+                "Weikit\\Providers\\RouterServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
