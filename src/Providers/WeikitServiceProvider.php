@@ -38,6 +38,17 @@ class WeikitServiceProvider extends ServiceProvider
                 $this->mergeConfigFrom($sourceFile, $key);
             }
         }
+
+        if (!$this->app->configurationIsCached()) {
+            config([
+                'auth.guards' => array_merge([
+                    'admin' => [
+                        'driver' => 'sanctum',
+                        'provider' => 'users',
+                    ],
+                ], config('auth.guards', [])),
+            ]);
+        }
     }
 
     /**
@@ -47,7 +58,7 @@ class WeikitServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'weikit');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'weikit');
     }
 
     /**

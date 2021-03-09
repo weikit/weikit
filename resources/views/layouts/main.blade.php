@@ -28,8 +28,9 @@
         <link rel="stylesheet" href="{{ mix('css/quasar.css', 'backend') }}">
     @endif
 
-    @hasSection('use_livewire')
+    @hasSection('use_tailwind')
         @livewireStyles
+        <link rel="stylesheet" href="{{ mix('css/tailwind.css', 'backend') }}">
     @endif
 
     @yield('css')
@@ -40,7 +41,7 @@
 <body class="body @yield('body_class')">
     @yield('before_content')
 
-    <div id="@yield('wrap_id', 'app')" class="content @yield('wrap_class')">
+    <main id="@yield('wrap_id', 'app')" class="content @yield('wrap_class')">
     @hasSection('wrap_content')
         @yield('wrap_content')
     @endif
@@ -48,7 +49,7 @@
     @sectionMissing('wrap_content')
         @yield('content')
     @endif
-    </div>
+    </main>
 
     @yield('after_content')
 
@@ -76,8 +77,10 @@
         <script type="text/javascript" src="{{ mix('js/quasar.js', 'backend') }}"></script>
     @endif
 
-    @hasSection('use_livewire')
+    @hasSection('use_tailwind')
         @livewireScripts
+{{--        <script type="text/javascript" src="{{ mix('vendor/tailwind.js', 'backend') }}"></script>--}}
+        <script type="text/javascript" src="{{ mix('js/tailwind.js', 'backend') }}"></script>
     @endif
 
     @yield('js')
