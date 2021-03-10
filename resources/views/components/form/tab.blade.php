@@ -6,5 +6,5 @@
     x-show="tab === '{{ "{$formComponent->parent->id}.{$formComponent->id}" }}'"
     class="p-4 md:p-6"
 >
-    <x-x-weikit::form.layout :schema="$formComponent->schema" :columns="$formComponent->columns" />
+    <x-weikit::form.layout :schema="$formComponent->schema" :columns="$formComponent->columns" />
 </div>

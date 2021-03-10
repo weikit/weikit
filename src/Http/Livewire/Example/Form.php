@@ -28,13 +28,13 @@ class Form extends Component
                     Select::make('select')
                         ->label('select')
                         ->options([
-                            'a' => 'haha'
+                            'haha'
                         ])
                         ->required(),
                     MultiSelect::make('multi_select')
                           ->label('MultiSelect')
                           ->options([
-                              'a' => 'haha'
+                              'haha'
                           ])
                           ->required(),
                 ]),
@@ -44,6 +44,6 @@ class Form extends Component
     public function render()
     {
         return view('weikit::example.form')
-            ->layout('weikit::components.layouts.base');
+            ->layout('weikit::components.layouts.page');
     }
 }

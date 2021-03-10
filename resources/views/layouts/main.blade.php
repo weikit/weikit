@@ -79,7 +79,7 @@
 
     @hasSection('use_tailwind')
         @livewireScripts
-{{--        <script type="text/javascript" src="{{ mix('vendor/tailwind.js', 'backend') }}"></script>--}}
+        <script type="text/javascript" src="{{ mix('vendor/tailwind.js', 'backend') }}"></script>
         <script type="text/javascript" src="{{ mix('js/tailwind.js', 'backend') }}"></script>
     @endif
 

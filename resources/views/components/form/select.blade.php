@@ -200,7 +200,7 @@
             noSearchResultsMessage: '{{ __($formComponent->noSearchResultsMessage) }}',
             required: {{ $formComponent->required ? 'true' : 'false' }},
             @if (Str::of($formComponent->nameAttribute)->startsWith('wire:model'))
-                value: @entangle($formComponent->name){{ Str::of($formComponent->nameAttribute)->after('wire:model') }},
+            value: @entangle($formComponent->name){{ Str::of($formComponent->nameAttribute)->after('wire:model') }},
             @endif
             })"
         x-init="init()"
