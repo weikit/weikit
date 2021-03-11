@@ -12,10 +12,16 @@ Route::group([
     Route::get('form', Livewire\Example\Form::class)->name('form');
 });
 
-
-
 Route::group([
-    'name' => 'auth.'
+    'name' => 'admin.',
+    'prefix' => 'admin'
 ],function () {
-    Route::get('login', Livewire\Auth\Login::class)->name('login');
+    Route::group([
+        'name' => 'auth.'
+    ],function () {
+        Route::get('login', Livewire\Auth\Login::class)->name('login');
+    });
 });
+
+
+

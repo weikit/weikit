@@ -8,11 +8,11 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * The module namespace to assume when generating URLs to actions.
+     * The route namespace to assume when generating URLs to actions.
      *
      * @var string
      */
-    protected $moduleNamespace = 'Weikit\Http';
+    protected $routeNamespace = 'Weikit\Http\Controllers';
 
     /**
      * Called before routes are registered.
@@ -33,9 +33,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapApiRoutes();
-
-        $this->mapWebRoutes();
+        Route::namespace($this->routeNamespace)
+            ->group(weikit_path('/routes/routes.php'));
+//        $this->mapApiRoutes();
+//
+//        $this->mapWebRoutes();
     }
 
     /**
