@@ -21,7 +21,6 @@
   "autoload": {
     "files": [
       "src/Helpers/general.php",
-      "src/Helpers/captcha.php",
       "src/Helpers/user.php",
       "src/Helpers/html.php"
     ],

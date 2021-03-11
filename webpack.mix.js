@@ -8,6 +8,7 @@ if (__dirname.indexOf("/modules/") >= 0) {
 }
 
 mix
+  .version()
   .setResourceRoot("../") // set resource path to /backend/
   .setPublicPath(publicPath)
   .disableSuccessNotifications()
@@ -26,7 +27,6 @@ mix
 
 if (!mix.inProduction()) {
   mix.sourceMaps();
-  mix.version();
 }
 
 mix
@@ -85,11 +85,4 @@ mix
     "css/quasar.css"
   )
   .extract(["quasar"], "vendor/quasar")
-  .vue({ version: 3 })
-
-  .js(__dirname + "/resources/assets/js/tailwind/index.js", "js/tailwind.js")
-  .sass(
-    __dirname + "/resources/assets/sass/tailwind/index.scss",
-    "css/tailwind.css"
-  )
-  .extract(["livewire", "alpinejs"], "vendor/tailwind");
+  .vue({ version: 3 });
