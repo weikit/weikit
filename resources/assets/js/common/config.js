@@ -1,9 +1,12 @@
-const config = (window.G = {
+const config = {
   name: "WeiKit",
   baseUrl: window.location ? window.location.origin : "",
   api: {
     admin: {
-      menu: "/admin/api/v1/menu",
+      menu: "/api/v1/admin/menu",
+      auth: {
+        login: "/api/v1/admin/login",
+      },
     },
   },
   defaultPaginationData: {
@@ -27,6 +30,8 @@ const config = (window.G = {
   appOptions: {},
 
   ...(window.G || {}),
-});
+};
+
+window.G = config;
 
 export default config;

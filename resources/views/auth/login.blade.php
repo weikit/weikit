@@ -11,7 +11,7 @@
                     <q-card-section>
                         <div class="text-center q-pt-lg">
                             <div class="col text-h6 ellipsis">
-                                @{{ $t('admin.auth.login.title') }}
+                                @{{ t('auth.login.title') }}
                             </div>
                         </div>
                     </q-card-section>
@@ -96,8 +96,9 @@
                     const user = await login(form);
 
                     $q.notify({
-                        message: $
-                    })
+                        message: t('auth.login.successed'),
+                        position: 'top'
+                    });
                 };
 
 

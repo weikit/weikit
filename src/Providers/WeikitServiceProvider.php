@@ -13,6 +13,7 @@ class WeikitServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerConfig();
+        $this->registerMigration();
         $this->registerLanguages();
         $this->registerViews();
 
@@ -58,6 +59,11 @@ class WeikitServiceProvider extends ServiceProvider
                 ], config('auth.guards', [])),
             ]);
         }
+    }
+
+    public function registerMigration()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
     }
 
     /**
