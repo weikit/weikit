@@ -7,7 +7,7 @@ import * as directives from "vuetify/lib/directives";
 const vuetifyInstance = createVuetify({
   components,
   directives,
-  ...config.vuetify.createOptions,
+  ...config.vuetifyOptions,
 });
 
 app.use(vuetifyInstance, config.vuetify.options);

@@ -1,0 +1,10 @@
+{
+  "admin": {
+    "auth": {
+      "login": {
+        "title": "登录",
+        "remember": "记住我"
+      }
+    }
+  }
+}

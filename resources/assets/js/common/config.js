@@ -21,16 +21,11 @@ const config = (window.G = {
     prev_page_url: null,
     has_next_page: true,
   },
-  quasar: {
-    id: "#app",
-    options: {},
-    appOptions: {},
-  },
-  vuetify: {
-    id: "#app",
-    options: {},
-    appOptions: {},
-  },
+  mountId: "#app",
+  quasarOptions: {},
+  vuetifyOptions: {},
+  appOptions: {},
+
   ...(window.G || {}),
 });
 

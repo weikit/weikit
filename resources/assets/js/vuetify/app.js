@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import config from "../common/config";
 
 const app = createApp({
-  ...config.vuetify.appOptions,
+  ...config.appOptions,
 });
 
 export default app;

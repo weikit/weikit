@@ -13,9 +13,18 @@ class WeikitServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerConfig();
+        $this->registerLanguages();
         $this->registerViews();
 
         $this->registerCaptcha();
+    }
+
+    /**
+     *
+     */
+    public function registerLanguages()
+    {
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'weikit');
     }
 
     /**

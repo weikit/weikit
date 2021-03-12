@@ -5,8 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', config('app.name'))</title>
-    <meta name="description" content="@yield('meta_description', 'WeiKit')">
+    <meta name="description" content="@yield('meta_description', 'Weikit')">
     @yield('meta')
+
+    <script type="text/javascript">
+        window.G = {
+            i18nOptions: {
+                locale: '{{ config('app.locale', 'en') }}',
+                fallbackLocale: '{{ config('app.fallback_locale', 'en') }}',
+            }
+        };
+    </script>
 
     @stack('before_style')
 
@@ -28,14 +37,10 @@
         <link rel="stylesheet" href="{{ mix('css/quasar.css', 'backend') }}">
     @endif
 
-    @hasSection('use_tailwind')
-        @livewireStyles
-        <link rel="stylesheet" href="{{ mix('css/tailwind.css', 'backend') }}">
-    @endif
-
     @yield('css')
 
     @stack('after_style')
+
 </head>
 
 <body class="body @yield('body_class')">
@@ -75,12 +80,6 @@
     @hasSection('use_quasar')
         <script type="text/javascript" src="{{ mix('vendor/quasar.js', 'backend') }}"></script>
         <script type="text/javascript" src="{{ mix('js/quasar.js', 'backend') }}"></script>
-    @endif
-
-    @hasSection('use_tailwind')
-        @livewireScripts
-        <script type="text/javascript" src="{{ mix('vendor/tailwind.js', 'backend') }}"></script>
-        <script type="text/javascript" src="{{ mix('js/tailwind.js', 'backend') }}"></script>
     @endif
 
     @yield('js')
