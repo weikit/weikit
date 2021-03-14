@@ -61,12 +61,12 @@
                 } = Uses;
 
                 const {
-                    useQuasar
+                    useQuasar,
                 } = Quasar;
                 const $q = useQuasar();
 
                 const {
-                    useI18n
+                    useI18n,
                 } = VueI18n;
                 const {
                     t

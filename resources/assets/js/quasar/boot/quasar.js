@@ -1,8 +1,45 @@
-import { Quasar } from "quasar";
+import { merge } from "lodash-es";
+import {
+  Quasar,
+  AppFullscreen,
+  AppVisibility,
+  BottomSheet,
+  Cookies,
+  Dark,
+  Dialog,
+  Loading,
+  LoadingBar,
+  LocalStorage,
+  SessionStorage,
+  Meta,
+  Notify,
+} from "quasar";
 import app from "../app";
 import config from "../../common/config";
 
-app.use(Quasar, config.quasarOptions);
+app.use(
+  Quasar,
+  merge(
+    {
+      plugins: {
+        // AddressbarColor,
+        AppFullscreen,
+        AppVisibility,
+        BottomSheet,
+        Cookies,
+        Dark,
+        Dialog,
+        Loading,
+        LoadingBar,
+        LocalStorage,
+        SessionStorage,
+        Meta,
+        Notify,
+      },
+    },
+    config.quasarOptions
+  )
+);
 
 if (!app.config.globalProperties.$q.iconMapFn) {
   app.config.globalProperties.$q.iconMapFn = (iconName) => {

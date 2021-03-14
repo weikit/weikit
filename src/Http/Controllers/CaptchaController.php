@@ -3,7 +3,6 @@
 namespace Weikit\Http\Controllers;
 
 use Exception;
-use Illuminate\Routing\Controller;
 use Weikit\Captcha\Captcha;
 
 /**

@@ -3,10 +3,9 @@
 namespace Weikit\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
+use Weikit\Http\Controllers\Controller;
 
-
-class LoginController extends BaseController
+class LoginController extends Controller
 {
 
     public function page()
@@ -16,10 +15,11 @@ class LoginController extends BaseController
 
     public function api(Request $request)
     {
+        $guard = auth();
         // TODO error limit
         // TODO api token get
-        $user = auth()->attempt($request->only(['username', 'password']), $request->remember);
+        $successed = $guard->attempt($request->only(['username', 'password']), $request->remember);
 
-        return $user;
+        return $guard->user();
     }
 }

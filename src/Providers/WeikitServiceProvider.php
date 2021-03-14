@@ -2,9 +2,12 @@
 
 namespace Weikit\Providers;
 
+use Illuminate\Auth\RequestGuard;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Factory;
+use Laravel\Sanctum\Guard;
 use Weikit\Captcha\Captcha;
 use Weikit\Captcha\Facades\Captcha as CaptchaFacade;
 
@@ -18,6 +21,8 @@ class WeikitServiceProvider extends ServiceProvider
         $this->registerViews();
 
         $this->registerCaptcha();
+
+        $this->registerGuard();
     }
 
     /**
@@ -53,7 +58,7 @@ class WeikitServiceProvider extends ServiceProvider
             config([
                 'auth.guards' => array_merge([
                     'admin' => [
-                        'driver' => 'sanctum',
+                        'driver' => 'admin',
                         'provider' => 'users',
                     ],
                 ], config('auth.guards', [])),
@@ -108,6 +113,28 @@ class WeikitServiceProvider extends ServiceProvider
         // Validator extensions
         $validator->extend('captcha_api', function ($attribute, $value, $parameters) {
             return captcha_api_check($value, $parameters[0], $parameters[1] ?? 'default');
+        });
+    }
+
+    /**
+     * Configure the Sanctum authentication guard.
+     *
+     * @return void
+     */
+    protected function registerGuard()
+    {
+        Auth::resolved(function ($auth) {
+            $auth->extend('admin', function ($app, $name, array $config) use ($auth) {
+                $guard = new RequestGuard(
+                    new Guard($auth, config('weikit.admin.auth_expiration'), $config['provider']),
+                    $this->app['request'],
+                    $auth->createUserProvider($config['provider'] ?? null)
+                );
+
+                $app->refresh('request', $guard, 'setRequest');
+
+                return $guard;
+            });
         });
     }
 }
