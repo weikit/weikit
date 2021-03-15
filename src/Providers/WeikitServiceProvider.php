@@ -2,13 +2,13 @@
 
 namespace Weikit\Providers;
 
-use Illuminate\Auth\RequestGuard;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Routing\Router;
 use Illuminate\Validation\Factory;
-use Laravel\Sanctum\Guard;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
 use Weikit\Captcha\Captcha;
+use Weikit\Http\Middleware\AuthenticateWithAdmin;
+use Weikit\Http\Middleware\RedirectIfAuthenticated;
 use Weikit\Captcha\Facades\Captcha as CaptchaFacade;
 
 class WeikitServiceProvider extends ServiceProvider
@@ -22,7 +22,7 @@ class WeikitServiceProvider extends ServiceProvider
 
         $this->registerCaptcha();
 
-        $this->registerGuard();
+        $this->configureMiddleware();
     }
 
     /**
@@ -117,24 +117,18 @@ class WeikitServiceProvider extends ServiceProvider
     }
 
     /**
-     * Configure the Sanctum authentication guard.
+     * Configure the Admin middleware and priority.
      *
      * @return void
      */
-    protected function registerGuard()
+    protected function configureMiddleware()
     {
-        Auth::resolved(function ($auth) {
-            $auth->extend('admin', function ($app, $name, array $config) use ($auth) {
-                $guard = new RequestGuard(
-                    new Guard($auth, config('weikit.admin.auth_expiration'), $config['provider']),
-                    $this->app['request'],
-                    $auth->createUserProvider($config['provider'] ?? null)
-                );
+        if (!$this->app->routesAreCached()) {
+            /** @var Router $router */
+            $router = $this->app['router'];
 
-                $app->refresh('request', $guard, 'setRequest');
-
-                return $guard;
-            });
-        });
+            $router->aliasMiddleware('auth.admin', AuthenticateWithAdmin::class);
+            $router->aliasMiddleware('guest.admin', RedirectIfAuthenticated::class);
+        }
     }
 }
