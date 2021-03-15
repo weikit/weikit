@@ -4,12 +4,14 @@ namespace Weikit\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Validation\Factory;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Weikit\Captcha\Captcha;
 use Weikit\Http\Middleware\AuthenticateWithAdmin;
 use Weikit\Http\Middleware\RedirectIfAuthenticated;
 use Weikit\Captcha\Facades\Captcha as CaptchaFacade;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 class WeikitServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,8 @@ class WeikitServiceProvider extends ServiceProvider
         $this->registerViews();
 
         $this->registerCaptcha();
+
+        $this->registerServices();
 
         $this->configureMiddleware();
     }
@@ -62,6 +66,12 @@ class WeikitServiceProvider extends ServiceProvider
                         'provider' => 'users',
                     ],
                 ], config('auth.guards', [])),
+            ]);
+        }
+
+        if (!$this->app->runningInConsole() && config('weikit.sanctum.auto_stateful_host')) {
+            config([
+                'sanctum.stateful' => array_merge([$_SERVER['HTTP_HOST']], (array) config('sanctum.stateful'))
             ]);
         }
     }
@@ -116,6 +126,13 @@ class WeikitServiceProvider extends ServiceProvider
         });
     }
 
+    public function registerServices()
+    {
+        foreach (config('weikit.services') as $contract => $class) {
+            $this->app->singleton($contract, $class);
+        }
+    }
+
     /**
      * Configure the Admin middleware and priority.
      *
@@ -123,12 +140,18 @@ class WeikitServiceProvider extends ServiceProvider
      */
     protected function configureMiddleware()
     {
-        if (!$this->app->routesAreCached()) {
+        if (!$this->app->runningInConsole()) {
             /** @var Router $router */
             $router = $this->app['router'];
+            $router->aliasMiddleware('auth.admin', config('weikit.middleware.auth'));
+            $router->aliasMiddleware('guest.admin', config('weikit.middleware.guest'));
 
-            $router->aliasMiddleware('auth.admin', AuthenticateWithAdmin::class);
-            $router->aliasMiddleware('guest.admin', RedirectIfAuthenticated::class);
+            if (config('weikit.sanctum.auto_stateful_middleware')) {
+                /** @var \Illuminate\Foundation\Http\Kernel $kernel */
+                $kernel = $this->app->make(Kernel::class);
+                // auto set sanctum middleware to kernel
+                $kernel->prependMiddlewareToGroup('api', EnsureFrontendRequestsAreStateful::class);
+            }
         }
     }
 }

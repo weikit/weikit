@@ -31,13 +31,13 @@ interface Service
 
     public function max(string $column, $where = null, array $options = []);
 
-    public function sum();
+    public function sum($column, $where = null, array $options = []);
 
-    public function avg();
+    public function avg($column, $where = null, array $options = []);
 
-    public function create(): Model;
+    public function create(array $data, array $options = []): Model;
 
-    public function getByPK(): Model;
+    public function getByPK($id, array $options = []): Model;
 
-    public function deleteByPK();
+    public function deleteByPK($id, array $options = []);
 }

@@ -6,10 +6,10 @@ Route::prefix('api/v1')->get('captcha/{config?}', 'CaptchaController@getCaptchaA
 
 Route::group([
     'as' => 'admin.',
-    'prefix' => config('weikit.admin.prefix', 'admin')
+    'prefix' => config('weikit.prefix')
 ], function () {
 
-    Route::get('/', 'DashboardController@page')->middleware(['web', 'auth.admin:sanctum'])->name('dashboard');
+    Route::get('/', 'DashboardController@page')->middleware(['web', 'auth.admin'])->name('dashboard');
 
     Route::group([
         'namespace' => 'Auth',
@@ -24,18 +24,19 @@ Route::group([
 
     Route::group([
         'namespace' => 'Menu',
-        'as' => 'menu.'
+        'as' => 'menu.',
+        'prefix' => 'menu'
     ], function() {
         // Admin Menu
-        Route::prefix('api/v1')->get('/', 'MenuController@api')->middleware(['api', 'auth.admin:sanctum'])->name('data');
+        Route::prefix('api/v1')->get('/', 'MenuController@api')->middleware(['api', 'auth.admin'])->name('data');
 
         // Menu Manage
-        Route::get('menu', 'ListController@page')->middleware(['web', 'auth:admin'])->name('list.page');
-        Route::prefix('api/v1')->post('menus', 'ListController@api')->middleware(['api', 'auth.admin:sanctum'])->name('list');
+        Route::get('list', 'ListController@page')->middleware(['web', 'auth:admin'])->name('list.page');
+        Route::prefix('api/v1')->post('list', 'ListController@api')->middleware(['api', 'auth.admin'])->name('list');
 
         // Menu Items Mange
-        Route::get('menu', 'ItemsController@page')->middleware(['web', 'auth.admin:sanctum'])->name('items.page');
-        Route::prefix('api/v1')->post('menus', 'ItemsController@api')->middleware(['api', 'auth.admin:sanctum'])->name('items');
+        Route::get('item', 'ItemController@page')->middleware(['web', 'auth.admin'])->name('item.page');
+        Route::prefix('api/v1')->post('item', 'ItemController@api')->middleware(['api', 'auth.admin'])->name('item');
     });
 
 });

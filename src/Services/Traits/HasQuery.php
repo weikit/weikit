@@ -82,7 +82,7 @@ trait HasQuery
      *
      * @return Model|mixed
      */
-    public function one($where = null, array $options = [])
+    public function one($where = null, array $options = []): Model
     {
         $model = $this->query(array_merge($options, ['where' => $where]))->first();
 
@@ -109,6 +109,13 @@ trait HasQuery
         return $this->query(array_merge($options, ['where' => $where]))->get();
     }
 
+    /**
+     * @param callable $callback
+     * @param null $where
+     * @param array $options
+     *
+     * @return bool
+     */
     public function chunk(callable $callback, $where = null, array $options = [])
     {
         $query = $this->query(array_merge($options, ['where' => $where]));
@@ -150,11 +157,11 @@ trait HasQuery
      * @param \Closure|array|null $where
      * @param array $options
      *
-     * @return int
+     * @return bool
      */
-    public function count($where = null, array $options = [])
+    public function has($where = null, array $options = []): bool
     {
-        return $this->query(array_merge($options, ['where' => $where]))->count();
+        return $this->query(array_merge($options, ['where' => $where]))->exists();
     }
 
     /**
@@ -163,9 +170,9 @@ trait HasQuery
      *
      * @return int
      */
-    public function has($where = null, array $options = [])
+    public function count($columns = '*', $where = null, array $options = []): int
     {
-        return $this->query(array_merge($options, ['where' => $where]))->exists();
+        return $this->query(array_merge($options, ['where' => $where]))->count($columns);
     }
 
     /**
@@ -234,7 +241,7 @@ trait HasQuery
      *
      * @return Model
      */
-    public function getByPK($id, array $options = [])
+    public function getByPK($id, array $options = []): Model
     {
         return $this->one(['id' => $id], $options);
     }
@@ -245,7 +252,7 @@ trait HasQuery
      *
      * @return bool|Model
      */
-    public function create(array $data, array $options = [])
+    public function create(array $data, array $options = []): Model
     {
         $model = $this->query()->newModelInstance($data);
 

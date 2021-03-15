@@ -1,6 +1,8 @@
 <?php
 
-namespace Weikit\Http\Controllers;
+namespace Weikit\Http\Controllers\Menu;
+
+use Weikit\Http\Controllers\Controller;
 
 class ListController extends Controller
 {
