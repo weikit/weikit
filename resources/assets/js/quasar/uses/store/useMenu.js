@@ -1,20 +1,27 @@
-import { computed, reactive, readonly } from "@vue/composition-api";
+import { computed, reactive, readonly } from "vue";
 
 import config from "../../../common/config";
 import http from "../../../common/http";
 
-function toTree(items) {
-  return items;
+function toTree(items, parentId = 0) {
+  return items
+    .filter((item) => item.parent_id == parentId)
+    .map((item) => {
+      return {
+        ...item,
+        children: toTree(items, item.id),
+      };
+    });
 }
 
-export function useAdminMenu() {
+export function useMenuData() {
   const state = reactive({ menu: null });
 
   const tree = computed(() => {
     let menuTree = [];
 
-    if (Array.isArray(state.menu)) {
-      menuTree = toTree(state.menu);
+    if (state.menu && Array.isArray(state.menu.items)) {
+      menuTree = toTree(state.menu.items);
     }
 
     return menuTree;

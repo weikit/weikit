@@ -8,8 +8,6 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Weikit\Captcha\Captcha;
-use Weikit\Http\Middleware\AuthenticateWithAdmin;
-use Weikit\Http\Middleware\RedirectIfAuthenticated;
 use Weikit\Captcha\Facades\Captcha as CaptchaFacade;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 

@@ -1,7 +1,7 @@
 import config from "../../../common/config";
 import http from "../../../common/http";
 
-export function useLogin({ url = config.api.admin.auth.login } = {}) {
+export function useLogin({ url = config.api.auth.login } = {}) {
   const login = async (data) => {
     const user = await http.post(url, data);
 

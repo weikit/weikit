@@ -18,7 +18,7 @@ Route::group([
 
         // Login
         Route::get('login', 'LoginController@page')->middleware(['web', 'guest.admin'])->name('login.page');
-        Route::prefix('api/v1')->post('login', 'LoginController@api')->middleware(['web', 'api', 'guest.admin'])->name('login');
+        Route::prefix('api/v1')->post('login', 'LoginController@api')->middleware(['api', 'guest.admin'])->name('login');
     });
 
 
@@ -27,7 +27,7 @@ Route::group([
         'as' => 'menu.',
         'prefix' => 'menu'
     ], function() {
-        // Admin Menu
+        // Admin Menu data
         Route::prefix('api/v1')->get('/', 'MenuController@api')->middleware(['api', 'auth.admin'])->name('data');
 
         // Menu Manage

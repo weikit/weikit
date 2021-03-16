@@ -1,14 +1,8 @@
+import api from "./api";
 const config = {
   name: "WeiKit",
   baseUrl: window.location ? window.location.origin : "",
-  api: {
-    admin: {
-      menu: "/api/v1/admin/menu",
-      auth: {
-        login: "/api/v1/admin/login",
-      },
-    },
-  },
+  api,
   defaultPaginationData: {
     data: [],
     total: 0,

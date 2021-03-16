@@ -67,9 +67,7 @@
 import { computed, defineComponent, reactive, ref, toRefs } from "vue";
 import { useQuasar } from "quasar";
 
-import { useConfig } from "../../uses/useConfig";
-import { useAdminMenu } from "../../uses/store/useAdminMenu";
-import { usePageTab } from "../../uses/usePageTab";
+import { useConfig, usePageTab, useMenuData } from "../../uses";
 
 import MenuItem from "./MenuItem.vue";
 import PageTab from "./PageTab.vue";
@@ -104,7 +102,7 @@ export default defineComponent({
 
     const { tabs, activeTab, toggleTab, removeTab } = usePageTab();
 
-    const { tree, loadMenu } = useAdminMenu();
+    const { tree, loadMenu } = useMenuData();
     loadMenu();
 
     return {

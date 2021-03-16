@@ -23,11 +23,13 @@ class CreateMenuTable extends Migration
             $table->unsignedInteger('menu_id')->nullable();
             $table->string('title');
             $table->string('url');
+            $table->string('route')->nullable();
+            $table->json('parameters')->nullable()->default('{}');
             $table->string('target')->default('_self');
             $table->string('icon_class')->nullable();
             $table->string('color')->nullable();
-            $table->integer('parent_id')->nullable();
-            $table->integer('order');
+            $table->integer('parent_id')->default(0);
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
 
