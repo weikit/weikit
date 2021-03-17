@@ -47,72 +47,72 @@
 @endsection
 
 @push('before_script')
-    <script type="text/javascript">
-        G.appOptions = {
-            setup() {
-                const {
-                    reactive,
-                    ref,
-                    watch,
-                } = Vue;
-                const {
-                    useCaptcha,
-                    useLogin,
-                } = Uses;
+<script type="text/javascript">
+    G.appOptions = {
+        setup() {
+            const {
+                reactive,
+                ref,
+                watch,
+            } = Vue;
+            const {
+                useCaptcha,
+                useLogin,
+            } = Uses;
 
-                const {
-                    useQuasar,
-                } = Quasar;
-                const $q = useQuasar();
+            const {
+                useQuasar,
+            } = Quasar;
+            const $q = useQuasar();
 
-                const {
-                    useI18n,
-                } = VueI18n;
-                const {
-                    t
-                } = useI18n();
+            const {
+                useI18n,
+            } = VueI18n;
+            const {
+                t
+            } = useI18n();
 
-                const form = reactive({
-                    username: '',
-                    password: '',
-                    captcha_code: '',
-                    remember: false,
+            const form = reactive({
+                username: '',
+                password: '',
+                captcha_code: '',
+                remember: false,
+            });
+
+            const {
+                captchaUrl,
+                updateCaptchaUrl
+            } = useCaptcha({
+                url: "{{ captcha_src('math') }}"
+            });
+            const captchaShow = ref(0);
+            watch(() => form.password, () => captchaShow.value = 1);
+
+
+            const {
+                login
+            } = useLogin();
+            const handleLogin = async () => {
+                const user = await login({ data: form });
+
+                $q.notify({
+                    message: t('auth.login.successed'),
+                    position: 'top'
                 });
-
-                const {
-                    captchaUrl,
-                    updateCaptchaUrl
-                } = useCaptcha({
-                    url: "{{ captcha_src('math') }}"
-                });
-                const captchaShow = ref(0);
-                watch(() => form.password, () => captchaShow.value = 1);
+            };
 
 
-                const {
-                    login
-                } = useLogin();
-                const handleLogin = async () => {
-                    const user = await login(form);
-
-                    $q.notify({
-                        message: t('auth.login.successed'),
-                        position: 'top'
-                    });
-                };
-
-
-                return {
-                    t,
-                    $q,
-                    form,
-                    captchaShow,
-                    handleLogin,
-                    captchaUrl,
-                    updateCaptchaUrl
-                }
+            return {
+                t,
+                $q,
+                form,
+                captchaShow,
+                handleLogin,
+                captchaUrl,
+                updateCaptchaUrl
             }
         }
+    }
 
-    </script>
+</script>
 @endpush

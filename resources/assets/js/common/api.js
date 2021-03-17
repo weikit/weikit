@@ -6,5 +6,6 @@ export default {
   },
   auth: {
     login: "/api/v1/admin/login",
+    user: "/api/v1/admin/auth/user",
   },
 };

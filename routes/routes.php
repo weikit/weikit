@@ -13,12 +13,21 @@ Route::group([
 
     Route::group([
         'namespace' => 'Auth',
-        'as' => 'auth.'
+        'as' => 'auth.',
     ], function() {
 
         // Login
         Route::get('login', 'LoginController@page')->middleware(['web', 'guest.admin'])->name('login.page');
         Route::prefix('api/v1')->post('login', 'LoginController@api')->middleware(['api', 'guest.admin'])->name('login');
+    });
+
+    Route::group([
+        'namespace' => 'Auth',
+        'as' => 'auth.',
+        'prefix' => 'auth'
+    ], function() {
+        // user info
+        Route::prefix('api/v1')->get('user', 'UserController@api')->middleware(['api', 'auth.admin'])->name('user');
     });
 
 
