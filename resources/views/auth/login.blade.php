@@ -58,6 +58,7 @@
             const {
                 useCaptcha,
                 useLogin,
+                useNotify,
             } = Uses;
 
             const {
@@ -88,17 +89,16 @@
             const captchaShow = ref(0);
             watch(() => form.password, () => captchaShow.value = 1);
 
-
+            const { showNotify } = useNotify();
             const {
                 login
             } = useLogin();
             const handleLogin = async () => {
                 const user = await login({ data: form });
 
-                $q.notify({
-                    message: t('auth.login.successed'),
-                    position: 'top'
-                });
+                showNotify(t('auth.login.success'));
+
+                location.href = "{{ route('admin.dashboard') }}"
             };
 
 

@@ -4,7 +4,7 @@
       "title": "登录",
       "remember": "记住我",
 
-      "successed": "登录成功!"
+      "success": "登录成功!"
     }
   }
 }
