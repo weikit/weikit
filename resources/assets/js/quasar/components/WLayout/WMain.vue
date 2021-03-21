@@ -18,7 +18,7 @@
         <slot name="toolbar-right"></slot>
       </q-toolbar>
 
-      <page-tab
+      <w-page-tab
         :tabs="tabs"
         :activeTab="activeTab"
         @switch="toggleTab"
@@ -40,7 +40,7 @@
       </q-toolbar>
       <q-scroll-area style="height: calc(100% - 50px)" dark>
         <q-list class="left-menu-list" dark>
-          <menu-item :data="tree" :activeMenu="activeTab" @nav="toggleTab" />
+          <w-menu-item :data="tree" :activeMenu="activeTab" @nav="toggleTab" />
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -69,14 +69,7 @@ import { useQuasar } from "quasar";
 
 import { useConfig, usePageTab, useMenuData } from "../../uses";
 
-import MenuItem from "./MenuItem.vue";
-import PageTab from "./PageTab.vue";
-
 export default defineComponent({
-  components: {
-    MenuItem,
-    PageTab,
-  },
   setup() {
     const $q = useQuasar();
 

@@ -2,14 +2,16 @@
 
 namespace Weikit\Builder\Form\Concerns;
 
+/**
+ * Trait HasPlaceholder
+ * @package Weikit\Builder\Form\Concerns
+ *
+ * @property string $placeholder
+ */
 trait HasPlaceholder
 {
-    public $placeholder;
-
     public function placeholder($placeholder)
     {
-        $this->placeholder = $placeholder;
-
-        return $this;
+        return $this->set('placeholder', $placeholder);
     }
 }

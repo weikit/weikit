@@ -1,4 +1,9 @@
 import app from "../app";
-import LayoutMain from "../components/Layout/Main.vue";
+import * as components from "../components";
 
-app.component("layout-main", LayoutMain);
+for (const key in components) {
+  console.log(`register components ${key}`);
+  const component = components[key];
+
+  app.component(key, component);
+}

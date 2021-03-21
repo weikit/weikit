@@ -3,7 +3,7 @@
 @section('use_quasar', true)
 
 @section('content')
-    <layout-main>
+    <w-main>
         <template v-slot:toolbar-right>
             <q-btn-dropdown v-if="user" stretch flat :label="user.username">
                 <q-list>
@@ -16,7 +16,7 @@
                 </q-list>
             </q-btn-dropdown>
         </template>
-    </layout-main>
+    </w-main>
 @endsection
 
 @push('before_script')

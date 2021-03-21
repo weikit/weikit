@@ -6,16 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Weikit\Builder\Component;
 
+/**
+ * Class Form
+ * @package Weikit\Builder\Form
+ *
+ * @property string $method
+ * @property string $action
+ * @property Field[] $schema
+ */
 class Form extends Component
 {
-    /**
-     * @var string[]
-     */
-    public $rules = [];
-    /**
-     * @var Field[]
-     */
-    public $schema = [];
+
+    protected function init()
+    {
+        $this->type('form');
+    }
 
     /**
      * @param $method
@@ -24,9 +29,7 @@ class Form extends Component
      */
     public function method(string $method)
     {
-        Arr::set($this->settings, 'attributes.method', $method);
-
-        return $this;
+        return $this->set('method', $method);
     }
 
     /**
@@ -36,9 +39,7 @@ class Form extends Component
      */
     public function action(string $action)
     {
-        Arr::set($this->settings, 'attributes.action', $action);
-
-        return $this;
+        return $this->set('action', $action);
     }
 
     /**
@@ -49,11 +50,25 @@ class Form extends Component
         $defaults = [];
 
         foreach ($this->schema as $field) {
-            $defaults = array_merge($defaults, $field->getDefaults());
+            $defaults = array_merge($defaults, $field->default);
         }
 
         return $defaults;
     }
+
+//    /**
+//     * @return array
+//     */
+//    public function getValidationAttributes()
+//    {
+//        $attributes = [];
+//
+//        foreach ($this->schema as $field) {
+//            $attributes = array_merge($attributes, $field->getValidationAttributes());
+//        }
+//
+//        return $attributes;
+//    }
 
     /**
      * @return string[]
@@ -72,45 +87,19 @@ class Form extends Component
     }
 
     /**
-     * @return array
-     */
-    public function getValidationAttributes()
-    {
-        $attributes = [];
-
-        foreach ($this->schema as $field) {
-            $attributes = array_merge($attributes, $field->getValidationAttributes());
-        }
-
-        return $attributes;
-    }
-
-    /**
      * @param Model $model
      *
      * @return $this
      */
     public function model($model)
     {
-        $this->schema = collect($this->schema)
+        $schema = collect($this->schema)
             ->map(function ($field) use ($model) {
                 return $field->model($model);
             })
             ->toArray();
 
-        return $this;
-    }
-
-    /**
-     * @param array $rules
-     *
-     * @return $this
-     */
-    public function rules(array $rules)
-    {
-        $this->rules = $rules;
-
-        return $this;
+        return $this->schema($schema);
     }
 
     /**
@@ -120,8 +109,19 @@ class Form extends Component
      */
     public function schema(array $schema)
     {
-        $this->schema = value($schema);
+        return $this->set('schema', value($schema));
+    }
 
-        return $this;
+    /**
+     * @return array
+     */
+    public function getSchema()
+    {
+        return $this->get('schema', []);
+    }
+
+    public function toArray()
+    {
+        return array_merge($this->data, ['schema' => collect($this->schema)->toArray()]);
     }
 }

@@ -39,8 +39,10 @@
                                     @click.stop="handleLogin" />
                             </div>
                         </q-form>
+                        <component :is="componentName" v-bind="componentOptions" />
                     </q-card-section>
                 </q-card>
+
             </q-page>
         </q-page-container>
     </q-layout>
@@ -52,6 +54,7 @@
         setup() {
             const {
                 reactive,
+                toRef,
                 ref,
                 watch,
             } = Vue;
@@ -59,6 +62,7 @@
                 useCaptcha,
                 useLogin,
                 useNotify,
+                useComponent
             } = Uses;
 
             const {
@@ -72,6 +76,9 @@
             const {
                 t
             } = useI18n();
+
+            const { componentName, ...componentOptions} = useComponent({!! $form->toJson() !!});
+            console.log(componentName, componentOptions)
 
             const form = reactive({
                 username: '',
@@ -106,6 +113,8 @@
                 t,
                 $q,
                 form,
+                componentName,
+                componentOptions,
                 captchaShow,
                 handleLogin,
                 captchaUrl,

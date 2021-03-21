@@ -2,6 +2,10 @@
 
 namespace Weikit\Builder\Form\Concerns;
 
+/**
+ * Trait CanBeCompared
+ * @package Weikit\Builder\Form\Concerns
+ */
 trait CanBeCompared
 {
     public function confirmed($confirmationFieldName = null)

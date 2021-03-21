@@ -2,8 +2,6 @@
 
 namespace Weikit\Builder\Form;
 
-use Illuminate\Support\Arr;
-
 class TextInput extends Field
 {
     use Concerns\CanBeAutocompleted;
@@ -13,13 +11,9 @@ class TextInput extends Field
     use Concerns\CanBeLengthConstrained;
     use Concerns\HasPlaceholder;
 
-
-
-    public function type($type)
+    protected function init()
     {
-        Arr::set($this->settings, 'attributes.type', $type);
-
-        return $this;
+        $this->text();
     }
 
     public function max($value)
@@ -34,6 +28,11 @@ class TextInput extends Field
         $this->addRules([$this->name => ["min:$value"]]);
 
         return $this;
+    }
+
+    public function text()
+    {
+        return $this->type('text');
     }
 
     public function numeric()

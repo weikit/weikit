@@ -2,10 +2,14 @@
 
 namespace Weikit\Builder\Form\Concerns;
 
+/**
+ * Trait CanBeAutocompleted
+ * @package Weikit\Builder\Form\Concerns
+ *
+ * @property string $autocomplete
+ */
 trait CanBeAutocompleted
 {
-    public $autocomplete;
-
     public function disableAutocomplete()
     {
         $this->autocomplete('off');
@@ -15,8 +19,6 @@ trait CanBeAutocompleted
 
     public function autocomplete($autocomplete = 'on')
     {
-        $this->autocomplete = $autocomplete;
-
-        return $this;
+        return $this->set('autocomplete', $autocomplete);
     }
 }

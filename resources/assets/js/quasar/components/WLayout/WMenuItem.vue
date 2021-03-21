@@ -9,7 +9,7 @@
         expand-separator
         class="text-item"
       >
-        <menu-item
+        <w-menu-item
           :data="menu.children"
           :activeMenu="activeMenu"
           @nav="handleNav"
@@ -38,9 +38,6 @@
 
 <script>
 export default {
-  components: {
-    MenuItem: () => import("./MenuItem.vue"),
-  },
   props: {
     data: {
       type: Array,

@@ -2,15 +2,18 @@
 
 namespace Weikit\Builder\Form\Concerns;
 
+/**
+ * Trait CanBeLengthConstrained
+ * @package Weikit\Builder\Form\Concerns
+ *
+ * @property numeric $maxLength
+ * @property numeric $minLength
+ */
 trait CanBeLengthConstrained
 {
-    public $maxLength;
-
-    public $minLength;
-
     public function maxLength($length)
     {
-        $this->maxLength = $length;
+        $this->set('maxLength', $length);
 
         $this->addRules([$this->name => ["max:{$this->maxLength}"]]);
 
@@ -19,7 +22,7 @@ trait CanBeLengthConstrained
 
     public function minLength($length)
     {
-        $this->minLength = $length;
+        $this->set('minLength', $length);
 
         $this->addRules([$this->name => ["min:{$this->minLength}"]]);
 
