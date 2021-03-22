@@ -1,14 +1,14 @@
 <?php
 
-namespace Weikit\Builder\Form;
+namespace Weikit\Components\Form;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Weikit\Builder\Component;
+use Weikit\Components\Component;
 
 /**
  * Class Field
- * @package Weikit\Builder\Form
+ * @package Weikit\Components\Form
  *
  * @property string $name
  * @property bool $disabled
@@ -30,6 +30,9 @@ abstract class Field extends Component
      */
     public function __construct($name)
     {
+        if ($name === null) {
+            throw new \InvalidArgumentException('The property "name" must be set.');
+        }
         $this->name($name);
         $this->label($name);
 

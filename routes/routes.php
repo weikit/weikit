@@ -48,5 +48,12 @@ Route::group([
         Route::prefix('api/v1')->post('item', 'ItemController@api')->middleware(['api', 'auth.admin'])->name('item');
     });
 
-});
+    Route::group([
+        'namespace' => 'Example',
+        'as' => 'example',
+        'prefix' => 'example',
+    ], function() {
+        Route::get('component', 'ComponentController@page')->middleware(['web', 'auth.admin'])->name('component');
+    });
 
+});

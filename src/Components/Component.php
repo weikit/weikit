@@ -1,6 +1,6 @@
 <?php
 
-namespace Weikit\Builder;
+namespace Weikit\Components;
 
 use JsonSerializable;
 use Illuminate\Contracts\Support\Jsonable;
@@ -10,7 +10,7 @@ use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * Class Component
- * @package Weikit\Builder
+ * @package Weikit\Components
  *
  * @property string $id
  * @property string $class

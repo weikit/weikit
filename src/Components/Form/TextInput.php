@@ -1,6 +1,6 @@
 <?php
 
-namespace Weikit\Builder\Form;
+namespace Weikit\Components\Form;
 
 class TextInput extends Field
 {

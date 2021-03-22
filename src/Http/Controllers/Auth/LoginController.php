@@ -4,8 +4,8 @@ namespace Weikit\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Weikit\Builder\Form\Form;
-use Weikit\Builder\Form\TextInput;
+use Weikit\Components\Form\Form;
+use Weikit\Components\Form\TextInput;
 use Weikit\Http\Controllers\Controller;
 use Weikit\Http\Traits\HasRateLimiting;
 

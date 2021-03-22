@@ -1,14 +1,13 @@
 <?php
 
-namespace Weikit\Builder\Form;
+namespace Weikit\Components\Form;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
-use Weikit\Builder\Component;
+use Weikit\Components\Component;
 
 /**
  * Class Form
- * @package Weikit\Builder\Form
+ * @package Weikit\Components\Form
  *
  * @property string $method
  * @property string $action

@@ -1,10 +1,10 @@
 <?php
 
-namespace Weikit\Builder\Form\Concerns;
+namespace Weikit\Components\Form\Concerns;
 
 /**
  * Trait CanBeAutofocused
- * @package Weikit\Builder\Form\Concerns
+ * @package Weikit\Components\Form\Concerns
  *
  * @property bool $autofocus
  */

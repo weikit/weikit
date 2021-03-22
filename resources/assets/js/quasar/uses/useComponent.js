@@ -7,10 +7,18 @@ export const builderComponents = {
   email: "WInput",
   password: "WInput",
   // url: "WInput",
+  checkbox: "WCheckbox",
+  textarea: "WTextarea",
+  select: "WSelect",
+  toggle: "WToggle",
 };
 
 export function useComponent({ type, ...options }) {
-  const componentName = builderComponents[type] || "WForm";
+  if (!builderComponents[type]) {
+    throw new Error(`The type '${type}' of component has not been implemented`);
+  }
+
+  const componentName = builderComponents[type];
 
   return reactive({ componentName, type, ...options });
 }
