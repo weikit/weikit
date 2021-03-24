@@ -54,6 +54,7 @@ Route::group([
         'prefix' => 'example',
     ], function() {
         Route::get('component', 'ComponentController@page')->middleware(['web', 'auth.admin'])->name('component');
+        Route::get('test.vue', 'ComponentController@test')->middleware(['web', 'auth.admin'])->name('test');
     });
 
 });

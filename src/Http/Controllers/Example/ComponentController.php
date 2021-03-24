@@ -12,6 +12,11 @@ use Weikit\Http\Controllers\Controller;
 
 class ComponentController extends Controller
 {
+    public function test()
+    {
+        return view('weikit::example.test');
+    }
+
     public function page()
     {
         return view('weikit::example.component', [

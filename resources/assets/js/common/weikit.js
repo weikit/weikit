@@ -1,23 +1,22 @@
+import { isFunction } from "lodash-es";
+import * as Vue from "vue";
 import {
   defineAsyncComponent,
   defineComponent as defineVueComponent,
   ref,
   watch,
-  isRef,
   toRaw,
 } from "vue";
+import http from "./http";
 
-const MAIN_COMPONENT_NAME = "main";
+import { loadModule } from "vue3-sfc-loader";
 
-let watchingComponent = {};
+const appComponent = ref(null);
 
-export function hookComponent({ name = MAIN_COMPONENT_NAME } = {}) {
-  // notice: first component must be registered before app create
-
-  if (watchingComponent[name]) {
+export function hookAppComponent() {
+  if (appComponent.value) {
     // hook sync page component
-    const component = watchingComponent[name];
-    delete watchingComponent[name];
+    const component = toRaw(appComponent.value);
 
     return component;
   } else {
@@ -25,17 +24,15 @@ export function hookComponent({ name = MAIN_COMPONENT_NAME } = {}) {
     return defineAsyncComponent({
       loader: async () => {
         return new Promise((resolve, reject) => {
-          watchingComponent[name] = ref(null);
-          // TODO  stop when watchingPage[name] has been replaced
           const stop = watch(() => {
-            if (watchingComponent[name].value) {
-              const component = toRaw(watchingComponent[name]);
-              if (typeof component === "object") {
-                // stop(); // stop watch
+            try {
+              if (appComponent.value) {
+                const component = toRaw(appComponent.value);
+                stop(); // stop watch
                 resolve(component);
-              } else {
-                reject(new Error("Load page component failed"));
               }
+            } catch (e) {
+              reject(new Error(`Load page component failed: ${e.message}`));
             }
           });
         });
@@ -44,16 +41,48 @@ export function hookComponent({ name = MAIN_COMPONENT_NAME } = {}) {
   }
 }
 
-export function defineComponent(options, { name = MAIN_COMPONENT_NAME } = {}) {
+export function defineComponent(options) {
   const component = defineVueComponent(options);
 
-  if (isRef(watchingComponent[name])) {
-    // register sync page component when it is not hooked
-    watchingComponent[name].value = component;
-  } else {
-    // register async page component when is hooked
-    watchingComponent[name] = component;
+  if (!appComponent.value) {
+    if (!isFunction(component) && !component.render && !component.template) {
+      component.template = document.querySelector("#vue-template");
+    }
+    appComponent.value = component;
   }
 
   return component;
+}
+
+export function resolveAsyncComponent(
+  url,
+  componentOptions = {},
+  resolveOptions = {}
+) {
+  return defineAsyncComponent({
+    loader: () =>
+      loadModule(url, {
+        moduleCache: {
+          vue: Vue,
+        },
+        async getFile(url) {
+          const response = await http.get(url, {
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+            },
+          });
+          return response.data;
+        },
+        addStyle(textContent) {
+          const style = Object.assign(document.createElement("style"), {
+            textContent,
+          });
+          const ref = document.head.getElementsByTagName("style")[0] || null;
+          document.head.insertBefore(style, ref);
+        },
+
+        ...resolveOptions,
+      }),
+    ...componentOptions,
+  });
 }

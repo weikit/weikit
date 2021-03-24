@@ -1,6 +1,6 @@
 import { createApp } from "vue";
-import { hookComponent } from "../common/weikit";
+import { hookAppComponent } from "../common/weikit";
 
-const app = createApp(hookComponent());
+const app = createApp(hookAppComponent());
 
 export default app;

@@ -47,13 +47,9 @@
     @yield('before_content')
 
     <main id="@yield('wrap_id', 'app')" class="content @yield('wrap_class')">
-    @hasSection('wrap_content')
-        @yield('wrap_content')
-    @endif
-
-    @sectionMissing('wrap_content')
-        @yield('content')
-    @endif
+        @sectionMissing('hide_content')
+            @yield('content')
+        @endif
     </main>
 
     @yield('after_content')

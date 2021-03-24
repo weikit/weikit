@@ -1,17 +1,25 @@
 @extends('weikit::layouts.quasar')
 
-@section('use_quasar', true)
-
 @section('content')
-    <div>123</div>
-    <component :is="componentName" v-bind="componentOptions" />
+    111
+    <test ></test>
+
+    111
+
+    <div>
+        <component :is="componentName" v-bind="componentOptions" />
+    </div>
+
 @endsection
 
 @push('script')
-    <script type="text/javascript">
-        const { defineComponent } = Weikit;
+    <script type="module" type="text/javascript">
+        const { defineComponent, resolveAsyncComponent } = Weikit;
 
-        defineComponent({
+        export default defineComponent({
+            components: {
+                'test': resolveAsyncComponent('http://weikit.com/admin/example/test.vue')
+            },
             setup() {
                 const { useComponent } = Uses;
 
@@ -22,7 +30,7 @@
                     componentName,
                     componentOptions,
                 }
-            }
+            },
         });
     </script>
 @endpush
