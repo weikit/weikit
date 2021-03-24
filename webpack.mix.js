@@ -47,6 +47,7 @@ mix
         "style-loader",
       ];
       const name = mod.nameForCondition();
+
       return (
         /resources\/assets\/js\/common\//.test(name) ||
         !!modules.find((moduleName) =>
@@ -55,6 +56,7 @@ mix
       );
     },
   })
+  .js(__dirname + "/resources/assets/js/common/browser.js", "common/browser.js")
 
   // Layui
   .js(__dirname + "/resources/assets/js/layui/index.js", "js/layui.js")

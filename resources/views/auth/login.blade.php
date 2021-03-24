@@ -48,9 +48,9 @@
     </q-layout>
 @endsection
 
-@push('before_script')
+@push('script')
 <script type="text/javascript">
-    G.appOptions = {
+    Weikit.defineComponent({
         setup() {
             const {
                 reactive,
@@ -121,7 +121,7 @@
                 updateCaptchaUrl
             }
         }
-    }
+    })
 
 </script>
 @endpush

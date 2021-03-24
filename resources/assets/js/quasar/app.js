@@ -1,8 +1,6 @@
 import { createApp } from "vue";
-import config from "../common/config";
+import { hookComponent } from "../common/weikit";
 
-const app = createApp({
-  ...config.appOptions,
-});
+const app = createApp(hookComponent());
 
 export default app;

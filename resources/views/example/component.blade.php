@@ -1,14 +1,17 @@
-@extends('weikit::layouts.main')
+@extends('weikit::layouts.quasar')
 
 @section('use_quasar', true)
 
 @section('content')
+    <div>123</div>
     <component :is="componentName" v-bind="componentOptions" />
 @endsection
 
-@push('before_script')
+@push('script')
     <script type="text/javascript">
-        G.appOptions = {
+        const { defineComponent } = Weikit;
+
+        defineComponent({
             setup() {
                 const { useComponent } = Uses;
 
@@ -20,6 +23,6 @@
                     componentOptions,
                 }
             }
-        };
+        });
     </script>
 @endpush

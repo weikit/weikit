@@ -1,5 +1,4 @@
 import app from "../app";
-import http from "../../common/http";
 import { useNotify } from "../uses";
 
 export function errorHandler(e, vm) {

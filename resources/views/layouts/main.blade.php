@@ -21,6 +21,8 @@
 
     <link rel="stylesheet" href="{{ mix('css/common.css', 'backend') }}">
 
+    @stack('style')
+
     @hasSection('use_bootstrap')
         <link rel="stylesheet" href="{{ mix('css/bootstrap.css', 'backend') }}">
     @endif
@@ -36,8 +38,6 @@
     @hasSection('use_quasar')
         <link rel="stylesheet" href="{{ mix('css/quasar.css', 'backend') }}">
     @endif
-
-    @yield('css')
 
     @stack('after_style')
 
@@ -62,6 +62,9 @@
 
     <script type="text/javascript" src="{{ mix('js/manifest.js', 'backend') }}"></script>
     <script type="text/javascript" src="{{ mix('vendor/common.js', 'backend') }}"></script>
+    <script type="text/javascript" src="{{ mix('common/browser.js', 'backend') }}"></script>
+
+    @stack('script')
 
     @hasSection('use_bootstrap')
         <script type="text/javascript" src="{{ mix('vendor/bootstrap.js', 'backend') }}"></script>
@@ -74,15 +77,13 @@
 
     @hasSection('use_vuetify')
         <script type="text/javascript" src="{{ mix('vendor/vuetify.js', 'backend') }}"></script>
-        <script type="text/javascript" src="{{ mix('js/vuetify.js', 'backend') }}"></script>
+        <script type="text/javascript" type="module" src="{{ mix('js/vuetify.js', 'backend') }}"></script>
     @endif
 
     @hasSection('use_quasar')
         <script type="text/javascript" src="{{ mix('vendor/quasar.js', 'backend') }}"></script>
         <script type="text/javascript" src="{{ mix('js/quasar.js', 'backend') }}"></script>
     @endif
-
-    @yield('js')
 
     @stack('after_script')
 </body>
