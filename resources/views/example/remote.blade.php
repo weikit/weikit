@@ -1,7 +1,7 @@
 @extends('weikit::layouts.quasar')
 
 @section('content')
-    <div>1234444</div>
+    <div>I'm a remote component</div>
 @endsection
 
 @push('script')

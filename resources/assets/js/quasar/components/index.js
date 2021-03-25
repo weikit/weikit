@@ -6,3 +6,5 @@ export * from "./WSelect";
 export * from "./WRadio";
 export * from "./WToggle";
 export * from "./WTextarea";
+export * from "./WDatePicker";
+export * from "./WTimePicker";

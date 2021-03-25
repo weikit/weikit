@@ -50,11 +50,11 @@ Route::group([
 
     Route::group([
         'namespace' => 'Example',
-        'as' => 'example',
+        'as' => 'example.',
         'prefix' => 'example',
     ], function() {
         Route::get('component', 'ComponentController@page')->middleware(['web', 'auth.admin'])->name('component');
-        Route::get('test.vue', 'ComponentController@test')->middleware(['web', 'auth.admin'])->name('test');
+        Route::get('remote', 'ComponentController@remote')->middleware(['web', 'auth.admin'])->name('remote');
     });
 
 });

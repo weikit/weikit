@@ -17,7 +17,7 @@ class Select extends Field
     /**
      * @param array $options
      *
-     * @return Select
+     * @return $this
      */
     public function options(array $options)
     {

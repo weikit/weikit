@@ -20,34 +20,8 @@ class DatePicker extends Field
 
     protected function init()
     {
-        $this->displayFormat('F j, Y');
-        $this->format('Y-m-d');
+        $this->type('datePicker');
     }
 
-    public function displayFormat($format)
-    {
-        return $this->set('displayFormat', $format);
-    }
 
-    public function format($format)
-    {
-        return $this->set('format', $format);
-    }
-
-    public function maxDate($date)
-    {
-        $this->set('maxDate', $date);
-
-        $this->addRules([$this->name => ["before_or_equal:$date"]]);
-        return $this;
-    }
-
-    public function minDate($date)
-    {
-        $this->set('minDate', $date);
-
-        $this->addRules([$this->name => ["after_or_equal:$date"]]);
-
-        return $this;
-    }
 }

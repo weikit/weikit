@@ -1,10 +1,7 @@
 @extends('weikit::layouts.quasar')
 
 @section('content')
-    111
-    <test ></test>
-
-    111
+    <remote></remote>
 
     <div>
         <component :is="componentName" v-bind="componentOptions" />
@@ -18,7 +15,7 @@
 
         export default defineComponent({
             components: {
-                'test': resolveAsyncComponent('http://weikit.com/admin/example/test.vue')
+                'remote': resolveAsyncComponent('{{route('admin.example.remote')}}')
             },
             setup() {
                 const { useComponent } = Uses;

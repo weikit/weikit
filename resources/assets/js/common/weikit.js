@@ -1,5 +1,6 @@
 import { isFunction } from "lodash-es";
 import * as Vue from "vue";
+import { posix as Path } from "path-browserify";
 import {
   ref,
   toRaw,
@@ -103,6 +104,19 @@ export function resolveAsyncComponent(
           });
           const ref = document.head.getElementsByTagName("style")[0] || null;
           document.head.insertBefore(style, ref);
+        },
+        pathHandlers: {
+          extname(filepath) {
+            return Path.extname(filepath) || ".vue";
+          },
+          resolve({ refPath, relPath }) {
+            // note :
+            //  normalize('./test') -> 'test'
+            //  normalize('/test') -> '/test'
+            return relPath[0] !== "." && relPath[0] !== "/"
+              ? relPath
+              : Path.normalize(Path.join(Path.dirname(refPath), relPath));
+          },
         },
         ...resolveOptions,
       }),

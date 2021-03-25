@@ -10,7 +10,11 @@ export const builderComponents = {
   checkbox: "WCheckbox",
   textarea: "WTextarea",
   select: "WSelect",
+  select: "WSelect",
+  radio: "WRadio",
   toggle: "WToggle",
+  datePicker: "WDatePicker",
+  timePicker: "WTimePicker",
 };
 
 export function useComponent({ type, ...options }) {
