@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { defineComponent, toRefs } from "vue";
+import { defineComponent, reactive } from "vue";
 
 export default defineComponent({
   props: {
@@ -39,7 +39,7 @@ export default defineComponent({
     minLength,
   }) {
     return {
-      ...toRefs({
+      ...reactive({
         id,
         type,
         className,

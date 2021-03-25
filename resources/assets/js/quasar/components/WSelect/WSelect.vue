@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { defineComponent, toRefs } from "vue";
+import { defineComponent, reactive } from "vue";
 
 export default defineComponent({
   props: {
@@ -22,12 +22,12 @@ export default defineComponent({
   setup({ id, className, label, options }) {
     const opts = Array.isArray(options)
       ? options
-      : Object.keys(options).map((key) => ({
+      : Object.keys(options).map(key => ({
           value: key,
           label: options[key],
         }));
     return {
-      ...toRefs({
+      ...reactive({
         id,
         className,
         label,

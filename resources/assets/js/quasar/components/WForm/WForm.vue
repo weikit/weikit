@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { defineComponent, toRef, toRefs } from "vue";
+import { defineComponent, reactive } from "vue";
 import { useComponent } from "../../uses";
 
 export default defineComponent({
@@ -22,7 +22,7 @@ export default defineComponent({
   setup({ id, className, schema }) {
     const fields = schema.map(useComponent);
     return {
-      ...toRefs({
+      ...reactive({
         id,
         className,
         fields,
