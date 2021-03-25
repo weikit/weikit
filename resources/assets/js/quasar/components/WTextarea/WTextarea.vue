@@ -6,7 +6,7 @@
     :cols="cols"
     :rows="rows"
     type="textarea"
-  />
+  ></q-input>
 </template>
 
 <script>

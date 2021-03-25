@@ -1,5 +1,5 @@
 <template>
-  <q-radio :id="id" :class="className" :label="label" value="option"> </q-radio>
+  <q-radio :id="id" :class="className" :label="label" value="option"></q-radio>
 </template>
 
 <script>

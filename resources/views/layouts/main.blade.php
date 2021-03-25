@@ -58,9 +58,6 @@
 
     <script type="text/javascript" src="{{ mix('js/manifest.js', 'backend') }}"></script>
     <script type="text/javascript" src="{{ mix('vendor/common.js', 'backend') }}"></script>
-    <script type="text/javascript" src="{{ mix('common/browser.js', 'backend') }}"></script>
-
-    @stack('script')
 
     @hasSection('use_bootstrap')
         <script type="text/javascript" src="{{ mix('vendor/bootstrap.js', 'backend') }}"></script>
@@ -80,6 +77,8 @@
         <script type="text/javascript" src="{{ mix('vendor/quasar.js', 'backend') }}"></script>
         <script type="text/javascript" src="{{ mix('js/quasar.js', 'backend') }}"></script>
     @endif
+
+    @stack('script')
 
     @stack('after_script')
 </body>

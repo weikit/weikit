@@ -1,5 +1,5 @@
 <template>
-  <q-toggle :id="id" :class="className" :label="label"> </q-toggle>
+  <q-toggle :id="id" :class="className" :label="label"></q-toggle>
 </template>
 
 <script>

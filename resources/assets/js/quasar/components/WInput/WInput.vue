@@ -7,8 +7,9 @@
     :placeholder="placeholder"
     :hint="hint"
     :maxlength="maxLength"
-    :minlength="minlength"
-  />
+    :minlength="minLength"
+  >
+  </q-input>
 </template>
 
 <script>

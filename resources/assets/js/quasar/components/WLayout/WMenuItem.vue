@@ -13,7 +13,7 @@
           :data="menu.children"
           :activeMenu="activeMenu"
           @nav="handleNav"
-        />
+        ></w-menu-item>
       </q-expansion-item>
 
       <q-item

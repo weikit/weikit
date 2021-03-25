@@ -17,7 +17,7 @@
           dense
           size="xs"
           @click.stop="removeTab(tab)"
-        />
+        ></q-btn>
       </q-tab>
     </q-tabs>
   </div>

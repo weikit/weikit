@@ -1,18 +1,47 @@
 import { isFunction } from "lodash-es";
 import * as Vue from "vue";
 import {
-  defineAsyncComponent,
-  defineComponent as defineVueComponent,
   ref,
-  watch,
   toRaw,
+  watchEffect,
+  defineComponent as defineVueComponent,
+  defineAsyncComponent as defineAsyncVueComponent,
 } from "vue";
 import http from "./http";
-
 import { loadModule } from "vue3-sfc-loader";
 
 const appComponent = ref(null);
 
+export function defineComponent(options, registerOptions = {}) {
+  return registerAppComponent(defineVueComponent(options), registerOptions);
+}
+
+export function defineAsyncComponent(options, registerOptions = {}) {
+  return registerAppComponent(
+    defineAsyncVueComponent(options),
+    registerOptions
+  );
+}
+
+// Register first component as app component
+export function registerAppComponent(
+  component,
+  { templateId = "#vue-template" }
+) {
+  if (!appComponent.value) {
+    if (!isFunction(component) && !component.render && !component.template) {
+      const elm = document.querySelector(templateId);
+      if (elm) {
+        component.template = elm;
+      }
+    }
+    appComponent.value = component;
+  }
+
+  return component;
+}
+
+// hook first defined component as App component
 export function hookAppComponent() {
   if (appComponent.value) {
     // hook sync page component
@@ -21,10 +50,10 @@ export function hookAppComponent() {
     return component;
   } else {
     // hook async page component
-    return defineAsyncComponent({
+    return defineAsyncVueComponent({
       loader: async () => {
         return new Promise((resolve, reject) => {
-          const stop = watch(() => {
+          const stop = watchEffect(() => {
             try {
               if (appComponent.value) {
                 const component = toRaw(appComponent.value);
@@ -41,31 +70,26 @@ export function hookAppComponent() {
   }
 }
 
-export function defineComponent(options) {
-  const component = defineVueComponent(options);
-
-  if (!appComponent.value) {
-    if (!isFunction(component) && !component.render && !component.template) {
-      component.template = document.querySelector("#vue-template");
-    }
-    appComponent.value = component;
-  }
-
-  return component;
-}
-
+/**
+ *
+ * resolve async component from url
+ *
+ * @param {*} url
+ * @param {*} componentOptions
+ * @param {*} resolveOptions
+ * @returns
+ */
 export function resolveAsyncComponent(
   url,
   componentOptions = {},
   resolveOptions = {}
 ) {
-  return defineAsyncComponent({
+  return defineAsyncVueComponent({
     loader: () =>
       loadModule(url, {
-        moduleCache: {
-          vue: Vue,
-        },
+        moduleCache: { vue: Vue },
         async getFile(url) {
+          console.log(url);
           const response = await http.get(url, {
             headers: {
               "X-Requested-With": "XMLHttpRequest",
@@ -80,7 +104,6 @@ export function resolveAsyncComponent(
           const ref = document.head.getElementsByTagName("style")[0] || null;
           document.head.insertBefore(style, ref);
         },
-
         ...resolveOptions,
       }),
     ...componentOptions,

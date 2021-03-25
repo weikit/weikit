@@ -13,7 +13,7 @@
         />
         <slot name="toolbar-left"></slot>
 
-        <q-space />
+        <q-space></q-space>
 
         <slot name="toolbar-right"></slot>
       </q-toolbar>
@@ -23,7 +23,7 @@
         :activeTab="activeTab"
         @switch="toggleTab"
         @remove="removeTab"
-      />
+      ></w-page-tab>
     </q-header>
 
     <q-drawer
@@ -40,7 +40,11 @@
       </q-toolbar>
       <q-scroll-area style="height: calc(100% - 50px)" dark>
         <q-list class="left-menu-list" dark>
-          <w-menu-item :data="tree" :activeMenu="activeTab" @nav="toggleTab" />
+          <w-menu-item
+            :data="tree"
+            :activeMenu="activeTab"
+            @nav="toggleTab"
+          ></w-menu-item>
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -53,11 +57,11 @@
         :class="{ show: activeTab && activeTab.id == tab.id }"
       >
         <iframe
-          :ref="(el) => (pages[`page_${tab.id}`] = el)"
+          :ref="el => (pages[`page_${tab.id}`] = el)"
           frameborder="0"
           :src="tab.href"
           class="iframe"
-        />
+        ></iframe>
       </div>
     </q-page-container>
   </q-layout>

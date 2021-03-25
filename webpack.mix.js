@@ -45,18 +45,19 @@ mix
         "vue",
         "css-loader",
         "style-loader",
+        "@babel",
+        "vue3-sfc-loader",
       ];
       const name = mod.nameForCondition();
 
       return (
         /resources\/assets\/js\/common\//.test(name) ||
-        !!modules.find((moduleName) =>
+        !!modules.find(moduleName =>
           new RegExp(`/node_modules/${moduleName}/`).test(name)
         )
       );
     },
   })
-  .js(__dirname + "/resources/assets/js/common/browser.js", "common/browser.js")
 
   // Layui
   .js(__dirname + "/resources/assets/js/layui/index.js", "js/layui.js")
