@@ -18,10 +18,4 @@ class DatePicker extends Field
     use Concerns\CanBeUnique;
     use Concerns\HasPlaceholder;
 
-    protected function init()
-    {
-        $this->type('datePicker');
-    }
-
-
 }

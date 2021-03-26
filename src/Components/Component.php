@@ -2,6 +2,7 @@
 
 namespace Weikit\Components;
 
+use Illuminate\Support\Str;
 use JsonSerializable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Arr;
@@ -30,7 +31,7 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
         $this->init();
 
         if ($this->type === null) {
-            throw new \InvalidArgumentException('Property type must be set.');
+            $this->type(Str::camel(class_basename(get_class($this))));
         }
     }
 

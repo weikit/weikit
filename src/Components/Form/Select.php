@@ -9,11 +9,6 @@ class Select extends Field
     use Concerns\CanBeUnique;
     use Concerns\HasPlaceholder;
 
-    public function init()
-    {
-        $this->type('select');
-    }
-
     /**
      * @param array $options
      *

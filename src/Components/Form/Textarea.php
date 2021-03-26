@@ -18,11 +18,6 @@ class Textarea extends Field
     use Concerns\CanBeLengthConstrained;
     use Concerns\HasPlaceholder;
 
-    protected function init()
-    {
-        $this->type('textarea');
-    }
-
     /**
      * @param $cols
      *

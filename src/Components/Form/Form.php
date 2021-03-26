@@ -4,6 +4,7 @@ namespace Weikit\Components\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use Weikit\Components\Component;
+use Weikit\Components\Concerns\HasChildren;
 
 /**
  * Class Form
@@ -11,16 +12,10 @@ use Weikit\Components\Component;
  *
  * @property string $method
  * @property string $action
- * @property Field[] $schema
  */
 class Form extends Component
 {
-
-    protected function init()
-    {
-        $this->type('form');
-    }
-
+    use HasChildren;
     /**
      * @param $method
      *
@@ -48,7 +43,7 @@ class Form extends Component
     {
         $defaults = [];
 
-        foreach ($this->schema as $field) {
+        foreach ($this->children as $field) {
             $defaults = array_merge($defaults, $field->default);
         }
 
@@ -62,7 +57,7 @@ class Form extends Component
 //    {
 //        $attributes = [];
 //
-//        foreach ($this->schema as $field) {
+//        foreach ($this->children as $field) {
 //            $attributes = array_merge($attributes, $field->getValidationAttributes());
 //        }
 //
@@ -76,7 +71,7 @@ class Form extends Component
     {
         $rules = $this->rules;
 
-        foreach ($this->schema as $field) {
+        foreach ($this->children as $field) {
             foreach ($field->getRules() as $name => $conditions) {
                 $rules[$name] = array_merge($rules[$name] ?? [], $conditions);
             }
@@ -92,35 +87,17 @@ class Form extends Component
      */
     public function model($model)
     {
-        $schema = collect($this->schema)
+        $children = collect($this->children)
             ->map(function ($field) use ($model) {
                 return $field->model($model);
             })
             ->toArray();
 
-        return $this->schema($schema);
-    }
-
-    /**
-     * @param Field[] $schema
-     *
-     * @return $this
-     */
-    public function schema(array $schema)
-    {
-        return $this->set('schema', value($schema));
-    }
-
-    /**
-     * @return array
-     */
-    public function getSchema()
-    {
-        return $this->get('schema', []);
+        return $this->children($children);
     }
 
     public function toArray()
     {
-        return array_merge($this->data, ['schema' => collect($this->schema)->toArray()]);
+        return array_merge($this->data, ['children' => collect($this->children)->toArray()]);
     }
 }

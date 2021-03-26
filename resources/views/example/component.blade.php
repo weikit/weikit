@@ -1,12 +1,14 @@
 @extends('weikit::layouts.quasar')
 
 @section('content')
-    <remote></remote>
-
-    <div>
-        <component :is="componentName" v-bind="componentOptions" />
-    </div>
-
+    <q-layout>
+        <q-page-container>
+            <q-page padding>
+                <component :is="componentName" v-bind="componentOptions" ></component>
+                <remote></remote>
+            </q-page>
+        </q-page-container>
+    </q-layout>
 @endsection
 
 @push('script')

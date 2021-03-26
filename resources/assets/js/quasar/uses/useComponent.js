@@ -15,6 +15,10 @@ export const builderComponents = {
   toggle: "WToggle",
   datePicker: "WDatePicker",
   timePicker: "WTimePicker",
+
+  card: "WCard",
+  tabs: "WTabs",
+  tab: "WTab",
 };
 
 export function useComponent({ type, ...options }) {

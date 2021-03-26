@@ -6,11 +6,6 @@ class Radio extends Field
 {
     use Concerns\CanBeAutofocused;
 
-    protected function init()
-    {
-        $this->type('radio');
-    }
-
     /**
      * @param array $options
      *

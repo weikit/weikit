@@ -1,12 +1,12 @@
 <template>
-  <q-form :id="id" :class="className">
-    <div
+  <q-tab :id="id" :class="className">
+    <component
       :key="index"
-      v-for="({ componentName, ...componentOptions }, index) in fields"
-    >
-      <component :is="componentName" v-bind="componentOptions" />
-    </div>
-  </q-form>
+      v-for="({ componentName, ...componentOptions }, index) in children"
+      :is="componentName"
+      v-bind="componentOptions"
+    ></component>
+  </q-tab>
 </template>
 
 <script>
@@ -20,12 +20,11 @@ export default defineComponent({
     children: Array,
   },
   setup({ id, className, children }) {
-    const fields = children.map(useComponent);
     return {
       ...reactive({
         id,
         className,
-        fields,
+        children: children.map(useComponent),
       }),
     };
   },

@@ -19,21 +19,35 @@
     </w-main>
 @endsection
 
-@push('before_script')
-<script type="text/javascript">
-    G.appOptions = {
-        setup() {
-            const { onBeforeMount } = Vue;
-            const { useUser } = Uses;
+@push('script')
+    <script type="module" type="text/javascript">
+        const {
+            defineComponent
+        } = Weikit;
 
-            const { user, loadUser } = useUser();
+        export default defineComponent({
+            setup() {
+                const {
+                    onBeforeMount
+                } = Vue;
+                const {
+                    useUser
+                } = Uses;
 
-            onBeforeMount(async () => {
-                loadUser();
-            });
+                const {
+                    user,
+                    loadUser
+                } = useUser();
 
-            return { user };
-        }
-    };
-</script>
+                onBeforeMount(async () => {
+                    loadUser();
+                });
+
+                return {
+                    user
+                };
+            }
+        });
+
+    </script>
 @endpush

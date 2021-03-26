@@ -13,7 +13,6 @@ class Toggle extends Field
 
     protected function init()
     {
-        $this->type('toggle');
         $this->default(false);
     }
 

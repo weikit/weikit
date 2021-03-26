@@ -8,7 +8,6 @@ class Checkbox extends Field
 
     protected function init()
     {
-        $this->type('checkbox');
         $this->default(false);
     }
 }
