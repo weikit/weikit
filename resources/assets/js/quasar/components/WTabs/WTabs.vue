@@ -1,16 +1,31 @@
 <template>
-  <q-tabs :id="id" :class="className">
-    <component
-      :key="index"
-      v-for="({ componentName, ...componentOptions }, index) in children"
-      :is="componentName"
-      v-bind="componentOptions"
-    ></component>
-  </q-tabs>
+  <q-card>
+    <q-tabs :id="id" :class="className" v-model="currentTab">
+      <q-tab
+        :key="index"
+        v-for="({ componentName, ...componentOptions }, index) in children"
+        :k="componentName"
+        v-bind="componentOptions"
+      ></q-tab>
+    </q-tabs>
+
+    <q-separator />
+
+    {{ currentTab }}
+
+    <q-tab-panels :id="id" :class="className" v-model="currentTab">
+      <component
+        :key="index"
+        v-for="({ componentName, ...componentOptions }, index) in children"
+        :is="componentName"
+        v-bind="componentOptions"
+      ></component>
+    </q-tab-panels>
+  </q-card>
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import { useComponent } from "../../uses";
 
 export default defineComponent({
@@ -20,7 +35,16 @@ export default defineComponent({
     children: Array,
   },
   setup({ id, className, children }) {
+    const currentTab = ref("tab1");
+
+    const switchTab = tab => {
+      currentTab.value = tab;
+    };
+
     return {
+      currentTab,
+      switchTab,
+
       ...reactive({
         id,
         className,

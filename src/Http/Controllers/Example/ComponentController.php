@@ -26,42 +26,47 @@ class ComponentController extends Controller
     public function page()
     {
         return view('weikit::example.component', [
-            'schema' => $this->getSchema()
+            'schema' => $this->getSchema(),
         ]);
     }
 
     public function getSchema()
     {
-        return Card::make()
-            ->child(
-                Tabs::make()
-                    ->children([
-                        Tab::make()
-                           ->label('tab1')
-                           ->child(
-                            Form::make()
-                                ->children([
-                                    TextInput::make('text')->label('text input'),
-                                    TextInput::make('password')->password()->label('password input'),
-                                    Checkbox::make('checkbox')->label('checkbox'),
-                                    Select::make('select')->options(['a' => 'a option', 'b' => 'b option'])->label('select'),
-                                    Radio::make('radio')->options(['a' => 'a option', 'b' => 'b option'])->label('radio'),
-                                    Toggle::make('toggle')->label('toggle'),
-                                    Textarea::make('textarea')->label('textarea'),
-                                    DatePicker::make('datePicker')->label('date picker'),
-                                    TimePicker::make('timePicker')->label('time picker')
-                                ])
-                        ),
-                        Tab::make()
-                           ->label('tab2')
-                           ->child(
-                            Form::make()
-                                ->children([
-                                    TextInput::make('text')->label('text input'),
+        return Tabs::make()
+           ->children([
+               Tab::make('tab1')
+                  ->child(
+                      Form::make()
+                          ->children([
+                              TextInput::make('text')->label('text input'),
+                              TextInput::make('password')->password()->label('password input'),
+                              Checkbox::make('checkbox')->label('checkbox'),
+                              Select::make('select')->options([
+                                  'a' => 'a option',
+                                  'b' => 'b option',
+                              ])->label('select'),
+                              Radio::make('radio')->options([
+                                  'a' => 'a option',
+                                  'b' => 'b option',
+                              ])->label('radio'),
+                              Toggle::make('toggle')->label('toggle'),
+                              Textarea::make('textarea')->label('textarea'),
+                              DatePicker::make('datePicker')->label('date picker'),
+                              TimePicker::make('timePicker')->label('time picker'),
+                          ])
+                  ),
+               Tab::make('tab2')
+                  ->child(
+                      Card::make()
+                          ->child(
+                              Form::make()
+                                  ->children([
+                                      TextInput::make('text')->label('text input'),
 
-                                ])
-                        ),
-                    ])
-            );
+                                  ])
+                          )
+
+                  ),
+           ]);
     }
 }

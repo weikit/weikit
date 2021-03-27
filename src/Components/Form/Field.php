@@ -65,7 +65,6 @@ abstract class Field extends Component
     public function name(string $name)
     {
         return $this->set('name', $name);
-
     }
 
     /**
