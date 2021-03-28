@@ -27,6 +27,7 @@
   "dependencies": {
     "@popperjs/core": "^2.9.0",
     "@quasar/extras": "^1.0.0",
+    "@weikit/component": "file:./packages/component",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.0-beta2",
     "jquery": "^3.5.1",

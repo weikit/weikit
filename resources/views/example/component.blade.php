@@ -23,7 +23,6 @@
                 const { useComponent } = Uses;
 
                 const { componentName, ...componentOptions} = useComponent({!! $schema->toJson() !!});
-                console.log(componentName, componentOptions)
 
                 return {
                     componentName,

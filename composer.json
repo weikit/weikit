@@ -25,7 +25,8 @@
       "src/Helpers/html.php"
     ],
     "psr-4": {
-      "Weikit\\": "src/"
+      "Weikit\\": "src",
+      "Weikit\\Component\\": "packages/component/src"
     }
   },
   "extra": {

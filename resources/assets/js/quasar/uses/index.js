@@ -2,4 +2,5 @@ export * from "./store";
 export * from "./useMessage";
 export * from "./useConfig";
 export * from "./usePageTab";
-export * from "./useComponent";
+
+export { useComponent } from "@weikit/component";
