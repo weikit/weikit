@@ -1,6 +1,4 @@
-@extends('weikit::layouts.main')
-
-@section('use_quasar', true)
+@extends('weikit::layouts.quasar')
 
 @section('content')
     <w-main>
@@ -21,23 +19,14 @@
 
 @push('script')
     <script type="module" type="text/javascript">
-        const {
-            defineComponent
-        } = Weikit;
+        const { defineComponent } = Weikit;
 
         export default defineComponent({
             setup() {
-                const {
-                    onBeforeMount
-                } = Vue;
-                const {
-                    useUser
-                } = Uses;
+                const { onBeforeMount } = Vue;
+                const { useUser } = Uses;
 
-                const {
-                    user,
-                    loadUser
-                } = useUser();
+                const { user, loadUser } = useUser();
 
                 onBeforeMount(async () => {
                     loadUser();

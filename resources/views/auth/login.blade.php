@@ -1,7 +1,6 @@
-@extends('weikit::layouts.main')
+@extends('weikit::layouts.quasar')
 
 @section('body_class', 'login')
-@section('use_quasar', true)
 
 @section('content')
     <q-layout>
