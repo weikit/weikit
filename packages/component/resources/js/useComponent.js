@@ -16,6 +16,8 @@ export const components = {
   timePicker: "WTimePicker",
 
   card: "WCard",
+  cardTitle: "WCardTitle",
+
   tabs: "WTabs",
   tab: "WTab",
 

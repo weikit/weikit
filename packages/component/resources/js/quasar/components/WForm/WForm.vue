@@ -1,5 +1,5 @@
 <template>
-  <q-form :id="id" :class="className">
+  <q-form :id="id" :class="classes">
     <component
       :key="index"
       v-for="({ componentName, ...componentOptions }, index) in fields"
@@ -16,15 +16,15 @@ import { useComponent } from "../../../useComponent";
 export default defineComponent({
   props: {
     id: String,
-    className: String,
+    classes: String,
     children: Array,
   },
-  setup({ id, className, children }) {
+  setup({ id, classes, children }) {
     const fields = children.map(useComponent);
     return {
       ...reactive({
         id,
-        className,
+        classes,
         fields,
       }),
     };

@@ -22,7 +22,7 @@
             setup() {
                 const { useComponent } = Uses;
 
-                const { componentName, ...componentOptions} = useComponent({!! $schema->toJson() !!});
+                const { componentName, ...componentOptions} = useComponent({!! $components->toJson() !!});
 
                 return {
                     componentName,

@@ -1,6 +1,6 @@
 <template>
   <q-card>
-    <q-tabs :id="id" :class="className" v-model="currentTab">
+    <q-tabs :id="id" :class="classes" v-model="currentTab">
       <q-tab
         :key="index"
         v-for="({ componentName, ...componentOptions }, index) in children"
@@ -13,7 +13,7 @@
 
     {{ currentTab }}
 
-    <q-tab-panels :id="id" :class="className" v-model="currentTab">
+    <q-tab-panels :id="id" :class="classes" v-model="currentTab">
       <component
         :key="index"
         v-for="({ componentName, ...componentOptions }, index) in children"
@@ -31,10 +31,10 @@ import { useComponent } from "../../../useComponent";
 export default defineComponent({
   props: {
     id: String,
-    className: String,
+    classes: String,
     children: Array,
   },
-  setup({ id, className, children }) {
+  setup({ id, classes, children }) {
     const currentTab = ref("tab1");
 
     const switchTab = tab => {
@@ -47,7 +47,7 @@ export default defineComponent({
 
       ...reactive({
         id,
-        className,
+        classes,
         children: children
           .map(tab => {
             if (tab.type != "tab") {

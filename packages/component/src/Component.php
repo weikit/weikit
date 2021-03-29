@@ -61,9 +61,19 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
      *
      * @return $this
      */
-    public function className($class)
+    public function classes($classes)
     {
-        return $this->set('className', is_array($class) ? implode(' ', value($class)) : $class);
+        return $this->set('classes', !is_array($classes) ? $classes : [$classes]);
+    }
+
+    /**
+     * @param array|string $styles
+     *
+     * @return $this
+     */
+    public function styles($styles)
+    {
+        return $this->set('styles', !is_array($styles) ? $styles : [$styles]);
     }
 
     /**
@@ -125,7 +135,7 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
             ->toArray();
     }
 
-    public function toJson($options = 0)
+    public function toJson($options = 256)
     {
         $json = json_encode($this->jsonSerialize(), $options);
 

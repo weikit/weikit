@@ -1,8 +1,6 @@
 <template>
-  <q-card :id="id" :class="className">
-    <q-card-section v-if="title" class="bg-primary text-white">
-      <div class="text-h6">{{ title }}</div>
-    </q-card-section>
+  <q-card :id="id" :style="['a', 'b']">
+    <component v-if="title" :is="title.componentName" v-bind="title" />
 
     <q-card-section v-if="children.length > 0">
       <component
@@ -16,22 +14,24 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, toRefs } from "vue";
 import { useComponent } from "../../../useComponent";
 
 export default defineComponent({
   props: {
     id: String,
-    className: String,
-    title: String,
+    classes: String | Array,
+    styles: String | Array | Object,
+    title: Object,
     children: Array,
   },
-  setup({ id, className, title, children }) {
+  setup(props) {
+    const { id, classes, title, children } = toRefs(props);
     return {
       ...reactive({
         id,
-        className,
-        title,
+        classes,
+        title: title && useComponent(title),
         children: children.map(useComponent),
       }),
     };

@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" class="row" :class="className">
+  <div :id="id" class="row" :class="classes">
     <div
       class="col"
       :key="index"
@@ -17,15 +17,15 @@ import { useComponent } from "../../../useComponent";
 export default defineComponent({
   props: {
     id: String,
-    className: String,
+    classes: String,
     title: String,
     children: Array,
   },
-  setup({ id, className, title, children }) {
+  setup({ id, classes, title, children }) {
     return {
       ...reactive({
         id,
-        className,
+        classes,
         title,
         children: children.map(useComponent),
       }),

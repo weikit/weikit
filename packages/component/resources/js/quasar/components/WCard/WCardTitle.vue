@@ -1,5 +1,7 @@
 <template>
-  <q-checkbox :id="id" :class="classes" :label="label"> </q-checkbox>
+  <q-card-section>
+    <div class="text-h6">{{ title }}</div>
+  </q-card-section>
 </template>
 
 <script>
@@ -9,14 +11,15 @@ export default defineComponent({
   props: {
     id: String,
     classes: String,
-    label: String,
+    title: String,
+    children: Array,
   },
-  setup({ id, classes, label }) {
+  setup({ id, classes, title }) {
     return {
       ...reactive({
         id,
         classes,
-        label,
+        title,
       }),
     };
   },

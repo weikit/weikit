@@ -27,11 +27,11 @@ class ComponentController extends Controller
     public function page()
     {
         return view('weikit::example.component', [
-            'schema' => $this->getSchema(),
+            'components' => $this->getComponents(),
         ]);
     }
 
-    public function getSchema()
+    public function getComponents()
     {
         return Tabs::make()
            ->children([

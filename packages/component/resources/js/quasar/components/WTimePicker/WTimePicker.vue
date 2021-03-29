@@ -3,7 +3,7 @@
     :id="id"
     :type="type"
     :label="label"
-    :class="className"
+    :class="classes"
     :placeholder="placeholder"
     :hint="hint"
     :maxlength="maxLength"
@@ -35,17 +35,17 @@ export default defineComponent({
     id: String,
     label: String,
     name: String,
-    className: String,
+    classes: String,
     placeholder: String,
     hint: String,
   },
-  setup({ id, label, name, className, placeholder, hint }) {
+  setup({ id, label, name, classes, placeholder, hint }) {
     return {
       ...reactive({
         id,
         label,
         name,
-        className,
+        classes,
         placeholder: placeholder || label || name,
         hint,
       }),

@@ -1,5 +1,5 @@
 <template>
-  <q-radio :id="id" :class="className" :label="label" value="option"></q-radio>
+  <q-radio :id="id" :class="classes" :label="label" value="option"></q-radio>
 </template>
 
 <script>
@@ -8,14 +8,14 @@ import { defineComponent, reactive } from "vue";
 export default defineComponent({
   props: {
     id: String,
-    className: String,
+    classes: String,
     label: String,
   },
-  setup({ id, className, label }) {
+  setup({ id, classes, label }) {
     return {
       ...reactive({
         id,
-        className,
+        classes,
         label,
       }),
     };

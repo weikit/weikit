@@ -4,6 +4,7 @@ namespace Weikit\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Weikit\Component\Card\Card;
 use Weikit\Component\Forms\Form;
 use Weikit\Component\Forms\TextInput;
 use Weikit\Http\Controllers\Controller;
@@ -38,14 +39,18 @@ class LoginController extends Controller
 
     protected function getForm()
     {
-        return Form::make([
-            TextInput::make('username')
-                     ->label('账号')
-                     ->required(),
-            TextInput::make('password')
-                     ->label('密码')
-                     ->password()
-                     ->required(),
-        ]);
+        return Card::make()
+            ->title(__('weikit::auth.login.title'))
+            ->child(
+                Form::make([
+                    TextInput::make('username')
+                         ->label('账号')
+                         ->required(),
+                    TextInput::make('password')
+                         ->label('密码')
+                         ->password()
+                         ->required(),
+                ])
+            );
     }
 }

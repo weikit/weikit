@@ -1,5 +1,5 @@
 <template>
-  <q-tab-panel :id="id" :class="className" :name="name">
+  <q-tab-panel :id="id" :class="classes" :name="name">
     <component
       :key="index"
       v-for="({ componentName, ...componentOptions }, index) in children"
@@ -16,15 +16,15 @@ import { useComponent } from "../../../useComponent";
 export default defineComponent({
   props: {
     id: String,
-    className: String,
+    classes: String,
     name: String,
     children: Array,
   },
-  setup({ id, className, name, children }) {
+  setup({ id, classes, name, children }) {
     return {
       ...reactive({
         id,
-        className,
+        classes,
         name,
         children: children.map(useComponent),
       }),

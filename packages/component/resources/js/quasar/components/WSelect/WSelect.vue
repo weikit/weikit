@@ -1,7 +1,7 @@
 <template>
   <q-select
     :id="id"
-    :class="className"
+    :class="classes"
     :label="label"
     :options="options"
     map-options
@@ -15,11 +15,11 @@ import { defineComponent, reactive } from "vue";
 export default defineComponent({
   props: {
     id: String,
-    className: String,
+    classes: String,
     label: String,
     options: [Array, Object],
   },
-  setup({ id, className, label, options }) {
+  setup({ id, classes, label, options }) {
     const opts = Array.isArray(options)
       ? options
       : Object.keys(options).map(key => ({
@@ -29,7 +29,7 @@ export default defineComponent({
     return {
       ...reactive({
         id,
-        className,
+        classes,
         label,
         options: opts,
       }),

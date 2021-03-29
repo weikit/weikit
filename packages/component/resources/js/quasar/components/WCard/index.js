@@ -1,3 +1,4 @@
 import WCard from "./WCard";
+import WCardTitle from "./WCardTitle";
 
-export { WCard };
+export { WCard, WCardTitle };

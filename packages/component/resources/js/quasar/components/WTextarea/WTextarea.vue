@@ -1,7 +1,7 @@
 <template>
   <q-input
     :id="id"
-    :class="className"
+    :class="classes"
     :label="label"
     :cols="cols"
     :rows="rows"
@@ -15,16 +15,16 @@ import { defineComponent, reactive } from "vue";
 export default defineComponent({
   props: {
     id: String,
-    className: String,
+    classes: String,
     label: String,
     cols: Number,
     rows: Number,
   },
-  setup({ id, className, cols, rows, label }) {
+  setup({ id, classes, cols, rows, label }) {
     return {
       ...reactive({
         id,
-        className,
+        classes,
         label,
         cols,
         rows,
