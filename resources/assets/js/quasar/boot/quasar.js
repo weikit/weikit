@@ -17,7 +17,7 @@ import {
 import app from "../app";
 import config from "../../common/config";
 
-import { QuasarComponent } from "@weikit/component";
+import QuasarComponent from "@weikit/component/quasar";
 
 app.use(QuasarComponent);
 app.use(
