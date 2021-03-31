@@ -50,6 +50,10 @@ export const defaultComponentProps = {
     type: [String, Array, Object],
     default: "",
   },
+  attrs: {
+    type: Object,
+    default: {},
+  },
 };
 
 export function makeComponentProps(replaceProps = {}) {

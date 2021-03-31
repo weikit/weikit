@@ -6,6 +6,7 @@
     :class="classes"
     :placeholder="placeholder"
     :hint="hint"
+    v-bind="extra"
   >
   </q-input>
 </template>
@@ -21,7 +22,13 @@ import {
 
 export default defineComponent({
   props: {
-    ...makeFieldProps(),
+    ...makeFieldProps({
+      extra: {
+        default: {
+          filled: true,
+        },
+      },
+    }),
     ...makeInputFieldProps(),
     type: {
       type: String,
