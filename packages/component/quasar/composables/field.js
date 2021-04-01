@@ -16,6 +16,10 @@ const defaultFieldProps = {
     type: String,
     default: "",
   },
+  value: {
+    type: String,
+    default: "",
+  },
 };
 
 export function makeFieldProps(replaceProps = {}) {
@@ -23,7 +27,7 @@ export function makeFieldProps(replaceProps = {}) {
 }
 
 export function useFieldAttrs(props) {
-  return reactive(pick(props, Object.keys(defaultComponentProps)));
+  return reactive(pick(props, Object.keys(defaultFieldProps)));
 }
 
 const defaultInputFieldProps = {

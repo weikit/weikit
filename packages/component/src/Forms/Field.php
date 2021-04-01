@@ -86,23 +86,34 @@ abstract class Field extends Component
     }
 
     /**
-     * @param $default
+     * @param $value
      *
      * @return $this
      */
-    public function default($default)
+    public function value($value)
     {
-        return $this->set('default', $default);
+        return $this->set('value', $value);
     }
 
     /**
      * @param $hint
      *
-     * @return $thi
+     * @return $this
      */
     public function hint($hint)
     {
         return $this->set('hint', $hint);
+    }
+
+    /**
+     * @param string $key
+     * @param $value
+     *
+     * @return $this
+     */
+    public function extra(string $key, $value)
+    {
+        return $this->set('extra.' . $key, $value);
     }
 
     /**

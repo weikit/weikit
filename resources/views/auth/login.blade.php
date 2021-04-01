@@ -107,7 +107,6 @@
                 location.href = "{{ route('admin.dashboard') }}"
             };
 
-
             return {
                 t,
                 q,

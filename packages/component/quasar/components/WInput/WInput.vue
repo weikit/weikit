@@ -7,12 +7,13 @@
     :placeholder="placeholder"
     :hint="hint"
     v-bind="extra"
+    v-model="value"
   >
   </q-input>
 </template>
 
 <script>
-import { defineComponent, toRefs } from "vue";
+import { defineComponent, toRefs, watch } from "vue";
 import {
   makeFieldProps,
   makeInputFieldProps,
@@ -38,6 +39,14 @@ export default defineComponent({
   setup(props) {
     const fieldAttrs = useFieldAttrs(props);
     const inputFieldAttrs = useInputFieldAttrs(props);
+
+    watch(
+      () => fieldAttrs.value,
+      val => {
+        console.log(val);
+      }
+    );
+
     return {
       ...toRefs(fieldAttrs),
       ...toRefs(inputFieldAttrs),
