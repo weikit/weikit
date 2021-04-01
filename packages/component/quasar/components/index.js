@@ -7,6 +7,7 @@ export * from "./WToggle";
 export * from "./WTextarea";
 export * from "./WDatePicker";
 export * from "./WTimePicker";
+export * from "./WCaptcha";
 
 export * from "./WCard";
 export * from "./WTabs";

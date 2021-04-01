@@ -86,12 +86,12 @@
                 remember: false,
             });
 
-            const {
-                captchaUrl,
-                updateCaptchaUrl
-            } = useCaptcha({
-                url: "{{ captcha_src('math') }}"
-            });
+            {{--const {--}}
+            {{--    captchaUrl,--}}
+            {{--    updateCaptchaUrl--}}
+            {{--} = useCaptcha({--}}
+            {{--    url: "{{ captcha_src('math') }}"--}}
+            {{--});--}}
             const captchaShow = ref(0);
             watch(() => form.password, () => captchaShow.value = 1);
 
@@ -116,8 +116,8 @@
                 componentOptions,
                 captchaShow,
                 handleLogin,
-                captchaUrl,
-                updateCaptchaUrl
+                // captchaUrl,
+                // updateCaptchaUrl
             }
         }
     })

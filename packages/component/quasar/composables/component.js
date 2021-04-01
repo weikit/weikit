@@ -15,6 +15,7 @@ export const components = {
   toggle: "WToggle",
   datePicker: "WDatePicker",
   timePicker: "WTimePicker",
+  captcha: "WCaptcha",
 
   card: "WCard",
   cardTitle: "WCardTitle",
