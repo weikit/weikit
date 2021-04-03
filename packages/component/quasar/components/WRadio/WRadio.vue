@@ -1,18 +1,29 @@
 <template>
-  <q-radio :id="id" :class="classes" :label="label" value="option"></q-radio>
+  <q-radio
+    :id="id"
+    :type="type"
+    :label="label"
+    :class="classes"
+    :hint="hint"
+    v-bind="extra"
+    v-model="value"
+  ></q-radio>
 </template>
 
 <script>
 import { defineComponent, toRefs } from "vue";
 import { useComponentAttrs } from "../../composables/component";
 import { makeFieldProps } from "../../composables/field";
+import { useFormInject } from "../../composables/form";
 
 export default defineComponent({
   props: {
     ...makeFieldProps(),
   },
-  setup(props) {
+  setup(props, { emit }) {
     const fieldAttrs = useComponentAttrs(props);
+
+    const { updateForm } = useFormInject(fieldAttrs, { emit });
 
     return {
       ...toRefs(fieldAttrs),

@@ -1,10 +1,12 @@
 <template>
   <q-input
     :id="id"
-    :class="classes"
     :label="label"
-    :cols="cols"
-    :rows="rows"
+    :class="classes"
+    :placeholder="placeholder"
+    :hint="hint"
+    v-bind="extra"
+    v-model="value"
     type="textarea"
   ></q-input>
 </template>
@@ -30,13 +32,16 @@ export default defineComponent({
       default: 5,
     },
   },
-  setup(props) {
-    const fieldProps = useFieldAttrs(props);
+  setup(props, { emit }) {
+    const fieldAttrs = useFieldAttrs(props);
+
     const cols = toRef(props, "cols");
     const rows = toRef(props, "rows");
 
+    const { updateForm } = useFormInject(fieldAttrs, { emit });
+
     return {
-      ...toRefs(fieldProps),
+      ...toRefs(fieldAttrs),
       cols,
       rows,
     };

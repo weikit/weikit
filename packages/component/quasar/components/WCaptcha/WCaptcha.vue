@@ -1,10 +1,13 @@
 <template>
   <q-input
     :id="id"
-    :class="classes"
-    :style="styles"
-    v-bind="extra"
+    :type="type"
     :label="label"
+    :class="classes"
+    :placeholder="placeholder"
+    :hint="hint"
+    v-bind="extra"
+    v-model="value"
   >
     <template v-slot:after>
       <img width="133" @click.stop="updateCaptchaUrl" :src="captchaUrl" />
@@ -15,9 +18,9 @@
 <script>
 import { defineComponent } from "vue";
 import { toRefs } from "@vue/reactivity";
-import { useComponentAttrs } from "../../composables/component";
-import { makeFieldProps } from "../../composables/field";
+import { makeFieldProps, useFieldAttrs } from "../../composables/field";
 import { useCaptcha } from "../../composables/captcha";
+import { useFormInject } from "../../composables/form";
 
 export default defineComponent({
   props: {
@@ -33,15 +36,17 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
-    const componentAtts = useComponentAttrs(props);
+  setup(props, { emit }) {
+    const fieldAtts = useFieldAttrs(props);
+
+    const { updateForm } = useFormInject(fieldAtts, { emit });
 
     const { captchaUrl, updateCaptchaUrl } = useCaptcha({
       url: props.url,
     });
 
     return {
-      ...toRefs(componentAtts),
+      ...toRefs(fieldAtts),
       captchaUrl,
       updateCaptchaUrl,
     };

@@ -1,30 +1,40 @@
 <template>
   <q-select
     :id="id"
-    :class="classes"
+    :type="type"
     :label="label"
-    :options="options"
-    map-options
+    :class="classes"
+    :hint="hint"
+    v-bind="extra"
+    v-model="value"
   >
   </q-select>
 </template>
 
 <script>
 import { defineComponent, reactive, toRefs } from "vue";
-import { useComponentAttrs } from "../../composables/component";
-import { makeFieldProps } from "../../composables/field";
+
+import { makeFieldProps, useFieldAttrs } from "../../composables/field";
 
 export default defineComponent({
   props: {
-    ...makeFieldProps(),
+    ...makeFieldProps({
+      extra: {
+        default: {
+          mapOptions: true,
+        },
+      },
+    }),
 
     options: {
       type: [Array, Object],
       default: [],
     },
   },
-  setup(props) {
-    const componentAttrs = useComponentAttrs(props);
+  setup(props, { emit }) {
+    const fieldAttrs = useFieldAttrs(props);
+
+    const { updateForm } = useFormInject(fieldAttrs, { emit });
 
     const options = reactive(
       Array.isArray(props.options)

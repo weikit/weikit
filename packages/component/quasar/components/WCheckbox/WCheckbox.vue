@@ -1,17 +1,28 @@
 <template>
-  <q-checkbox :id="id" :class="classes" :label="label"> </q-checkbox>
+  <q-checkbox
+    :id="id"
+    :label="label"
+    :class="classes"
+    :hint="hint"
+    v-bind="extra"
+    v-model="value"
+  >
+  </q-checkbox>
 </template>
 
 <script>
 import { defineComponent, toRefs } from "vue";
 import { makeFieldProps } from "../../composables/field";
+import { useFormInject } from "../../composables/form";
 
 export default defineComponent({
   props: {
     ...makeFieldProps(),
   },
-  setup(props) {
+  setup(props, { emit }) {
     const filedAttrs = makeFieldProps(props);
+
+    const { updateForm } = useFormInject(fieldAtts, { emit });
 
     return {
       ...toRefs(filedAttrs),

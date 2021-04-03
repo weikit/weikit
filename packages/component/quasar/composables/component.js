@@ -51,7 +51,7 @@ export const defaultComponentProps = {
     type: [String, Array, Object],
     default: "",
   },
-  attrs: {
+  extra: {
     type: Object,
     default: {},
   },

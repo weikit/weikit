@@ -1,11 +1,13 @@
 <template>
   <q-input
     :id="id"
-    :type="type"
     :label="label"
     :class="classes"
     :placeholder="placeholder"
     :hint="hint"
+    v-bind="extra"
+    v-model="value"
+    :type="type"
   >
     <template v-slot:append>
       <q-icon name="event" class="cursor-pointer">
@@ -33,6 +35,7 @@ import {
   useFieldAttrs,
   useInputFieldAttrs,
 } from "../../composables/field";
+import { useFormInject } from "../../composables/form";
 
 export default defineComponent({
   props: {
@@ -43,9 +46,12 @@ export default defineComponent({
       default: "",
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const fieldAttrs = useFieldAttrs(props);
     const inputFieldAttrs = useInputFieldAttrs(props);
+
+    const { updateForm } = useFormInject(fieldAtts, { emit });
+
     const type = ref(props.type);
 
     return {

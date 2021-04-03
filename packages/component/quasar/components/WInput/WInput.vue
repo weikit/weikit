@@ -1,7 +1,6 @@
 <template>
   <q-input
     :id="id"
-    :type="type"
     :label="label"
     :class="classes"
     :placeholder="placeholder"
@@ -20,6 +19,7 @@ import {
   useFieldAttrs,
   useInputFieldAttrs,
 } from "../../composables/field";
+import { useFormInject } from "../../composables/form";
 
 export default defineComponent({
   props: {
@@ -36,16 +36,11 @@ export default defineComponent({
       default: "text",
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const fieldAttrs = useFieldAttrs(props);
     const inputFieldAttrs = useInputFieldAttrs(props);
 
-    watch(
-      () => fieldAttrs.value,
-      val => {
-        console.log(val);
-      }
-    );
+    const { updateForm } = useFormInject(fieldAttrs, { emit });
 
     return {
       ...toRefs(fieldAttrs),
