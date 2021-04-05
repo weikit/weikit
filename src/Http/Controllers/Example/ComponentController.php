@@ -3,6 +3,7 @@
 namespace Weikit\Http\Controllers\Example;
 
 use Weikit\Component\Card;
+use Weikit\Component\Forms\Button;
 use Weikit\Component\Forms\Checkbox;
 use Weikit\Component\Forms\DatePicker;
 use Weikit\Component\Forms\Form;

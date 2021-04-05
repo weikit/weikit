@@ -16,8 +16,30 @@ use Weikit\Component\Traits\HasMakeChildren;
  */
 class Form extends Component
 {
-    use HasMakeChildren;
     use HasChildren;
+    use HasMakeChildren {
+        HasMakeChildren::make as _make;
+    }
+
+    protected function init()
+    {
+        $this->method('POST');
+        $this->action(url()->current());
+    }
+
+    public static function make(array $children = [], $button = null)
+    {
+        $instance = static::_make($children);
+
+        if ($button !== false) {
+            $button = new Button($button ?: __('weikit::component.form.button.label'));
+            $button->type(Button::TYPE_SUBMIT);
+            $instance->child($button);
+        }
+
+        return $instance;
+    }
+
     /**
      * @param $method
      *
@@ -25,7 +47,7 @@ class Form extends Component
      */
     public function method(string $method)
     {
-        return $this->set('method', $method);
+        return $this->set('method', strtoupper($method));
     }
 
     /**
@@ -96,10 +118,5 @@ class Form extends Component
             ->toArray();
 
         return $this->children($children);
-    }
-
-    public function toArray()
-    {
-        return array_merge($this->data, ['children' => collect($this->children)->toArray()]);
     }
 }

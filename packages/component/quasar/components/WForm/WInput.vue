@@ -3,6 +3,7 @@
     :id="id"
     :label="label"
     :class="classes"
+    :styles="styles"
     :placeholder="placeholder"
     :hint="hint"
     v-bind="extra"

@@ -1,5 +1,11 @@
 <template>
-  <q-form :id="id" :class="classes" :style="styles">
+  <q-form
+    :id="id"
+    :label="label"
+    :class="classes"
+    :styles="styles"
+    v-bind="extra"
+  >
     {{ form }}
     <component
       :key="index"
@@ -18,7 +24,7 @@ import {
   useComponentAttrs,
   useChildrenAttrs,
 } from "../../composables/component";
-import { useFormInject, useFormProvide } from "../../composables/form";
+import { useFormProvide } from "../../composables/form";
 
 export default defineComponent({
   props: {

@@ -15,7 +15,7 @@ use Illuminate\Contracts\Support\Arrayable;
  *
  * @property string $id
  * @property string $class
- * @property string $type
+ * @property string $key
  */
 abstract class Component implements Arrayable, Jsonable, JsonSerializable
 {
@@ -28,11 +28,11 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
 
     public function __construct()
     {
-        $this->init();
-
-        if ($this->type === null) {
-            $this->type(Str::camel(class_basename(get_class($this))));
+        if ($this->key === null) {
+            $this->key(Str::camel(class_basename(get_class($this))));
         }
+
+        $this->init();
     }
 
     protected function init()
@@ -40,20 +40,20 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
     }
 
     /**
-     * @param $type
+     * @param $key
      *
      * @return $this
      */
-    protected function type($type)
+    protected function key($type)
     {
-        $this->data['type'] = $type;
+        $this->data['key'] = $type;
 
         return $this;
     }
 
-    public function getType()
+    public function getKey()
     {
-        return $this->data['type'] ?? null;
+        return $this->data['key'] ?? null;
     }
 
     /**
@@ -129,10 +129,25 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
         return $this->toArray();
     }
 
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    private function mapArray($data)
+    {
+        return collect($data)->map(function ($value) {
+            if (is_array($value)) {
+                return $this->mapArray($value);
+            }
+
+            return $value instanceof Arrayable ? $value->toArray() : $value;
+        })->all();
+    }
+
     public function toArray()
     {
-        return collect($this->data)
-            ->toArray();
+        return $this->mapArray($this->data);
     }
 
     public function toJson($options = 256)

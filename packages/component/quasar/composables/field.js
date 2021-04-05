@@ -23,7 +23,7 @@ const defaultFieldProps = {
 };
 
 export function makeFieldProps(replaceProps = {}) {
-  return merge(defaultFieldProps, replaceProps);
+  return merge({}, defaultFieldProps, replaceProps);
 }
 
 export function useFieldAttrs(props) {

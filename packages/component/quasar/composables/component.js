@@ -3,6 +3,7 @@ import { merge, pick } from "lodash-es";
 
 export const components = {
   form: "WForm",
+  button: "WButton",
   text: "WInput",
   number: "WInput",
   email: "WInput",
@@ -27,13 +28,15 @@ export const components = {
 };
 
 export function useComponent(options) {
-  const type = options.type;
+  const key = options.key;
 
-  if (!components[type]) {
-    throw new Error(`The type '${type}' of component has not been implemented`);
+  if (!components[key]) {
+    throw new Error(
+      `The key type '${key}' of component has not been implemented`
+    );
   }
 
-  options.componentName = components[type];
+  options.componentName = components[key];
 
   return reactive(options);
 }
@@ -58,7 +61,7 @@ export const defaultComponentProps = {
 };
 
 export function makeComponentProps(replaceProps = {}) {
-  return merge(defaultComponentProps, replaceProps);
+  return merge({}, defaultComponentProps, replaceProps);
 }
 
 export function useComponentAttrs(props) {
