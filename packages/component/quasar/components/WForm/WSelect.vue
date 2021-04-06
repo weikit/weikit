@@ -13,8 +13,11 @@
 
 <script>
 import { defineComponent, reactive, toRefs } from "vue";
-
-import { makeFieldProps, useFieldAttrs } from "../../composables/field";
+import {
+  makeFieldProps,
+  useFieldAttrs,
+  useFormInject,
+} from "../../composables/form";
 
 export default defineComponent({
   props: {

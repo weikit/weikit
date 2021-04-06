@@ -13,9 +13,9 @@ use Weikit\Component\Component;
  */
 class Button extends Component
 {
-    const TYPE_SUBMIT = 'SUBMIT';
-    const TYPE_RESET = 'RESET';
-    const TYPE_BUTTON = 'BUTTON';
+    const TYPE_SUBMIT = 'submit';
+    const TYPE_RESET = 'reset';
+    const TYPE_BUTTON = 'bytton';
 
     public function __construct(string $label)
     {
@@ -36,7 +36,7 @@ class Button extends Component
 
     public function init()
     {
-        $this->type(self::TYPE_BUTTON);
+        $this->type(self::TYPE_RESET);
     }
 
     /**

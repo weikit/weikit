@@ -5,6 +5,7 @@
     :styles="styles"
     :label="label"
     v-bind="extra"
+    @click.stop="handleClick"
   ></q-btn>
 </template>
 
@@ -14,6 +15,7 @@ import {
   makeComponentProps,
   useComponentAttrs,
 } from "../../composables/component";
+import { useFormInject } from "../../composables/form";
 
 export default defineComponent({
   props: {
@@ -28,6 +30,11 @@ export default defineComponent({
       },
     }),
 
+    type: {
+      type: String,
+      default: "button",
+    },
+
     label: {
       type: String,
       default: "",
@@ -37,10 +44,30 @@ export default defineComponent({
   setup(props) {
     const componentAttrs = useComponentAttrs(props);
     const label = toRef(props, "label");
+    const type = toRef(props, "type");
+
+    const { submitForm, resetForm } = useFormInject(props);
+
+    const handleClick = () => {
+      if (type.value == "submit") {
+        if (submitForm) {
+          submitForm();
+        } else {
+          console.warn("Cannot submit because the form was not detected");
+        }
+      } else if ((type.value = "reset")) {
+        if (resetForm) {
+          resetForm();
+        } else {
+          console.warn("Cannot submit because the form was not detected");
+        }
+      }
+    };
 
     return {
       ...toRefs(componentAttrs),
       label,
+      handleClick,
     };
   },
 });

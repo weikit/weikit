@@ -18,9 +18,12 @@
 <script>
 import { defineComponent } from "vue";
 import { toRefs } from "@vue/reactivity";
-import { makeFieldProps, useFieldAttrs } from "../../composables/field";
 import { useCaptcha } from "../../composables/captcha";
-import { useFormInject } from "../../composables/form";
+import {
+  useFormInject,
+  makeFieldProps,
+  useFieldAttrs,
+} from "../../composables/form";
 
 export default defineComponent({
   props: {

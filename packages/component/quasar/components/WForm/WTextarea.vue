@@ -17,7 +17,8 @@ import {
   makeFieldProps,
   makeInputFieldProps,
   useFieldAttrs,
-} from "../../composables/field";
+  useFormInject,
+} from "../../composables/form";
 
 export default defineComponent({
   props: {

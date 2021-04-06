@@ -30,12 +30,12 @@
 <script>
 import { defineComponent, toRefs } from "vue";
 import {
+  useFormInject,
   makeFieldProps,
   makeInputFieldProps,
   useFieldAttrs,
   useInputFieldAttrs,
-} from "../../composables/field";
-import { useFormInject } from "../../composables/form";
+} from "../../composables/form";
 
 export default defineComponent({
   props: {

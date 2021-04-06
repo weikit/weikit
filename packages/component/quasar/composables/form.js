@@ -1,27 +1,50 @@
-import { update } from "lodash";
-import { inject, provide, reactive, readonly, watch } from "vue";
+import { merge, pick } from "lodash-es";
+import { inject, provide, reactive, readonly, ref, watch } from "vue";
+import { defaultComponentProps } from "./component";
 
-export const FORM_PROVIDE_KEY = Symbol("form");
-export const INIT_FORM_PROVIDE_KEY = Symbol("init_form");
-export const UPDATE_FORM_PROVIDE_KEY = Symbol("update_form");
-export const RESET_FORM_PROVIDE_KEY = Symbol("reset_form");
-export const SUBMIT_FORM_PROVIDE_KEY = Symbol("submit_form");
+const defaultFormProps = {
+  ...defaultComponentProps,
+  action: {
+    default: "",
+  },
+  method: {
+    default: "POST",
+  },
+};
+
+export function makeFormProps(replaceProps = {}) {
+  return merge({}, defaultFormProps, replaceProps);
+}
+
+export function useFormAttrs(props) {
+  return reactive(pick(props, Object.keys(defaultFormProps)));
+}
+
+const FORM_PROVIDE_KEY = Symbol("form");
+const INIT_FORM_PROVIDE_KEY = Symbol("init_form");
+const UPDATE_FORM_PROVIDE_KEY = Symbol("update_form");
+const RESET_FORM_PROVIDE_KEY = Symbol("reset_form");
+const SUBMIT_FORM_PROVIDE_KEY = Symbol("submit_form");
 
 export function useFormProvide(props) {
-  const defaultForm = reactive({});
-  const form = reactive({});
+  const defaultFormValue = reactive({});
+  const form = reactive({
+    action: props.action || location.href,
+    method: props.method || "POST",
+    value: {},
+  });
 
   const initForm = (key, value) => {
-    defaultForm[key] = value;
+    defaultFormValue[key] = value;
     updateForm(key, value);
   };
 
   const updateForm = (key, value) => {
-    form[key] = value;
+    form.value[key] = value;
   };
 
   const resetForm = () => {
-    Object.keys(defaultForm).map(key => updateForm(key, defaultForm[key]));
+    Object.keys(defaultFormValue).map(key => updateForm(key, defaultForm[key]));
   };
 
   const submitForm = () => {};
@@ -40,12 +63,15 @@ export function useFormInject(
   { initFormValue = true, watchValue = true, emit = undefined } = {}
 ) {
   const form = inject(FORM_PROVIDE_KEY);
-  const updateForm = inject(UPDATE_FORM_PROVIDE_KEY);
+  const action = inject();
   const initForm = inject(INIT_FORM_PROVIDE_KEY);
+  const updateForm = inject(UPDATE_FORM_PROVIDE_KEY);
+  const resetForm = inject(RESET_FORM_PROVIDE_KEY);
+  const submitForm = inject(SUBMIT_FORM_PROVIDE_KEY);
 
-  if (updateForm) {
+  if (updateForm && props.name) {
     // init value
-    if (initFormValue && props.name) {
+    if (initFormValue) {
       initForm(props.name, props.value);
     }
 
@@ -64,5 +90,48 @@ export function useFormInject(
     }
   }
 
-  return { form, updateForm };
+  return { form, initForm, updateForm, resetForm, submitForm };
+}
+
+const defaultFieldProps = {
+  ...defaultComponentProps,
+  name: {
+    type: String,
+    default: "",
+  },
+  label: {
+    type: String,
+    default: "",
+  },
+  hint: {
+    type: String,
+    default: "",
+  },
+  value: {
+    type: String,
+    default: "",
+  },
+};
+
+export function makeFieldProps(replaceProps = {}) {
+  return merge({}, defaultFieldProps, replaceProps);
+}
+
+export function useFieldAttrs(props) {
+  return reactive(pick(props, Object.keys(defaultFieldProps)));
+}
+
+const defaultInputFieldProps = {
+  placeholder: {
+    type: String,
+    default: "",
+  },
+};
+
+export function makeInputFieldProps(replaceProps = {}) {
+  return merge(defaultInputFieldProps, replaceProps);
+}
+
+export function useInputFieldAttrs(props) {
+  return reactive(pick(props, Object.keys(defaultInputFieldProps)));
 }

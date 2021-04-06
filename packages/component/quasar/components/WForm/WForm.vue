@@ -19,26 +19,28 @@
 <script>
 import { defineComponent, toRefs } from "vue";
 import {
-  makeComponentProps,
   makeChildrenProps,
-  useComponentAttrs,
   useChildrenAttrs,
 } from "../../composables/component";
-import { useFormProvide } from "../../composables/form";
+import {
+  makeFormProps,
+  useFormAttrs,
+  useFormProvide,
+} from "../../composables/form";
 
 export default defineComponent({
   props: {
-    ...makeComponentProps(),
+    ...makeFormProps(),
     ...makeChildrenProps(),
   },
   setup(props) {
-    const componentAttrs = useComponentAttrs(props);
+    const formAttrs = useFormAttrs(props);
     const childrenAttrs = useChildrenAttrs(props);
 
-    const { form } = useFormProvide();
+    const { form } = useFormProvide(formAttrs);
 
     return {
-      ...toRefs(componentAttrs),
+      ...toRefs(formAttrs),
       ...toRefs(childrenAttrs),
       form,
     };
