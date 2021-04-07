@@ -7,7 +7,9 @@ use Illuminate\Validation\Factory;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use Weikit\Captcha\Captcha;
+use Weikit\Http\Middleware\HandleInertiaRequests;
 use Weikit\Captcha\Facades\Captcha as CaptchaFacade;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
@@ -87,6 +89,10 @@ class WeikitServiceProvider extends ServiceProvider
     public function registerViews()
     {
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'weikit');
+
+        $this->app->resolving(ViewFactory::class, function($view) {
+            $view->addExtension('vue', 'file');
+        });
     }
 
     /**
@@ -144,9 +150,15 @@ class WeikitServiceProvider extends ServiceProvider
             $router->aliasMiddleware('auth.admin', config('weikit.middleware.auth'));
             $router->aliasMiddleware('guest.admin', config('weikit.middleware.guest'));
 
-            if (config('weikit.sanctum.auto_stateful_middleware')) {
-                /** @var \Illuminate\Foundation\Http\Kernel $kernel */
-                $kernel = $this->app->make(Kernel::class);
+            /** @var \Illuminate\Foundation\Http\Kernel $kernel */
+            $kernel = $this->app->make(Kernel::class);
+
+            if (config('weikit.inertia.request_middleware', true)) {
+                // auto set sanctum middleware to kernel
+                $kernel->prependMiddlewareToGroup('web', HandleInertiaRequests::class);
+            }
+
+            if (config('weikit.sanctum.auto_stateful_middleware', true)) {
                 // auto set sanctum middleware to kernel
                 $kernel->prependMiddlewareToGroup('api', EnsureFrontendRequestsAreStateful::class);
             }

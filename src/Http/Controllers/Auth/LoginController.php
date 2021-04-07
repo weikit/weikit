@@ -4,6 +4,7 @@ namespace Weikit\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
 use Weikit\Component\Card\Card;
 use Weikit\Component\Forms\Captcha;
 use Weikit\Component\Forms\Form;
@@ -17,9 +18,11 @@ class LoginController extends Controller
 
     public function page()
     {
-        return view('weikit::auth.login', [
-            'form' => $this->getForm()
-        ]);
+//        return view('weikit::auth.login', [
+//            'form' => $this->getForm()
+//        ]);
+
+        return Inertia::render('weikit::auth/login');
     }
 
     public function api(Request $request)

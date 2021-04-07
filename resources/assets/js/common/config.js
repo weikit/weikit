@@ -18,7 +18,7 @@ const config = {
     prev_page_url: null,
     has_next_page: true,
   },
-  mountId: "#app",
+  id: "#app",
   quasarOptions: {},
   vuetifyOptions: {},
   appOptions: {},
