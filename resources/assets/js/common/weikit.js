@@ -23,7 +23,7 @@ export function resolveAsyncComponent(
       loadModule(url, {
         moduleCache: { vue: Vue },
         async getFile(url) {
-          console.log(url);
+          console.debug(url);
           const response = await http.get(url, {
             headers: {
               "X-Requested-With": "XMLHttpRequest",

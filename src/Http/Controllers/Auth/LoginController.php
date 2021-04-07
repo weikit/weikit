@@ -22,7 +22,9 @@ class LoginController extends Controller
 //            'form' => $this->getForm()
 //        ]);
 
-        return Inertia::render('weikit::auth/login');
+        return Inertia::render('weikit::auth/login', [
+            'schema' => $this->getSchema()
+        ]);
     }
 
     public function api(Request $request)
@@ -41,7 +43,7 @@ class LoginController extends Controller
         return $guard->user();
     }
 
-    protected function getForm()
+    protected function getSchema()
     {
         return Card::make()
             ->title(__('weikit::auth.login.title'))
