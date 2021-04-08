@@ -21,6 +21,13 @@ class Form extends Component
         HasMakeChildren::make as _make;
     }
 
+    const SCENE_SUBMIT_CONFIRM = "submit_confirm";
+    const SCENE_SUBMIT_CANCEL = "submit_cancel";
+    const SCENE_SUBMIT_SUCCESS = "submit_success";
+    const SCENE_RESET_CONFIRM = "reset_confirm";
+    const SCENE_RESET_SUCCESS = "reset_success";
+    const SCENE_RESET_CANCEL = "reset_cancel";
+
     protected function init()
     {
         $this->method('POST');
@@ -33,7 +40,6 @@ class Form extends Component
 
         if ($button !== false) {
             $button = new Button($button ?: __('weikit::component.form.button.label'));
-            $button->type(Button::TYPE_SUBMIT);
             $instance->child($button);
         }
 
@@ -118,5 +124,21 @@ class Form extends Component
             ->toArray();
 
         return $this->children($children);
+    }
+
+    /**
+     * @param string $scene submit_confirm | submit_success | reset_confirm | reset_success
+     * @param $message
+     *
+     * @return Form
+     */
+    public function message(string $scene, $message)
+    {
+        return $this->set('messages.' . $scene, $message);
+    }
+
+    public function getMessage(string $scene)
+    {
+        return $this->get('messages.' . $scene, null);
     }
 }

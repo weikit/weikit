@@ -19,7 +19,7 @@ Route::group([
 
         // Login
         Route::get('login', 'LoginController@page')->middleware(['web', 'guest.admin'])->name('login.page');
-        Route::prefix('api/v1')->post('login', 'LoginController@api')->middleware(['api', 'guest.admin'])->name('login');
+        Route::prefix('api/v1')->post('login', 'LoginController@login')->middleware(['api', 'guest.admin'])->name('login');
     });
 
     Route::group([

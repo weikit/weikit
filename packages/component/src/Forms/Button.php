@@ -15,7 +15,7 @@ class Button extends Component
 {
     const TYPE_SUBMIT = 'submit';
     const TYPE_RESET = 'reset';
-    const TYPE_BUTTON = 'bytton';
+    const TYPE_BUTTON = 'button';
 
     public function __construct(string $label)
     {
@@ -36,7 +36,7 @@ class Button extends Component
 
     public function init()
     {
-        $this->type(self::TYPE_RESET);
+        $this->type(self::TYPE_SUBMIT);
     }
 
     /**

@@ -4,7 +4,6 @@ namespace Weikit\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Inertia\Inertia;
 use Weikit\Component\Card\Card;
 use Weikit\Component\Forms\Captcha;
 use Weikit\Component\Forms\Form;
@@ -18,23 +17,21 @@ class LoginController extends Controller
 
     public function page()
     {
-//        return view('weikit::auth.login', [
-//            'form' => $this->getForm()
-//        ]);
+        $form = $this->getForm();
 
-        return Inertia::render('weikit::auth/login', [
-            'schema' => $this->getSchema()
+        return inertia('weikit::auth/login', [
+            'schema' => $this->getSchema($form),
         ]);
     }
 
-    public function api(Request $request)
+    public function login(Request $request)
     {
         $this->rateLimit(5);
 
         $guard = auth();
         if ( ! $guard->attempt($request->only(['username', 'password']), $request->remember)) {
             throw ValidationException::withMessages([
-                'username' => [__('weikit::auth.failed')],
+                'username' => [__('weikit::auth.login.login_failed')],
             ]);
         }
 
@@ -43,24 +40,31 @@ class LoginController extends Controller
         return $guard->user();
     }
 
-    protected function getSchema()
+    protected function getForm()
+    {
+        return Form::make([
+            TextInput::make('username')
+                     ->label(__('weikit::auth.login.username'))
+                     ->required(),
+            TextInput::make('password')
+                     ->label(__('weikit::auth.login.password'))
+                     ->password()
+                     ->required(),
+            Captcha::make()
+                   ->label(__('weikit::captcha.input.label'))
+                   ->url(captcha_src('math'))
+                   ->required(),
+        ], __('weikit::auth.login.submit'))
+                   ->id('login_form')
+                   ->action(route('admin.auth.login'));
+    }
+
+    protected function getSchema($form)
     {
         return Card::make()
-            ->title(__('weikit::auth.login.title'))
-            ->child(
-                Form::make([
-                    TextInput::make('username')
-                         ->label('账号')
-                         ->required(),
-                    TextInput::make('password')
-                         ->label('密码')
-                         ->password()
-                         ->required(),
-                    Captcha::make()
-                         ->label('验证码')
-                         ->url(captcha_src('math'))
-                         ->required(),
-                ])
-            );
+                   ->title(__('weikit::auth.login.title'))
+                   ->child($form);
     }
+
+
 }

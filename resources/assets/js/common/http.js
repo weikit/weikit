@@ -1,10 +1,10 @@
 import axios from "axios";
 
-import $config from "./config";
+import config from "./config";
 
-const $http = axios.create({
+const http = axios.create({
   timeout: 20000,
-  baseURL: $config.baseUrl,
+  baseURL: config.baseUrl,
   withCredentials: true,
 });
 
@@ -13,9 +13,9 @@ const headers = {
   "X-Requested-With": "XMLHttpRequest",
 };
 
-$http.defaults.headers.common = {
+http.defaults.headers.common = {
   ...headers,
-  ...$http.defaults.headers.common,
+  ...http.defaults.headers.common,
 };
 
-export default $http;
+export default http;

@@ -1,4 +1,5 @@
 import { merge } from "lodash-es";
+import http from "../../common/http";
 import {
   Quasar,
   AppFullscreen,
@@ -19,7 +20,9 @@ import config from "../../common/config";
 
 import QuasarComponent from "@weikit/component/quasar";
 
-app.use(QuasarComponent);
+app.use(QuasarComponent, {
+  http,
+});
 app.use(
   Quasar,
   merge(
@@ -45,7 +48,7 @@ app.use(
 );
 
 if (!app.config.globalProperties.$q.iconMapFn) {
-  app.config.globalProperties.$q.iconMapFn = iconName => {
+  app.config.globalProperties.$q.iconMapFn = (iconName) => {
     if (iconName.startsWith("voyager") === true) {
       // TODO custom icon
       return {
