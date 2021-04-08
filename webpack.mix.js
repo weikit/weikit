@@ -60,26 +60,26 @@ mix
   })
 
   // Layui
-  .js(__dirname + "/resources/assets/js/layui/index.js", "js/layui.js")
-  .sass(__dirname + "/resources/assets/sass/layui/index.scss", "css/layui.css")
+  // .js(__dirname + "/resources/assets/js/layui/index.js", "js/layui.js")
+  // .sass(__dirname + "/resources/assets/sass/layui/index.scss", "css/layui.css")
   //   .extract(["layui-src"], "vendor/layui"); // TODO layui-src extract 会影响其他js导致js不执行???
 
   // Bootstrap
-  .js(__dirname + "/resources/assets/js/bootstrap/index.js", "js/bootstrap.js")
-  .sass(
-    __dirname + "/resources/assets/sass/bootstrap/index.scss",
-    "css/bootstrap.css"
-  )
-  .extract(["datatables", "@popperjs", "bootstrap"], "vendor/bootstrap")
+  // .js(__dirname + "/resources/assets/js/bootstrap/index.js", "js/bootstrap.js")
+  // .sass(
+  //   __dirname + "/resources/assets/sass/bootstrap/index.scss",
+  //   "css/bootstrap.css"
+  // )
+  // .extract(["datatables", "@popperjs", "bootstrap"], "vendor/bootstrap")
 
   // Vuetify
-  .js(__dirname + "/resources/assets/js/vuetify/index.js", "js/vuetify.js")
-  .sass(
-    __dirname + "/resources/assets/sass/vuetify/index.scss",
-    "css/vuetify.css"
-  )
-  .extract(["vuetify"], "vendor/vuetify")
-  .vue({ version: 3 })
+  // .js(__dirname + "/resources/assets/js/vuetify/index.js", "js/vuetify.js")
+  // .sass(
+  //   __dirname + "/resources/assets/sass/vuetify/index.scss",
+  //   "css/vuetify.css"
+  // )
+  // .extract(["vuetify"], "vendor/vuetify")
+  // .vue({ version: 3 })
 
   // Quasar
   .js(__dirname + "/resources/assets/js/quasar/index.js", "js/quasar.js")
