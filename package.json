@@ -30,13 +30,10 @@
     "@quasar/extras": "^1.0.0",
     "@weikit/component": "file:./packages/component",
     "axios": "^0.21.1",
-    "bootstrap": "^5.0.0-beta2",
     "jquery": "^3.5.1",
-    "layui-src": "^2.5.8",
     "lodash-es": "^4.17.20",
     "quasar": "^2.0.0-beta.9",
     "vue": "^3.0.6",
-    "vue-i18n": "^9.0.0",
-    "vuetify": "^3.0.0-alpha.0"
+    "vue-i18n": "^9.0.0"
   }
 }

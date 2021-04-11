@@ -1,8 +1,9 @@
 import { merge, pick } from "lodash-es";
-import axios from "axios";
+import { AxiosInstance } from "axios";
 import { inject, provide, reactive, readonly, watch } from "vue";
 import { Dialog, Notify } from "quasar";
 import { defaultComponentProps } from "./component";
+import { emitComponentEvent } from "./event";
 
 const SCENE_SUBMIT_CONFIRM = "submit_confirm";
 const SCENE_SUBMIT_CANCEL = "submit_cancel";
@@ -41,16 +42,15 @@ const UPDATE_FORM_PROVIDE_KEY = Symbol("update_form");
 const RESET_FORM_PROVIDE_KEY = Symbol("reset_form");
 const SUBMIT_FORM_PROVIDE_KEY = Symbol("submit_form");
 
-let http;
-export function setFormHttp(httpInstance) {
+let http: AxiosInstance;
+export function setFormHttp(httpInstance: AxiosInstance) {
   http = httpInstance;
 }
 
 export function useFormProvide(attrs) {
-  const onSubmitFormEvent = inject("on_form_submit");
-
   const defaultFormValue = reactive({});
   const form = reactive({
+    id: attrs.id,
     action: attrs.action || location.href,
     method: attrs.method || "POST",
     submitting: false,
@@ -122,20 +122,13 @@ export function useFormProvide(attrs) {
             position: "top",
           });
         }
+        const event = {
+          form: readonly(form),
+          data: readonly(data),
+        };
 
-        if (onSubmitFormEvent) {
-          if (attrs.id) {
-            onSubmitFormEvent({
-              id: attrs.id,
-              form: readonly(form),
-              data: readonly(data),
-            });
-          } else {
-            console.warn(
-              "Cannot trigger submitFormEvent becase form.id does not specified"
-            );
-          }
-        }
+        emitComponentEvent(`form_submit:${attrs.id}`, event);
+        emitComponentEvent(`form_submit`, event);
       } finally {
         form.submitting = false;
       }
@@ -167,18 +160,18 @@ export function useFormProvide(attrs) {
   provide(RESET_FORM_PROVIDE_KEY, resetForm);
   provide(SUBMIT_FORM_PROVIDE_KEY, submitForm);
 
-  return { form, initForm, updateForm, updateForm, resetForm, submitForm };
+  return { form, initForm, updateForm, resetForm, submitForm };
 }
 
 export function useFormInject(
   attrs,
-  { initFormValue = true, watchValue = true, emit = undefined } = {}
+  { initFormValue = true, watchValue = true, emit = null } = {}
 ) {
-  const form = inject(FORM_PROVIDE_KEY);
-  const initForm = inject(INIT_FORM_PROVIDE_KEY);
-  const updateForm = inject(UPDATE_FORM_PROVIDE_KEY);
-  const resetForm = inject(RESET_FORM_PROVIDE_KEY);
-  const submitForm = inject(SUBMIT_FORM_PROVIDE_KEY);
+  const form: any = inject(FORM_PROVIDE_KEY);
+  const initForm: Function = inject(INIT_FORM_PROVIDE_KEY);
+  const updateForm: Function = inject(UPDATE_FORM_PROVIDE_KEY);
+  const resetForm: Function = inject(RESET_FORM_PROVIDE_KEY);
+  const submitForm: Function = inject(SUBMIT_FORM_PROVIDE_KEY);
 
   if (updateForm && attrs.name) {
     // init value
