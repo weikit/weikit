@@ -127,7 +127,7 @@ export function useFormProvide(attrs) {
           data: readonly(data),
         };
 
-        emitComponentEvent(`form_submit:${attrs.id}`, event);
+        if (attrs.id) emitComponentEvent(`form_submit:${attrs.id}`, event);
         emitComponentEvent(`form_submit`, event);
       } finally {
         form.submitting = false;

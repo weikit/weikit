@@ -10,7 +10,7 @@
 
 <script>
 const { defineComponent, provide } = Vue;
-const { useComponent } = Uses;
+const { useComponent, useComponentEvent } = Uses;
 
 export default defineComponent({
   props: {
@@ -19,18 +19,13 @@ export default defineComponent({
   setup(props) {
     const { componentName, ...componentOptions } = useComponent(props.schema);
 
-    provide("form_submit", ({ form }) => {});
+    useComponentEvent("form_submit", ({ data: { url } }) => {
+      if (url) window.location.href = url;
+    });
 
     return {
-      t,
-      q,
-      form,
       componentName,
       componentOptions,
-      captchaShow,
-      handleLogin,
-      // captchaUrl,
-      // updateCaptchaUrl
     };
   },
 });

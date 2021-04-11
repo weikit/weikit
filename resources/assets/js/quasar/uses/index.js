@@ -3,4 +3,4 @@ export * from "./useMessage";
 export * from "./useConfig";
 export * from "./usePageTab";
 
-export { useComponent } from "@weikit/component/quasar";
+export * from "@weikit/component/quasar";
