@@ -19,6 +19,8 @@ export default defineComponent({
   setup(props) {
     const { componentName, ...componentOptions } = useComponent(props.schema);
 
+    provide("form_submit", ({ form }) => {});
+
     return {
       t,
       q,

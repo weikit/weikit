@@ -1,9 +1,17 @@
 import * as components from "./components";
-import { setFormHttp } from "./composables";
+import { setFormHttp, setComponentEvent } from "./composables";
+import mitt from "mitt";
+import axios from "axios";
 export * from "./composables";
 
 export default {
-  install: (app, { http } = {}) => {
+  install: (
+    app,
+    {
+      http = app.config.globalProperties.$http || axios.create(),
+      event = app.config.globalProperties.$event || mitt(),
+    } = {}
+  ) => {
     for (const key in components) {
       const component = components[key];
 
@@ -12,6 +20,9 @@ export default {
 
     if (http) {
       setFormHttp(http);
+    }
+    if (event) {
+      setComponentEvent(event);
     }
   },
 };

@@ -41,7 +41,7 @@ const UPDATE_FORM_PROVIDE_KEY = Symbol("update_form");
 const RESET_FORM_PROVIDE_KEY = Symbol("reset_form");
 const SUBMIT_FORM_PROVIDE_KEY = Symbol("submit_form");
 
-let http = axios;
+let http;
 export function setFormHttp(httpInstance) {
   http = httpInstance;
 }
@@ -71,7 +71,7 @@ export function useFormProvide(attrs) {
     const confirm = async () => {
       try {
         form.reseting = true;
-        Object.keys(defaultFormValue).map(key =>
+        Object.keys(defaultFormValue).map((key) =>
           updateForm(key, defaultFormValue[key])
         );
         if (attrs.messages[SCENE_RESET_SUCCESS]) {
@@ -190,7 +190,7 @@ export function useFormInject(
     if (watchValue) {
       watch(
         () => attrs.value,
-        val => {
+        (val) => {
           updateForm(attrs.name, val);
 
           if (emit) {
@@ -200,7 +200,7 @@ export function useFormInject(
       );
       watch(
         () => form.value[attrs.name],
-        val => (attrs.value = val)
+        (val) => (attrs.value = val)
       );
     }
   }

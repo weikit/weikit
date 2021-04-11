@@ -17,12 +17,9 @@ import {
 } from "quasar";
 import app from "../app";
 import config from "../../common/config";
-
 import QuasarComponent from "@weikit/component/quasar";
+import { readonly } from "@vue/reactivity";
 
-app.use(QuasarComponent, {
-  http,
-});
 app.use(
   Quasar,
   merge(
@@ -57,3 +54,13 @@ if (!app.config.globalProperties.$q.iconMapFn) {
     }
   };
 }
+
+if (!app.config.globalProperties.$http) {
+  app.config.globalProperties.$http = http;
+}
+
+if (!app.config.globalProperties.$config) {
+  app.config.globalProperties.$config = readonly(config);
+}
+
+app.use(QuasarComponent);

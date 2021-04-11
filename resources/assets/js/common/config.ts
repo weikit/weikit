@@ -23,9 +23,9 @@ const config = {
   vuetifyOptions: {},
   appOptions: {},
 
-  ...(window.G || {}),
+  ...((window as any).G || {}),
 };
 
-window.G = config;
+(window as any).G = config;
 
 export default config;
