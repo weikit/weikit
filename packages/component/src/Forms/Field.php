@@ -269,4 +269,24 @@ abstract class Field extends Component
 
         return $this;
     }
+
+    public function getValidationAttributes()
+    {
+
+        $attributes = [];
+
+        if ($name = $this->name) {
+            if ($label = $this->label) {
+                $attributes[$this->name] = $label;
+            }
+            // TODO
+            if (property_exists($this, 'validationAttribute') && $this->validationAttribute !== null) {
+                $attributes[$this->name] = __($this->validationAttribute);
+            }
+        }
+
+        $attributes = array_merge($attributes, $this->getSubform()->getValidationAttributes());
+
+        return $attributes;
+    }
 }

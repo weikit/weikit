@@ -11,7 +11,7 @@
 <script>
 const { defineComponent } = Vue;
 const { useComponent, useComponentEvent } = Uses;
-console.log(1);
+
 export default defineComponent({
   props: {
     schema: Object,
@@ -21,7 +21,7 @@ export default defineComponent({
 
     useComponentEvent(
       "form_submit",
-      ({ data: { url = route("admin.dashboard") } }) => {
+      ({ data: { url = route("admin.dashboard.layout") } }) => {
         Inertia.locationVisit({ href: url });
       }
     );

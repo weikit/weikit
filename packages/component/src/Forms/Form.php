@@ -80,19 +80,19 @@ class Form extends Component
         return $defaults;
     }
 
-//    /**
-//     * @return array
-//     */
-//    public function getValidationAttributes()
-//    {
-//        $attributes = [];
-//
-//        foreach ($this->children as $field) {
-//            $attributes = array_merge($attributes, $field->getValidationAttributes());
-//        }
-//
-//        return $attributes;
-//    }
+    /**
+     * @return array
+     */
+    public function getValidationAttributes()
+    {
+        $attributes = [];
+        // TODO nested Field component
+        foreach ($this->children as $field) {
+            $attributes = array_merge($attributes, $field->getValidationAttributes());
+        }
+
+        return $attributes;
+    }
 
     /**
      * @return string[]

@@ -4,8 +4,13 @@ namespace Weikit\Http\Controllers;
 
 class DashboardController extends Controller
 {
-    public function page()
+    public function layout()
     {
-        return view('weikit::dashboard');
+        return inertia('weikit::dashboard/layout');
+    }
+
+    public function index()
+    {
+        return inertia('weikit::dashboard/index');
     }
 }

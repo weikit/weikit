@@ -8,16 +8,18 @@ use Weikit\Component\Card\Card;
 use Weikit\Component\Forms\Captcha;
 use Weikit\Component\Forms\Form;
 use Weikit\Component\Forms\TextInput;
+use Weikit\Component\Traits\HasForm;
 use Weikit\Http\Controllers\Controller;
 use Weikit\Http\Traits\HasRateLimiting;
 
 class LoginController extends Controller
 {
+    use HasForm;
     use HasRateLimiting;
 
     public function page()
     {
-        $form = $this->getForm();
+        $form = $this->form();
 
         return inertia('weikit::auth/login', [
             'schema' => $this->getSchema($form),
@@ -35,12 +37,14 @@ class LoginController extends Controller
             ]);
         }
 
+        $this->validate();
+
         $this->clearRateLimiter();
 
         return $guard->user();
     }
 
-    protected function getForm()
+    protected function form()
     {
         return Form::make([
             TextInput::make('username')

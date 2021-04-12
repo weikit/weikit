@@ -10,7 +10,8 @@ Route::group([
     'prefix' => config('weikit.prefix')
 ], function () {
 
-    Route::get('/', 'DashboardController@page')->middleware(['web', 'auth.admin'])->name('dashboard');
+    Route::get('/', 'DashboardController@layout')->middleware(['web', 'auth.admin'])->name('dashboard.layout');
+    Route::get('/dashboard', 'DashboardController@index')->middleware(['web', 'auth.admin'])->name('dashboard');
 
     Route::group([
         'namespace' => 'Auth',
