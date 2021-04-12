@@ -16,7 +16,8 @@
     "guzzlehttp/guzzle": "^7.2.0",
     "livewire/livewire": "^2.4",
     "nwidart/laravel-modules": "^8.2.0",
-    "inertiajs/inertia-laravel": "^0.4.1"
+    "inertiajs/inertia-laravel": "^0.4.1",
+    "tightenco/ziggy": "^1.1"
   },
   "autoload": {
     "files": [

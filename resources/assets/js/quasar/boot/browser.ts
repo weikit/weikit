@@ -2,7 +2,7 @@ import "../../common/browser";
 import * as Quasar from "quasar";
 import * as VueI18n from "vue-i18n";
 import * as Uses from "../uses";
-import * as Inertia from "@inertiajs/inertia";
+import { Inertia } from "@inertiajs/inertia";
 
 (window as any).Quasar = Quasar;
 (window as any).Uses = Uses;

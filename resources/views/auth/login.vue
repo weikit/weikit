@@ -9,9 +9,9 @@
 </template>
 
 <script>
-const { defineComponent, provide } = Vue;
+const { defineComponent } = Vue;
 const { useComponent, useComponentEvent } = Uses;
-
+console.log(1);
 export default defineComponent({
   props: {
     schema: Object,
@@ -19,9 +19,12 @@ export default defineComponent({
   setup(props) {
     const { componentName, ...componentOptions } = useComponent(props.schema);
 
-    useComponentEvent("form_submit", ({ data: { url } }) => {
-      if (url) window.location.href = url;
-    });
+    useComponentEvent(
+      "form_submit",
+      ({ data: { url = route("admin.dashboard") } }) => {
+        Inertia.locationVisit({ href: url });
+      }
+    );
 
     return {
       componentName,

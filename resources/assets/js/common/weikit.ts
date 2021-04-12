@@ -1,8 +1,44 @@
 import * as Vue from "vue";
-import { posix as Path } from "path-browserify";
+import { dirname, extname, normalize, join } from "path-browserify";
 import { defineAsyncComponent as defineAsyncVueComponent } from "vue";
 import http from "./http";
 import { loadModule } from "vue3-sfc-loader";
+
+export function loadComponent(url, options = {}) {
+  return loadModule(url, {
+    moduleCache: { vue: Vue },
+    async getFile(url) {
+      console.debug(url);
+      const response = await http.get(url, {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+        },
+      });
+      return response.data;
+    },
+    addStyle(textContent) {
+      const style = Object.assign(document.createElement("style"), {
+        textContent,
+      });
+      const ref = document.head.getElementsByTagName("style")[0] || null;
+      document.head.insertBefore(style, ref);
+    },
+    pathHandlers: {
+      extname(filepath) {
+        return extname(filepath) || ".vue";
+      },
+      resolve({ refPath, relPath }) {
+        // note :
+        //  normalize('./test') -> 'test'
+        //  normalize('/test') -> '/test'
+        return relPath[0] !== "." && relPath[0] !== "/"
+          ? relPath
+          : normalize(join(dirname(refPath), relPath));
+      },
+    },
+    ...options,
+  });
+}
 
 /**
  *
@@ -16,43 +52,10 @@ import { loadModule } from "vue3-sfc-loader";
 export function resolveAsyncComponent(
   url,
   componentOptions = {},
-  resolveOptions = {}
+  loadOptions = {}
 ) {
   return defineAsyncVueComponent({
-    loader: () =>
-      loadModule(url, {
-        moduleCache: { vue: Vue },
-        async getFile(url) {
-          console.debug(url);
-          const response = await http.get(url, {
-            headers: {
-              "X-Requested-With": "XMLHttpRequest",
-            },
-          });
-          return response.data;
-        },
-        addStyle(textContent) {
-          const style = Object.assign(document.createElement("style"), {
-            textContent,
-          });
-          const ref = document.head.getElementsByTagName("style")[0] || null;
-          document.head.insertBefore(style, ref);
-        },
-        pathHandlers: {
-          extname(filepath) {
-            return Path.extname(filepath) || ".vue";
-          },
-          resolve({ refPath, relPath }) {
-            // note :
-            //  normalize('./test') -> 'test'
-            //  normalize('/test') -> '/test'
-            return relPath[0] !== "." && relPath[0] !== "/"
-              ? relPath
-              : Path.normalize(Path.join(Path.dirname(refPath), relPath));
-          },
-        },
-        ...resolveOptions,
-      }),
+    loader: () => loadComponent(url, loadOptions),
     ...componentOptions,
   });
 }

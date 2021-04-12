@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{ mix('css/quasar.css', 'backend') }}">
 
     @stack('after_style')
-
+    @routes
 </head>
 
 <body class="body @yield('body_class')">
