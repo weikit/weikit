@@ -31,17 +31,14 @@ import {
 export default defineComponent({
   props: {
     ...makeFormProps(),
-    ...makeChildrenProps(),
   },
   setup(props) {
     const formAttrs = useFormAttrs(props);
-    const childrenAttrs = useChildrenAttrs(props);
 
     const { form } = useFormProvide(formAttrs);
 
     return {
       ...toRefs(formAttrs),
-      ...toRefs(childrenAttrs),
       form,
     };
   },

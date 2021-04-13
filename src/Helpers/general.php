@@ -64,6 +64,6 @@ if (!function_exists('captcha_api_check')) {
 if (! function_exists('weikit_path')) {
     function weikit_path($path = '')
     {
-        return realpath(__DIR__ . '/../..') . $path;
+        return realpath(__DIR__ . '/../../' . $path);
     }
 }

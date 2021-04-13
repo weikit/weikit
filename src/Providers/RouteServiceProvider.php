@@ -2,8 +2,8 @@
 
 namespace Weikit\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -15,26 +15,24 @@ class RouteServiceProvider extends ServiceProvider
     protected $routeNamespace = 'Weikit\Http\Controllers';
 
     /**
-     * Called before routes are registered.
-     *
-     * Register any model bindings or pattern based filters.
+     * Define your route model bindings, pattern filters, etc.
      *
      * @return void
      */
     public function boot()
     {
-        parent::boot();
-    }
+        $this->routes(function () {
+            Route::namespace($this->routeNamespace)
+                 ->group(weikit_path('routes/global.php'));
 
-    /**
-     * Define the routes for the application.
-     *
-     * @return void
-     */
-    public function map()
-    {
-        Route::namespace($this->routeNamespace)
-            ->group(weikit_path('/routes/routes.php'));
-    }
+            Route::middleware('web')
+                ->namespace($this->routeNamespace)
+                ->group(weikit_path('routes/web.php'));
 
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->routeNamespace)
+                ->group(weikit_path('routes/api.php'));
+        });
+    }
 }

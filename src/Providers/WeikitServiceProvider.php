@@ -155,7 +155,7 @@ class WeikitServiceProvider extends ServiceProvider
 
             if (config('weikit.inertia.request_middleware', true)) {
                 // auto set sanctum middleware to kernel
-                $kernel->prependMiddlewareToGroup('web', HandleInertiaRequests::class);
+                $kernel->appendMiddlewareToGroup('web', HandleInertiaRequests::class);
             }
 
             if (config('weikit.sanctum.auto_stateful_middleware', true)) {

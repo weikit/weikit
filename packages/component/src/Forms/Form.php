@@ -13,6 +13,10 @@ use Weikit\Component\Traits\HasMakeChildren;
  *
  * @property string $method
  * @property string $action
+ * @property array $defaults
+ * @property array $rules
+ * @property array $validationAttributes
+ * @property array $messages
  */
 class Form extends Component
 {
@@ -71,10 +75,19 @@ class Form extends Component
      */
     public function getDefaults()
     {
+        return $this->flattenDefaults($this->children);
+    }
+
+    public function flattenDefaults(array $components)
+    {
         $defaults = [];
 
-        foreach ($this->children as $field) {
-            $defaults = array_merge($defaults, $field->default);
+        foreach ($components as $component) {
+            if ($component instanceof Field) {
+                $defaults = array_merge($defaults, $component->value);
+            } elseif (!$component instanceof Form && !empty($component->children)) {
+                $defaults = array_merge($defaults, $this->flattenDefaults($component->children));
+            }
         }
 
         return $defaults;
@@ -85,25 +98,51 @@ class Form extends Component
      */
     public function getValidationAttributes()
     {
+        return $this->flattenValidationAttributes($this->children);
+    }
+
+    /**
+     * @param Component[] $components
+     *
+     * @return array
+     */
+    protected function flattenValidationAttributes(array $components)
+    {
         $attributes = [];
-        // TODO nested Field component
-        foreach ($this->children as $field) {
-            $attributes = array_merge($attributes, $field->getValidationAttributes());
+
+        foreach ($components as $component) {
+            if ($component instanceof Field) {
+                $attributes = array_merge($attributes, $component->getValidationAttributes());
+            } elseif (!$component instanceof Form && !empty($component->children)) {
+                $attributes = array_merge($attributes, $this->flattenValidationAttributes($component->children));
+            }
         }
 
         return $attributes;
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     public function getRules()
     {
-        $rules = $this->rules;
+        return $this->flattenRules($this->children);
+    }
 
-        foreach ($this->children as $field) {
-            foreach ($field->getRules() as $name => $conditions) {
-                $rules[$name] = array_merge($rules[$name] ?? [], $conditions);
+    /**
+     * @param Component[] $components
+     *
+     * @return array
+     */
+    protected function flattenRules(array $components)
+    {
+        $rules = [];
+
+        foreach ($components as $component) {
+            if ($component instanceof Field) {
+                $rules = array_merge($rules, $component->getRules());
+            } elseif (!$component instanceof Form && !empty($component->children)) {
+                $rules = array_merge($rules, $this->flattenRules($component->children));
             }
         }
 
@@ -137,6 +176,11 @@ class Form extends Component
         return $this->set('messages.' . $scene, $message);
     }
 
+    /**
+     * @param string $scene
+     *
+     * @return mixed
+     */
     public function getMessage(string $scene)
     {
         return $this->get('messages.' . $scene, null);

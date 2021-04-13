@@ -1,17 +1,12 @@
 <?php
 
-// Captcha
-Route::get('captcha/{config?}', 'CaptchaController@getCaptcha')->middleware(['web'])->name('captcha.image');
-Route::prefix('api/v1')->get('captcha/{config?}', 'CaptchaController@getCaptchaApi')->middleware(['api'])->name('captcha');
-Route::any('{view}.vue', 'VueController')->where('view', '.*');
-
 Route::group([
     'as' => 'admin.',
     'prefix' => config('weikit.prefix')
 ], function () {
 
-    Route::get('/', 'DashboardController@layout')->middleware(['web', 'auth.admin'])->name('dashboard.layout');
-    Route::get('/dashboard', 'DashboardController@index')->middleware(['web', 'auth.admin'])->name('dashboard');
+    Route::get('/', 'DashboardController@layout')->middleware(['auth.admin'])->name('dashboard.layout');
+    Route::get('/dashboard', 'DashboardController@index')->middleware(['auth.admin'])->name('dashboard');
 
     Route::group([
         'namespace' => 'Auth',
@@ -19,8 +14,8 @@ Route::group([
     ], function() {
 
         // Login
-        Route::get('login', 'LoginController@page')->middleware(['web', 'guest.admin'])->name('login.page');
-        Route::prefix('api/v1')->post('login', 'LoginController@login')->middleware(['api', 'guest.admin'])->name('login');
+        Route::get('login', 'LoginController@page')->middleware(['guest.admin'])->name('login.page');
+        Route::post('login', 'LoginController@login')->middleware(['guest.admin'])->name('login');
     });
 
     Route::group([

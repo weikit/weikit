@@ -35,14 +35,14 @@ trait HasForm
         return $rules;
     }
 
-    public function getValidationAttributes()
+    public function getValidationAttributes(): array
     {
         $attributes = $this->getForm()->getValidationAttributes();
 
         return $attributes;
     }
 
-    protected function getMessages()
+    protected function getMessages(): array
     {
         if (method_exists($this, 'messages')) return $this->messages();
         if (property_exists($this, 'messages')) return $this->messages;
