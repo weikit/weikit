@@ -29,4 +29,10 @@ class Captcha extends Field
     {
         return $this->set('url', $url);
     }
+
+    public function required()
+    {
+        return parent::required()
+            ->addRules([$this->name => ['captcha']]);
+    }
 }

@@ -2,11 +2,19 @@
 
 namespace Weikit\Http\Controllers;
 
+use Weikit\Services\Contracts\MenuService;
+
 class DashboardController extends Controller
 {
-    public function layout()
+    public function layout(MenuService $service)
     {
-        return inertia('weikit::dashboard/layout');
+        $menu = $service->one(['name' => 'admin'], [
+            'with' => ['items']
+        ]);
+
+        return inertia('weikit::dashboard/layout',[
+            'menu' => $menu
+        ]);
     }
 
     public function index()

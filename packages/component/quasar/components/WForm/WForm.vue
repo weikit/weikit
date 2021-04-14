@@ -6,7 +6,6 @@
     :styles="styles"
     v-bind="extra"
   >
-    {{ form }}
     <component
       :key="index"
       v-for="({ componentName, ...componentOptions }, index) in children"
@@ -19,10 +18,6 @@
 <script>
 import { defineComponent, toRefs } from "vue";
 import {
-  makeChildrenProps,
-  useChildrenAttrs,
-} from "../../composables/component";
-import {
   makeFormProps,
   useFormAttrs,
   useFormProvide,
@@ -30,7 +25,11 @@ import {
 
 export default defineComponent({
   props: {
-    ...makeFormProps(),
+    ...makeFormProps({
+      classes: {
+        default: "q-gutter-sm",
+      },
+    }),
   },
   setup(props) {
     const formAttrs = useFormAttrs(props);

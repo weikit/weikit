@@ -8,6 +8,8 @@ use Weikit\Component\Forms\Form;
 
 trait HasForm
 {
+    private $form;
+
     public function validate(Request $request = null, $rules = null, $messages = [], $attributes = [])
     {
         if (is_null($request)) {
@@ -56,6 +58,10 @@ trait HasForm
             throw new \Exception('Missing form method.');
         }
 
-        return $this->form();
+        if ($this->form === null) {
+            $this->form = $this->form();
+        }
+
+        return $this->form;
     }
 }

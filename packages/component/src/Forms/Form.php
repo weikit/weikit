@@ -4,6 +4,7 @@ namespace Weikit\Component\Forms;
 
 use Illuminate\Database\Eloquent\Model;
 use Weikit\Component\Component;
+use Weikit\Component\Layout\Grid;
 use Weikit\Component\Traits\HasChildren;
 use Weikit\Component\Traits\HasMakeChildren;
 
@@ -35,7 +36,7 @@ class Form extends Component
     protected function init()
     {
         $this->method('POST');
-        $this->action(url()->current());
+        $this->url(url()->current());
     }
 
     public static function make(array $children = [], $button = null)
@@ -43,8 +44,9 @@ class Form extends Component
         $instance = static::_make($children);
 
         if ($button !== false) {
-            $button = new Button($button ?: __('weikit::component.form.button.label'));
-            $instance->child($button);
+            $instance->child(Grid::make([
+                Button::make($button ?: __('weikit::component.form.button.label'))
+            ]));
         }
 
         return $instance;
@@ -61,13 +63,13 @@ class Form extends Component
     }
 
     /**
-     * @param string $action
+     * @param string $url
      *
      * @return $this
      */
-    public function action(string $action)
+    public function url(string $url)
     {
-        return $this->set('action', $action);
+        return $this->set('url', $url);
     }
 
     /**

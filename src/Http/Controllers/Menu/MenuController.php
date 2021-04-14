@@ -8,7 +8,7 @@ use Weikit\Services\Contracts\MenuService;
 
 class MenuController extends Controller
 {
-    public function api(Request $request, MenuService $service)
+    public function admin(Request $request, MenuService $service)
     {
         return $service->one(['name' => 'admin'], [
             'with' => ['items']

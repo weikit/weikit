@@ -34,7 +34,7 @@ Route::group([
         'prefix' => 'menu'
     ], function() {
         // Admin Menu data
-        Route::prefix('api/v1')->get('/', 'MenuController@api')->middleware(['api', 'auth.admin'])->name('data');
+        Route::get('/', 'MenuController@admin')->middleware(['auth.admin'])->name('admin');
 
         // Menu Manage
         Route::get('list', 'ListController@page')->middleware(['web', 'auth:admin'])->name('list.page');

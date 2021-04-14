@@ -6,11 +6,13 @@
     :label="label"
     v-bind="extra"
     @click.stop="handleClick"
+    :disable="form.processing"
+    :loading="form.processing"
   ></q-btn>
 </template>
 
 <script>
-import { defineComponent, toRef, toRefs } from "vue";
+import { defineComponent, ref, toRef, toRefs } from "vue";
 import {
   makeComponentProps,
   useComponentAttrs,
@@ -46,7 +48,7 @@ export default defineComponent({
     const label = toRef(props, "label");
     const type = toRef(props, "type");
 
-    const { submitForm, resetForm } = useFormInject(props);
+    const { form, submitForm, resetForm } = useFormInject(props);
 
     const handleClick = () => {
       if (type.value == "submit") {
@@ -66,6 +68,7 @@ export default defineComponent({
 
     return {
       ...toRefs(componentAttrs),
+      form: ref(form),
       label,
       handleClick,
     };

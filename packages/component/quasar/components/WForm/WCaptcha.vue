@@ -8,6 +8,8 @@
     :hint="hint"
     v-bind="extra"
     v-model="value"
+    :error-message="errors[0]"
+    :error="!isValid"
   >
     <template v-slot:after>
       <img width="133" @click.stop="updateCaptchaUrl" :src="captchaUrl" />
@@ -42,7 +44,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const fieldAtts = useFieldAttrs(props);
 
-    const { updateForm } = useFormInject(fieldAtts, { emit });
+    const { errors, isValid } = useFormInject(fieldAtts, { emit });
 
     const { captchaUrl, updateCaptchaUrl } = useCaptcha({
       url: props.url,
@@ -52,6 +54,8 @@ export default defineComponent({
       ...toRefs(fieldAtts),
       captchaUrl,
       updateCaptchaUrl,
+      errors,
+      isValid,
     };
   },
 });

@@ -1,6 +1,14 @@
 import { merge, pick, cloneDeep } from "lodash-es";
 import { AxiosInstance } from "axios";
-import { computed, inject, provide, reactive, readonly, watch } from "vue";
+import {
+  computed,
+  ErrorCodes,
+  inject,
+  provide,
+  reactive,
+  readonly,
+  watch,
+} from "vue";
 import { Dialog, Notify } from "quasar";
 import { defaultComponentProps, useChildrenAttrs } from "./component";
 import { emitComponentEvent } from "./event";
@@ -50,7 +58,7 @@ export function makeFormProps(replaceProps = {}) {
 export function useFormAttrs(props) {
   return reactive({
     ...pick(props, Object.keys(defaultFormProps)),
-    children: useChildrenAttrs(props),
+    ...useChildrenAttrs(props),
   });
 }
 
@@ -83,6 +91,10 @@ export function useFieldAttrs(props) {
 }
 
 const defaultInputFieldProps = {
+  type: {
+    type: String,
+    default: "text",
+  },
   placeholder: {
     type: String,
     default: "",
@@ -97,194 +109,39 @@ export function useInputFieldAttrs(props) {
   return reactive(pick(props, Object.keys(defaultInputFieldProps)));
 }
 
-export type FormType = {
-  errors: {};
-  hasErrors: boolean;
-  processing: boolean;
-  progress: any;
-  wasSuccessful: boolean;
-  recentlySuccessful: boolean;
-  transform: (callback: any) => any;
-  reset: (...fields: any[]) => void;
-  clearErrors: (...fields: any[]) => void;
-  submit: (method: string, url: string, options?: any) => void;
-  get: (url: string, options?: any) => void;
-  post: (url: string, options?: any) => void;
-  put: (url: string, options?: any) => void;
-  patch: (url: string, options?: any) => void;
-  delete: (url: string, options?: any) => void;
-  cancel: () => void;
-  [key: string]: any;
-};
-
-export function setUseForm(useFormCallback: (...args: any[]) => FormType) {
-  useForm = useFormCallback;
+let useForm;
+export function setUseForm(callback: Function) {
+  useForm = callback;
 }
 
-let useForm = function (...args) {
-  const data = (typeof args[0] === "string" ? args[1] : args[0]) || {};
-  const defaults = cloneDeep(data);
-  let cancelToken = null;
-  let transform = (data) => data;
+function makeForm(attrs) {
+  if (useForm) return useForm(attrs);
 
-  let form: FormType = reactive({
-    ...data,
-    errors: {},
-    hasErrors: false,
-    processing: false,
-    progress: null,
-    wasSuccessful: false,
-    recentlySuccessful: false,
-    data() {
-      return Object.keys(data).reduce((carry, key) => {
-        carry[key] = this[key];
-        return carry;
-      }, {});
-    },
-    transform(callback) {
-      transform = callback;
-
-      return this;
-    },
-    reset(...fields) {
-      let clonedDefaults = cloneDeep(defaults);
-      if (fields.length === 0) {
-        Object.assign(this, clonedDefaults);
-      } else {
-        Object.assign(
-          this,
-          Object.keys(clonedDefaults)
-            .filter((key) => fields.includes(key))
-            .reduce((carry, key) => {
-              carry[key] = clonedDefaults[key];
-              return carry;
-            }, {})
-        );
-      }
-
-      return this;
-    },
-    clearErrors(...fields) {
-      this.errors = Object.keys(this.errors).reduce(
-        (carry, field) => ({
-          ...carry,
-          ...(fields.length > 0 && !fields.includes(field)
-            ? { [field]: this.errors[field] }
-            : {}),
-        }),
-        {}
-      );
-
-      this.hasErrors = Object.keys(this.errors).length > 0;
-
-      return this;
-    },
-    async submit(method, url, options: any = {}) {
-      const data = transform(this.data());
-      const httpOptions = options.httpOptions || {};
-      http[method](url, data, httpOptions);
-    },
-    get(url, options) {
-      this.submit("get", url, options);
-    },
-    post(url, options) {
-      this.submit("post", url, options);
-    },
-    put(url, options) {
-      this.submit("put", url, options);
-    },
-    patch(url, options) {
-      this.submit("patch", url, options);
-    },
-    delete(url, options) {
-      this.submit("delete", url, options);
-    },
-    cancel() {
-      if (cancelToken) {
-        cancelToken.cancel();
-      }
-    },
-  });
-
-  return form;
-};
-
-function flattenFormDefaults(children: object[]) {
-  let defaults = [];
-
-  cloneDeep(children).forEach((child: any) => {
-    if (child.name && child.value) {
-      defaults[child.name] = child.value;
-    } else if (child.children && child.key != "WForm") {
-      defaults = [...defaults, flattenFormDefaults(child.children)];
-    }
-  });
-
-  return defaults;
-}
-
-export function useFormProvide(attrs) {
-  console.log(cloneDeep(attrs));
-  const defaults = flattenFormDefaults(attrs.children);
-  const form = useForm(defaults);
-  provide(FORM_PROVIDE_KEY, readonly(form));
-  provide(UPDATE_FORM_PROVIDE_KEY, (key, value) => {
-    form[key] = value;
-  });
-
-  return { form };
-}
-
-export function useFormInject(attrs, { watchValue = true, emit = null } = {}) {
-  const form: any = inject(FORM_PROVIDE_KEY);
-  const updateForm = inject(UPDATE_FORM_PROVIDE_KEY);
-
-  // watch value two way binging for auto update
-  if (attrs.name && watchValue) {
-    watch(
-      () => attrs.value,
-      (val) => {
-        if (updateForm) form[attrs.name] = val;
-
-        if (emit) emit("input", val);
-      }
-    );
-
-    watch(
-      () => form[attrs.name],
-      (val) => (attrs.value = val)
-    );
-  }
-
-  return { form };
-}
-
-export function useFormProvide1(attrs) {
-  const defaultFormValue = reactive({});
+  const defaultFormData = reactive({});
   const form = reactive({
     id: attrs.id,
-    action: attrs.action || location.href,
+    url: attrs.url || location.href,
     method: attrs.method || "POST",
-    submitting: false,
-    reseting: false,
-    value: {},
+    processing: false,
+    errors: {},
+    data: {},
   });
 
   const initForm = async (key, value) => {
-    defaultFormValue[key] = value;
+    defaultFormData[key] = value;
     updateForm(key, value);
   };
 
   const updateForm = async (key, value) => {
-    form.value[key] = value;
+    form.data[key] = value;
   };
 
   const resetForm = async () => {
     const confirm = async () => {
       try {
-        form.reseting = true;
-        Object.keys(defaultFormValue).map((key) =>
-          updateForm(key, defaultFormValue[key])
+        form.processing = true;
+        Object.keys(defaultFormData).map((key) =>
+          updateForm(key, defaultFormData[key])
         );
         if (attrs.messages[SCENE_RESET_SUCCESS]) {
           Notify.create({
@@ -293,7 +150,7 @@ export function useFormProvide1(attrs) {
           });
         }
       } finally {
-        form.reseting = false;
+        form.processing = false;
       }
     };
     const cancel = async () => {
@@ -320,11 +177,12 @@ export function useFormProvide1(attrs) {
   const submitForm = async () => {
     const confirm = async () => {
       try {
-        form.submitting = true;
+        form.errors = {};
+        form.processing = true;
         const { data } = await http({
-          url: form.action,
+          url: form.url,
           method: form.method,
-          data: form.value,
+          data: form.data,
         });
 
         const message = data.message || attrs.messages[SCENE_SUBMIT_SUCCESS];
@@ -341,8 +199,19 @@ export function useFormProvide1(attrs) {
 
         if (attrs.id) emitComponentEvent(`form_submit:${attrs.id}`, event);
         emitComponentEvent(`form_submit`, event);
+      } catch (e) {
+        const {
+          response: { status, data },
+        } = e;
+
+        form.errors = {};
+        if (status == 422) {
+          form.errors = data.errors;
+        }
+
+        throw e;
       } finally {
-        form.submitting = false;
+        form.processing = false;
       }
     };
 
@@ -367,6 +236,12 @@ export function useFormProvide1(attrs) {
     }
   };
 
+  return { form, initForm, updateForm, resetForm, submitForm };
+}
+
+export function useFormProvide(attrs) {
+  const { form, initForm, updateForm, resetForm, submitForm } = makeForm(attrs);
+
   provide(FORM_PROVIDE_KEY, readonly(form));
   provide(INIT_FORM_PROVIDE_KEY, initForm);
   provide(UPDATE_FORM_PROVIDE_KEY, updateForm);
@@ -376,7 +251,7 @@ export function useFormProvide1(attrs) {
   return { form, initForm, updateForm, resetForm, submitForm };
 }
 
-export function useFormInject1(
+export function useFormInject(
   attrs,
   { initFormValue = true, watchValue = true, emit = null } = {}
 ) {
@@ -405,11 +280,25 @@ export function useFormInject1(
         }
       );
       watch(
-        () => form.value[attrs.name],
+        () => form.data[attrs.name],
         (val) => (attrs.value = val)
       );
     }
   }
 
-  return { form, initForm, updateForm, resetForm, submitForm };
+  const errors = computed(() => {
+    let errors = [];
+
+    Object.keys(form.errors).forEach((key) => {
+      if (key == attrs.name) {
+        errors = form.errors[attrs.name];
+      }
+    });
+
+    return errors;
+  });
+
+  const isValid = computed(() => !(errors.value.length > 0));
+
+  return { form, errors, isValid, initForm, updateForm, resetForm, submitForm };
 }

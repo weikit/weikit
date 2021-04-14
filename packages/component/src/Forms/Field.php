@@ -14,6 +14,7 @@ use Weikit\Component\Component;
  * @property bool $disabled
  *
  * @property mixed $default
+ * @property array $rules
  * @property string $label
  * @property string $hint
  * @property string $helpMessage

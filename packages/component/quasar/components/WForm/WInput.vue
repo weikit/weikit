@@ -6,14 +6,17 @@
     :styles="styles"
     :placeholder="placeholder"
     :hint="hint"
+    :type="type"
     v-bind="extra"
     v-model="value"
+    :error-message="errors[0]"
+    :error="!isValid"
   >
   </q-input>
 </template>
 
 <script>
-import { defineComponent, toRefs, watch } from "vue";
+import { defineComponent, toRefs } from "vue";
 
 import {
   useFormInject,
@@ -33,20 +36,18 @@ export default defineComponent({
       },
     }),
     ...makeInputFieldProps(),
-    type: {
-      type: String,
-      default: "text",
-    },
   },
   setup(props, { emit }) {
     const fieldAttrs = useFieldAttrs(props);
     const inputFieldAttrs = useInputFieldAttrs(props);
 
-    const { updateForm } = useFormInject(fieldAttrs, { emit });
+    const { errors, isValid } = useFormInject(fieldAttrs, { emit });
 
     return {
       ...toRefs(fieldAttrs),
       ...toRefs(inputFieldAttrs),
+      errors,
+      isValid,
     };
   },
 });

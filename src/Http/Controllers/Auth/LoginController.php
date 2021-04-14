@@ -30,14 +30,14 @@ class LoginController extends Controller
     {
         $this->rateLimit(5);
 
+        $this->validate();
+
         $guard = auth();
         if ( ! $guard->attempt($request->only(['username', 'password']), $request->remember)) {
             throw ValidationException::withMessages([
                 'username' => [__('weikit::auth.login.login_failed')],
             ]);
         }
-
-        $this->validate();
 
         $this->clearRateLimiter();
 
@@ -60,7 +60,7 @@ class LoginController extends Controller
                    ->required(),
         ], __('weikit::auth.login.submit'))
                    ->id('login_form')
-                   ->action(route('admin.auth.login'));
+                   ->url(route('admin.auth.login'));
     }
 
     protected function getSchema($form)

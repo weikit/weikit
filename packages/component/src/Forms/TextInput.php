@@ -13,6 +13,7 @@ class TextInput extends Field
 
     protected function init()
     {
+        $this->key('text');
         $this->text();
     }
 
@@ -30,9 +31,14 @@ class TextInput extends Field
         return $this;
     }
 
+    protected function type($type)
+    {
+        return $this->set('type', $type);
+    }
+
     public function text()
     {
-        return $this->key('text');
+        return $this->type('text');
     }
 
     public function numeric()
@@ -46,7 +52,7 @@ class TextInput extends Field
 
     public function email()
     {
-        $this->key('email');
+        $this->type('email');
 
         $this->addRules([$this->name => ['email']]);
 
@@ -55,21 +61,21 @@ class TextInput extends Field
 
     public function tel()
     {
-        $this->key('tel');
+        $this->type('tel');
 
         return $this;
     }
 
     public function password()
     {
-        $this->key('password');
+        $this->type('password');
 
         return $this;
     }
 
     public function url()
     {
-        $this->key('url');
+        $this->type('url');
 
         $this->addRules([$this->name => ['url']]);
 
