@@ -1,6 +1,6 @@
 import { merge, pick, cloneDeep } from "lodash-es";
 import { AxiosInstance } from "axios";
-import { inject, provide, reactive, readonly, watch } from "vue";
+import { computed, inject, provide, reactive, readonly, watch } from "vue";
 import { Dialog, Notify } from "quasar";
 import { defaultComponentProps, useChildrenAttrs } from "./component";
 import { emitComponentEvent } from "./event";
@@ -50,7 +50,7 @@ export function makeFormProps(replaceProps = {}) {
 export function useFormAttrs(props) {
   return reactive({
     ...pick(props, Object.keys(defaultFormProps)),
-    children: useChildrenAttrs(props.children),
+    children: useChildrenAttrs(props),
   });
 }
 
@@ -121,7 +121,7 @@ export function setUseForm(useFormCallback: (...args: any[]) => FormType) {
   useForm = useFormCallback;
 }
 
-export let useForm = function (...args) {
+let useForm = function (...args) {
   const data = (typeof args[0] === "string" ? args[1] : args[0]) || {};
   const defaults = cloneDeep(data);
   let cancelToken = null;
@@ -212,7 +212,7 @@ export let useForm = function (...args) {
 function flattenFormDefaults(children: object[]) {
   let defaults = [];
 
-  children.forEach((child: any) => {
+  cloneDeep(children).forEach((child: any) => {
     if (child.name && child.value) {
       defaults[child.name] = child.value;
     } else if (child.children && child.key != "WForm") {
@@ -224,49 +224,39 @@ function flattenFormDefaults(children: object[]) {
 }
 
 export function useFormProvide(attrs) {
+  console.log(cloneDeep(attrs));
   const defaults = flattenFormDefaults(attrs.children);
   const form = useForm(defaults);
   provide(FORM_PROVIDE_KEY, readonly(form));
+  provide(UPDATE_FORM_PROVIDE_KEY, (key, value) => {
+    form[key] = value;
+  });
 
   return { form };
 }
 
-export function useFormInject(
-  attrs,
-  { initFormValue = true, watchValue = true, emit = null } = {}
-) {
+export function useFormInject(attrs, { watchValue = true, emit = null } = {}) {
   const form: any = inject(FORM_PROVIDE_KEY);
-  const initForm: Function = inject(INIT_FORM_PROVIDE_KEY);
-  const updateForm: Function = inject(UPDATE_FORM_PROVIDE_KEY);
-  const resetForm: Function = inject(RESET_FORM_PROVIDE_KEY);
-  const submitForm: Function = inject(SUBMIT_FORM_PROVIDE_KEY);
+  const updateForm = inject(UPDATE_FORM_PROVIDE_KEY);
 
-  if (updateForm && attrs.name) {
-    // init value
-    if (initFormValue) {
-      initForm(attrs.name, attrs.value);
-    }
+  // watch value two way binging for auto update
+  if (attrs.name && watchValue) {
+    watch(
+      () => attrs.value,
+      (val) => {
+        if (updateForm) form[attrs.name] = val;
 
-    // watch value two way binging for auto update
-    if (watchValue) {
-      watch(
-        () => attrs.value,
-        (val) => {
-          updateForm(attrs.name, val);
+        if (emit) emit("input", val);
+      }
+    );
 
-          if (emit) {
-            emit("input", val);
-          }
-        }
-      );
-      watch(
-        () => form.value[attrs.name],
-        (val) => (attrs.value = val)
-      );
-    }
+    watch(
+      () => form[attrs.name],
+      (val) => (attrs.value = val)
+    );
   }
 
-  return { form, initForm, updateForm, resetForm, submitForm };
+  return { form };
 }
 
 export function useFormProvide1(attrs) {
