@@ -1,5 +1,5 @@
 import app from "../app";
-import { useNotify } from "../uses";
+import { useNotify } from "../composables";
 
 export function errorHandler(e, vm) {
   console.error(e);

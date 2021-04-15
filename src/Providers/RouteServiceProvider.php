@@ -29,9 +29,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->routeNamespace)
                 ->group(weikit_path('routes/web.php'));
 
-            Route::prefix('api')
-                ->middleware('api')
-                ->namespace($this->routeNamespace)
+            Route::middleware('api')
+                ->namespace($this->routeNamespace . '\Api')
                 ->group(weikit_path('routes/api.php'));
         });
     }

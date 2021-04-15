@@ -14,7 +14,7 @@ function toTree(items, parentId = 0) {
     });
 }
 
-export function useMenuData() {
+export function useAdminMenu() {
   const state = reactive({ menu: null });
 
   const tree = computed(() => {
@@ -28,7 +28,7 @@ export function useMenuData() {
   });
 
   const loadMenu = async () => {
-    const { data } = await http.get(config.api.menu.data);
+    const { data } = await http.get(config.api.menu.admin);
     state.menu = data;
   };
 

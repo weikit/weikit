@@ -1,5 +1,5 @@
 <template>
-  <q-layout class="dashboard" view="lHh lpR lFf">
+  <q-layout class="dashboard-layout" view="lHh lpR lFf">
     <q-header class="bg-white text-grey-9" bordered height-hint="98">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleMenu" />
@@ -15,7 +15,7 @@
 
         <q-space></q-space>
 
-        <q-btn-dropdown v-if="user" stretch flat:label="user.username">
+        <q-btn-dropdown v-if="user" stretch flat :label="user.username">
           <q-list>
             <q-item clickable v-ripple>
               <q-item-section lay-event="edit_password"
@@ -72,7 +72,7 @@
           frameborder="0"
           :src="tab.href"
           class="iframe"
-        ></iframe>
+        />
       </div>
     </q-page-container>
   </q-layout>
@@ -81,26 +81,10 @@
 <script>
 const { computed, defineComponent, reactive, ref, toRefs } = Vue;
 const { useQuasar } = Quasar;
-const { useConfig, usePageTab } = Uses;
+const { useConfig, usePageTab, useUser, useAdminMenu } = Uses;
 
 export default defineComponent({
-  props: {
-    menu: Array,
-  },
   setup() {
-    // const { onBeforeMount } = Vue;
-    // const { useUser } = Uses;
-
-    // const { user, loadUser } = useUser();
-
-    // onBeforeMount(async () => {
-    //   loadUser();
-    // });
-
-    // return {
-    //   user,
-    // };
-
     const $q = useQuasar();
 
     const { config } = useConfig();
@@ -123,9 +107,13 @@ export default defineComponent({
       }
     };
 
+    const { user, loadUser } = useUser();
+    loadUser();
+
     const { tabs, activeTab, toggleTab, removeTab } = usePageTab();
 
-    const { tree, loadMenu } = useMenuData();
+    const { tree, loadMenu } = useAdminMenu();
+    loadMenu();
 
     return {
       ...toRefs(state),
@@ -137,6 +125,7 @@ export default defineComponent({
       activeTab,
       toggleTab,
       removeTab,
+      user,
       tree,
       loadMenu,
       toggleMenu,
@@ -146,7 +135,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* :deep(.title-bar) {
+:deep(.title-bar) {
   background: #22a7f0;
   border-color: #22a7f0;
 }
@@ -155,27 +144,17 @@ export default defineComponent({
   background: linear-gradient(45deg, #353d47, #21292e);
 }
 
-.content {
+.dashboard-layout .content {
   position: relative;
   height: 100%;
   width: 100%;
   display: none;
+}
+.dashboard-layout .content.show {
+  display: block;
+}
 
-  &.show {
-    display: block;
-  }
-
-  .iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-  }
-} */
-.dashboard .iframe {
+.dashboard-layout .content .iframe {
   position: absolute;
   width: 100%;
   height: 100%;

@@ -8,13 +8,7 @@ class DashboardController extends Controller
 {
     public function layout(MenuService $service)
     {
-        $menu = $service->one(['name' => 'admin'], [
-            'with' => ['items']
-        ]);
-
-        return inertia('weikit::dashboard/layout',[
-            'menu' => $menu
-        ]);
+        return inertia('weikit::dashboard/layout');
     }
 
     public function index()

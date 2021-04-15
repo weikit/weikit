@@ -22,15 +22,3 @@ export function useUser() {
 
   return { user: readonly(user), loadUser, setUser };
 }
-
-export function useLogin() {
-  const { config } = useConfig();
-  const { setUser } = useUser();
-
-  const login = async ({ url = config.api.auth.login, data }) => {
-    const res = await http.post(url, data);
-    setUser(res.data);
-  };
-
-  return { login };
-}
