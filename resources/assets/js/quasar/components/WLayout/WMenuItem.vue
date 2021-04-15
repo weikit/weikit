@@ -24,7 +24,7 @@
         :active="isActive(menu)"
         class="text-item"
         active-class="bg-item text-white"
-        @click="handleNav(menu)"
+        @click.stop="handleNav(menu)"
       >
         <q-item-section avatar>
           <q-icon :name="menu.icon_class" />

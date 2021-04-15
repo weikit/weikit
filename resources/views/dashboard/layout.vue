@@ -70,7 +70,7 @@
         <iframe
           :ref="(el) => (pages[`page_${tab.id}`] = el)"
           frameborder="0"
-          :src="tab.href"
+          :src="tab.url"
           class="iframe"
         />
       </div>
@@ -82,7 +82,7 @@
 const { computed, defineComponent, reactive, ref, toRefs } = Vue;
 const { useQuasar } = Quasar;
 const { useConfig, usePageTab, useUser, useAdminMenu } = Uses;
-
+console.log(1);
 export default defineComponent({
   setup() {
     const $q = useQuasar();
