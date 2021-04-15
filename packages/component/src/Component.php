@@ -24,7 +24,7 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
     /**
      * @var array
      */
-    protected $data = [];
+    protected $data;
 
     public function __construct()
     {
@@ -97,6 +97,34 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
         Arr::set($this->data, $key, $value);
 
         return $this;
+    }
+
+    /**
+     * @param string $key
+     * @param $value
+     *
+     * @return $this
+     */
+    protected function append(string $key, $value)
+    {
+        $data = $this->get($key, []);
+        $data[] = $value;
+
+        return $this->set($key, $data);
+    }
+
+    /**
+     * @param string $key
+     * @param $value
+     *
+     * @return $this
+     */
+    protected function prepend(string $key, $value)
+    {
+        $data = $this->get($key, []);
+        $data = array_merge([$value], $data);
+
+        return $this->set($key, $data);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Weikit\Component\Forms\Traits;
+namespace Weikit\Component\Form\Traits;
 
 /**
  * Trait CanBeUnique

@@ -3,16 +3,16 @@
 namespace Weikit\Http\Controllers\Example;
 
 use Weikit\Component\Card;
-use Weikit\Component\Forms\Button;
-use Weikit\Component\Forms\Checkbox;
-use Weikit\Component\Forms\DatePicker;
-use Weikit\Component\Forms\Form;
-use Weikit\Component\Forms\Radio;
-use Weikit\Component\Forms\Select;
-use Weikit\Component\Forms\Textarea;
-use Weikit\Component\Forms\TextInput;
-use Weikit\Component\Forms\TimePicker;
-use Weikit\Component\Forms\Toggle;
+use Weikit\Component\Form\Button;
+use Weikit\Component\Form\Checkbox;
+use Weikit\Component\Form\DatePicker;
+use Weikit\Component\Form\Form;
+use Weikit\Component\Form\Radio;
+use Weikit\Component\Form\Select;
+use Weikit\Component\Form\Textarea;
+use Weikit\Component\Form\TextInput;
+use Weikit\Component\Form\TimePicker;
+use Weikit\Component\Form\Toggle;
 use Weikit\Component\Layout\Grid;
 use Weikit\Component\Tabs\Tab;
 use Weikit\Component\Tabs\Tabs;

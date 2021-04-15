@@ -33,9 +33,7 @@ trait HasChildren
      */
     public function child(Component $component)
     {
-        $children = $this->children;
-        $children[] = $component;
-        return $this->set('children', $children);
+        return $this->append('children', $component);
     }
 
     /**

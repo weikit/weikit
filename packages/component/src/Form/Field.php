@@ -1,6 +1,6 @@
 <?php
 
-namespace Weikit\Component\Forms;
+namespace Weikit\Component\Form;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

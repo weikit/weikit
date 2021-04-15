@@ -1,10 +1,13 @@
 <?php
 
-namespace Weikit\Component\Forms;
+namespace Weikit\Component\Form;
 
-class Radio extends Field
+class Select extends Field
 {
     use Traits\CanBeAutofocused;
+    use Traits\CanBeCompared;
+    use Traits\CanBeUnique;
+    use Traits\HasPlaceholder;
 
     /**
      * @param array $options

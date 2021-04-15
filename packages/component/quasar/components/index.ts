@@ -1,6 +1,6 @@
-export * from "./WForm";
+export * from "./Form";
 
-export * from "./WCard";
-export * from "./WTabs";
+export * from "./Card";
+export * from "./Tabs";
 
-export * from "./WGrid";
+export * from "./Grid";

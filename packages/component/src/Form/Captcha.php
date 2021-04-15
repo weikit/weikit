@@ -1,10 +1,10 @@
 <?php
 
-namespace Weikit\Component\Forms;
+namespace Weikit\Component\Form;
 
 /**
  * Class Captcha
- * @package Weikit\Component\Forms
+ * @package Weikit\Component\Form
  *
  * @property string $url
  */
