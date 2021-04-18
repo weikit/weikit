@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Weikit\Component\Traits;
+namespace Weikit\Component\Form\Traits;
 
 use Illuminate\Http\Request;
-use Weikit\Component\Forms\Form;
+use Weikit\Component\Form\Form;
 
 trait HasForm
 {

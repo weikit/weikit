@@ -1,0 +1,17 @@
+{
+  "name": "weikit/component",
+  "authors": [
+    {
+      "name": "张龙",
+      "email": "callme-z@qq.com"
+    }
+  ],
+  "require": {
+    "spatie/laravel-query-builder": "^3.3.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Weikit\\Component\\": "src"
+    }
+  }
+}

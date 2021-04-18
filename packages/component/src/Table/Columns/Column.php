@@ -1,6 +1,6 @@
 <?php
 
-namespace Weikit\Component\Table;
+namespace Weikit\Component\Table\Columns;
 
 use Illuminate\Support\Str;
 use Weikit\Component\Component;
@@ -33,12 +33,13 @@ class Column extends Component
     {
         if ($this->label === null) {
             $this->label(
-                (string) Str::of($this->name)
-                            ->kebab()
-                            ->replace(['-', '_', '.'], ' ')
-                            ->ucfirst(),
+                (string) Str::of($name)
+                    ->kebab()
+                    ->replace(['-', '_', '.'], ' ')
+                    ->ucfirst(),
             );
         }
+
         return $this->set('name', $name);
     }
 

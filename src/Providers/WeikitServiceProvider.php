@@ -24,8 +24,6 @@ class WeikitServiceProvider extends ServiceProvider
 
         $this->registerCaptcha();
 
-        $this->registerServices();
-
         $this->configureMiddleware();
     }
 
@@ -128,13 +126,6 @@ class WeikitServiceProvider extends ServiceProvider
         $validator->extend('captcha_api', function ($attribute, $value, $parameters) {
             return captcha_api_check($value, $parameters[0], $parameters[1] ?? 'default');
         });
-    }
-
-    public function registerServices()
-    {
-        foreach (config('weikit.services') as $contract => $class) {
-            $this->app->singleton($contract, $class);
-        }
     }
 
     /**

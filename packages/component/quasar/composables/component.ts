@@ -18,6 +18,8 @@ export const components = {
   timePicker: "WTimePicker",
   captcha: "WCaptcha",
 
+  table: "WTable",
+
   card: "WCard",
   cardTitle: "WCardTitle",
 

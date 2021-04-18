@@ -2,7 +2,7 @@
 
 namespace Weikit\Http\Controllers;
 
-use Weikit\Services\Contracts\MenuService;
+use Weikit\Services\MenuService;
 
 class DashboardController extends Controller
 {

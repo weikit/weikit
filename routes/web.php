@@ -18,6 +18,14 @@ Route::group([
     });
 
 
+    Route::group([
+        'as' => 'user.',
+    ], function() {
+        // Login
+        Route::get('users', 'UserController@list')->middleware(['auth.admin'])->name('user.list');
+    });
+
+
 
 //    Route::group([
 //        'namespace' => 'Menu',

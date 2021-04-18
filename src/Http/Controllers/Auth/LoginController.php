@@ -8,7 +8,7 @@ use Weikit\Component\Card\Card;
 use Weikit\Component\Form\Captcha;
 use Weikit\Component\Form\Form;
 use Weikit\Component\Form\TextInput;
-use Weikit\Component\Traits\HasForm;
+use Weikit\Component\Form\Traits\HasForm;
 use Weikit\Http\Controllers\Controller;
 use Weikit\Http\Traits\HasRateLimiting;
 
