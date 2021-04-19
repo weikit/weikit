@@ -2,6 +2,7 @@
 
 namespace Weikit\Component\Table;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder as Query;
 use Spatie\QueryBuilder\QueryBuilder;
 use Weikit\Component\Component;
@@ -40,21 +41,13 @@ class Table extends Component
         return $this->append('columns', $column);
     }
 
-    public function query($query)
+    /**
+     * @param Paginator $paginator
+     *
+     * @return Table
+     */
+    public function pagination(Paginator $paginator)
     {
-        if ($query instanceof Query || $query instanceof QueryBuilder) {
-            $this->query = $query;
-        } else {
-            throw new \InvalidArgumentException('Table query only accept instance "' . Query::class . '" or "' . QueryBuilder::class . '"');
-        }
-
-        return $this;
-    }
-
-    public function toArray()
-    {
-        $array = parent::toArray();
-        $array['data'] = $this->query->paginate();
-        return $array;
+        return $this->set('pagination', $paginator);
     }
 }
