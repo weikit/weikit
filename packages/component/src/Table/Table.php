@@ -18,6 +18,11 @@ class Table extends Component
      */
     protected $query;
 
+    public function init()
+    {
+        $this->url(url()->current());
+    }
+
     /**
      * @param array $columns
      *
@@ -42,12 +47,12 @@ class Table extends Component
     }
 
     /**
-     * @param Paginator $paginator
+     * @param string $url
      *
      * @return Table
      */
-    public function pagination(Paginator $paginator)
+    public function url(string $url)
     {
-        return $this->set('pagination', $paginator);
+        return $this->set('url', $url);
     }
 }

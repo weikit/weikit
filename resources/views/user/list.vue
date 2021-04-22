@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="q-pa-md">
     <component :is="componentName" v-bind="componentOptions" />
   </div>
 </template>

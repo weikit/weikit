@@ -1,5 +1,6 @@
 import * as components from "./components";
-import { setFormHttp, setComponentEmitter } from "./composables";
+import { setComponentHttp, setComponentEmitter } from "./composables";
+import { Model } from "vue-api-query";
 import mitt from "mitt";
 import axios from "axios";
 export * from "./composables";
@@ -19,8 +20,10 @@ export default {
     }
 
     if (http) {
-      setFormHttp(http);
+      setComponentHttp(http);
+      if (!Model.$http) Model.$http = http;
     }
+
     if (emitter) {
       setComponentEmitter(emitter);
     }

@@ -10,7 +10,7 @@ const app = createApp({
   render: () =>
     h(App, {
       initialPage: JSON.parse(el.dataset.page),
-      resolveComponent: name =>
+      resolveComponent: (name) =>
         resolveAsyncComponent(trimEnd(name, ".vue") + ".vue"),
     }),
 });

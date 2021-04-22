@@ -4,11 +4,14 @@ import { defineAsyncComponent as defineAsyncVueComponent } from "vue";
 import http from "./http";
 import { loadModule } from "vue3-sfc-loader";
 
-export function loadComponent(url, options = {}) {
-  return loadModule(url, {
+const components = {};
+
+export async function loadComponent(url, options = {}) {
+  const component = await loadModule(url, {
     moduleCache: { vue: Vue },
     async getFile(url) {
       console.debug(url);
+      // TODO file cache
       const response = await http.get(url, {
         headers: {
           "X-Requested-With": "XMLHttpRequest",
@@ -38,6 +41,9 @@ export function loadComponent(url, options = {}) {
     },
     ...options,
   });
+  components[url] = component;
+
+  return component;
 }
 
 /**
@@ -54,6 +60,8 @@ export function resolveAsyncComponent(
   componentOptions = {},
   loadOptions = {}
 ) {
+  if (components[url]) return components[url];
+
   return defineAsyncVueComponent({
     loader: () => loadComponent(url, loadOptions),
     ...componentOptions,

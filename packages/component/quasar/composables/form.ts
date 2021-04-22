@@ -1,17 +1,9 @@
-import { merge, pick, cloneDeep } from "lodash-es";
-import { AxiosInstance } from "axios";
-import {
-  computed,
-  ErrorCodes,
-  inject,
-  provide,
-  reactive,
-  readonly,
-  watch,
-} from "vue";
+import { merge, pick } from "lodash-es";
+import { computed, inject, provide, reactive, readonly, watch } from "vue";
 import { Dialog, Notify } from "quasar";
 import { defaultComponentProps, useChildrenAttrs } from "./component";
 import { emitComponentEvent } from "./event";
+import { useComponentHttp } from "./http";
 
 const SCENE_SUBMIT_CONFIRM = "submit_confirm";
 const SCENE_SUBMIT_CANCEL = "submit_cancel";
@@ -25,11 +17,6 @@ const INIT_FORM_PROVIDE_KEY = Symbol("init_form");
 const UPDATE_FORM_PROVIDE_KEY = Symbol("update_form");
 const RESET_FORM_PROVIDE_KEY = Symbol("reset_form");
 const SUBMIT_FORM_PROVIDE_KEY = Symbol("submit_form");
-
-let http: AxiosInstance;
-export function setFormHttp(httpInstance: AxiosInstance) {
-  http = httpInstance;
-}
 
 const defaultFormProps = {
   ...defaultComponentProps,
@@ -109,13 +96,15 @@ export function useInputFieldAttrs(props) {
   return reactive(pick(props, Object.keys(defaultInputFieldProps)));
 }
 
-let useForm;
-export function setUseForm(callback: Function) {
-  useForm = callback;
+let useFormCallback;
+export function setForm(callback: Function) {
+  useFormCallback = callback;
 }
 
 function makeForm(attrs) {
-  if (useForm) return useForm(attrs);
+  const http = useComponentHttp();
+
+  if (useFormCallback) return useFormCallback(attrs, { http });
 
   const defaultFormData = reactive({});
   const form = reactive({
@@ -200,9 +189,8 @@ function makeForm(attrs) {
         if (attrs.id) emitComponentEvent(`form_submit:${attrs.id}`, event);
         emitComponentEvent(`form_submit`, event);
       } catch (e) {
-        const {
-          response: { status, data },
-        } = e;
+        console.log(e);
+        const { status, data } = e.response || {};
 
         form.errors = {};
         if (status == 422) {

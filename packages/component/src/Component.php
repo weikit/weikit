@@ -37,6 +37,7 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
 
     protected function init()
     {
+
     }
 
     /**

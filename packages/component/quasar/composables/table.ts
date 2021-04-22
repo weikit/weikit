@@ -1,9 +1,15 @@
 import { merge, pick } from "lodash-es";
 import { reactive } from "vue";
 import { defaultComponentProps } from "./component";
+import { useComponentHttp } from "./http";
+import { Model as BaseModel } from "vue-api-query";
 
 const defaultTableProps = {
   ...defaultComponentProps,
+  url: {
+    type: String,
+    required: true,
+  },
   columns: {
     type: Array,
     required: true,
@@ -38,28 +44,85 @@ export function useTableColumnAttrs(props) {
   return reactive({
     field: (row) => row[props.name],
     format: (val) => `${val}`,
-    align: "left",
+    align: "center",
     ...props,
   });
 }
 
 export function useTableDataAttrs(props) {
   const atts = {
+    loading: false,
     rows: [],
-    paginate: {
+    pagination: {
+      sortBy: "desc",
+      descending: false,
       page: 1,
-      rowsPerPage: 20,
+      rowsPerPage: 15,
       rowsNumber: 0,
     },
   };
 
-  if (props.pagination) {
-    const { data, current_page, per_page, total } = props.pagination;
-    atts.rows = data;
-    atts.paginate.page = current_page;
-    atts.paginate.rowsPerPage = per_page;
-    atts.paginate.rowsPerPage = total;
-  }
-
   return reactive(atts);
+}
+
+let useTableCallback;
+export function setTable(callback: Function) {
+  useTableCallback = callback;
+}
+
+export function useTable(props) {
+  const http = useComponentHttp();
+
+  const attrs = useTableAttrs(props);
+
+  if (useTableCallback) useTableCallback(attrs, { http });
+
+  const url = props.url || "";
+
+  const Search = class extends BaseModel {
+    baseURL() {
+      return props.url;
+    }
+    // Implement a default request method
+    request(config) {
+      return http.request(config);
+    }
+    // TODO fix '/' slash 301 Moved Permanently
+    resource() {
+      return "";
+    }
+  };
+
+  const request = async ({ filter, pagination }) => {
+    const { sortBy, descending, page, rowsPerPage } = pagination || {};
+    const req = new Search();
+
+    if (sortBy) {
+      req.orderBy(`${descending ? "-" : ""}${sortBy}`);
+    }
+
+    if (rowsPerPage) {
+      req.limit(rowsPerPage);
+    }
+
+    return req.get() as any;
+  };
+
+  const loadData = async (search: any = {}) => {
+    try {
+      attrs.loading = true;
+      const { data, current_page, per_page, total } = await request(search);
+
+      attrs.rows = data;
+      attrs.pagination.page = current_page;
+      attrs.pagination.rowsPerPage = per_page;
+      attrs.pagination.rowsNumber = total;
+      attrs.pagination.sortBy = search.pagination.sortBy;
+      attrs.pagination.descending = search.pagination.descending;
+    } finally {
+      attrs.loading = false;
+    }
+  };
+
+  return { attrs, loadData };
 }

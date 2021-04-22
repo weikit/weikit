@@ -2,45 +2,79 @@ import { reactive } from "vue";
 import { merge, pick } from "lodash-es";
 
 export const components = {
-  form: "WForm",
-  button: "WButton",
-  text: "WInput",
-  number: "WInput",
-  email: "WInput",
-  password: "WInput",
-  // url: "WInput",
-  checkbox: "WCheckbox",
-  textarea: "WTextarea",
-  select: "WSelect",
-  radio: "WRadio",
-  toggle: "WToggle",
-  datePicker: "WDatePicker",
-  timePicker: "WTimePicker",
-  captcha: "WCaptcha",
-
-  table: "WTable",
-
-  card: "WCard",
-  cardTitle: "WCardTitle",
-
-  tabs: "WTabs",
-  tab: "WTab",
-
-  grid: "WGrid",
+  form: {
+    componentName: "WForm",
+  },
+  button: {
+    componentName: "WButton",
+  },
+  text: {
+    componentName: "WInput",
+  },
+  number: {
+    componentName: "WInput",
+  },
+  email: {
+    componentName: "WInput",
+  },
+  password: {
+    componentName: "WInput",
+  },
+  checkbox: {
+    componentName: "WCheckbox",
+  },
+  textarea: {
+    componentName: "WTextarea",
+  },
+  select: {
+    componentName: "WSelect",
+  },
+  radio: {
+    componentName: "WRadio",
+  },
+  toggle: {
+    componentName: "WToggle",
+  },
+  datePicker: {
+    componentName: "WDatePicker",
+  },
+  timePicker: {
+    componentName: "WTimePicker",
+  },
+  captcha: {
+    componentName: "WCaptcha",
+  },
+  table: {
+    componentName: "WTable",
+  },
+  card: {
+    componentName: "WCard",
+  },
+  cardTitle: {
+    componentName: "WCardTitle",
+  },
+  tabs: {
+    componentName: "WTabs",
+  },
+  tab: {
+    componentName: "WTab",
+  },
+  grid: {
+    componentName: "WGrid",
+  },
 };
 
 export function useComponent(options) {
-  const key = options.key;
-
-  if (!components[key]) {
+  if (!components[options.key]) {
     throw new Error(
-      `The key type '${key}' of component has not been implemented`
+      `The key type '${options.key}' of component has not been implemented`
     );
   }
 
-  options.componentName = components[key];
-
-  return reactive(options);
+  return reactive({
+    ...options,
+    ...components[options.key],
+  });
 }
 
 export const defaultComponentProps = {
