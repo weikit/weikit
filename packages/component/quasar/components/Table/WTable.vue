@@ -26,6 +26,22 @@
         <q-icon name="fullscreen" />
       </div>
     </template>
+
+    <template
+      v-for="(column, n) in columns.filter(({ key }) => key == 'action')"
+      :key="n"
+      v-slot:[`body-cell-${column.name}`]="props"
+    >
+      <q-td :props="props">
+        <component
+          :key="index"
+          v-for="({ componentName, ...componentOptions }, index) in props.col
+            .children"
+          :is="componentName"
+          v-bind="componentOptions"
+        />
+      </q-td>
+    </template>
   </q-table>
 </template>
 
@@ -39,9 +55,10 @@ export default defineComponent({
   },
   setup(props) {
     const { attrs, loadData } = useTable(props);
-    console.log(attrs);
 
     loadData({ pagination: attrs.pagination });
+
+    console.log(attrs);
 
     return {
       ...toRefs(attrs),

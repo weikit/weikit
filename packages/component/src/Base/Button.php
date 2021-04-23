@@ -1,6 +1,6 @@
 <?php
 
-namespace Weikit\Component\Form;
+namespace Weikit\Component\Base;
 
 use Weikit\Component\Component;
 

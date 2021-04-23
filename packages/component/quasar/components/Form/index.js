@@ -1,5 +1,4 @@
 import WForm from "./WForm";
-import WButton from "./WButton";
 import WInput from "./WInput";
 import WCaptcha from "./WCaptcha";
 import WDatePicker from "./WDatePicker";
@@ -12,7 +11,6 @@ import WToggle from "./WToggle";
 
 export {
   WForm,
-  WButton,
   WInput,
   WCaptcha,
   WDatePicker,

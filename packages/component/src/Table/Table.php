@@ -2,7 +2,6 @@
 
 namespace Weikit\Component\Table;
 
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder as Query;
 use Spatie\QueryBuilder\QueryBuilder;
 use Weikit\Component\Component;

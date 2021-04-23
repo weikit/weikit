@@ -2,6 +2,7 @@
 
 namespace Weikit\Component\Form;
 
+use Weikit\Component\Base\Button;
 use Illuminate\Database\Eloquent\Model;
 use Weikit\Component\Component;
 use Weikit\Component\Layout\Grid;

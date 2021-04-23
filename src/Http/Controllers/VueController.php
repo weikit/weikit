@@ -17,11 +17,13 @@ class VueController
 
             $file = $factory->getFinder()->find(ViewName::normalize($view));
             $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+            // only support vue file
             if ($extension !== 'vue') {
                 throw new \InvalidArgumentException('Vue file not found.');
             }
 
-            return $factory->file($file);
+            return response($factory->file($file), 200)
+                ->setLastModified(\DateTime::createFromFormat('U', (string) filemtime($file)));
         } catch (\Exception $e) {
             abort(404, $e->getMessage());
         }

@@ -3,6 +3,8 @@
 namespace Weikit\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Weikit\Component\Base\Link;
+use Weikit\Component\Table\Columns\Action;
 use Weikit\Search\UserSearch;
 use Weikit\Component\Table\Table;
 use Weikit\Component\Table\Columns\Text;
@@ -34,7 +36,12 @@ class UserController extends Controller
         return Table::make()
             ->columns([
                 Text::make('username')->sortable(),
-                Text::make('name')
+                Text::make('name'),
+                Action::make()
+                    ->children([
+                        Link::make('', '编辑'),
+                        Link::make('', '删除')
+                    ])
             ]);
     }
 }

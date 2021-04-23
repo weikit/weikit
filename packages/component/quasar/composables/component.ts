@@ -2,11 +2,14 @@ import { reactive } from "vue";
 import { merge, pick } from "lodash-es";
 
 export const components = {
-  form: {
-    componentName: "WForm",
+  link: {
+    componentName: "WLink",
   },
   button: {
     componentName: "WButton",
+  },
+  form: {
+    componentName: "WForm",
   },
   text: {
     componentName: "WInput",

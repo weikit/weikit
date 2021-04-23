@@ -1,6 +1,6 @@
 import { merge, pick } from "lodash-es";
 import { reactive } from "vue";
-import { defaultComponentProps } from "./component";
+import { defaultComponentProps, useChildrenAttrs } from "./component";
 import { useComponentHttp } from "./http";
 import { Model as BaseModel } from "vue-api-query";
 
@@ -33,19 +33,24 @@ export function useTableAttrs(props) {
 }
 
 export function useTableColumnsAttrs(props) {
+  const columns = props.columns.map(useTableColumnAttrs);
+
   const atts = {
-    columns: props?.columns.map(useTableColumnAttrs),
+    columns,
   };
 
   return reactive(atts);
 }
 
 export function useTableColumnAttrs(props) {
+  const attrs = props.key == "action" ? useChildrenAttrs(props) : {};
   return reactive({
     field: (row) => row[props.name],
     format: (val) => `${val}`,
     align: "center",
+
     ...props,
+    ...attrs,
   });
 }
 
@@ -103,6 +108,10 @@ export function useTable(props) {
 
     if (rowsPerPage) {
       req.limit(rowsPerPage);
+    }
+
+    if (page) {
+      req.page(page);
     }
 
     return req.get() as any;

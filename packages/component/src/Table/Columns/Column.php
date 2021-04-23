@@ -17,16 +17,17 @@ use Weikit\Component\Component;
  */
 class Column extends Component
 {
-    public function __construct($name)
+    public function __construct($name, $label = null)
     {
+        $this->label($label);
         $this->name($name);
 
         parent::__construct();
     }
 
-    public static function make($name)
+    public static function make($name, $label = null)
     {
-        return new static($name);
+        return new static($name, $label);
     }
 
     public function name($name)
@@ -53,14 +54,14 @@ class Column extends Component
         return $this->set('primary', true);
     }
 
-    public function searchable()
+    public function searchable($searchable = true)
     {
-        return $this->set('searchable', true);
+        return $this->set('searchable', $searchable);
     }
 
-    public function sortable()
+    public function sortable($sortable = true)
     {
-        return $this->set('sortable', true);
+        return $this->set('sortable', $sortable);
     }
 
     public function hidden()
