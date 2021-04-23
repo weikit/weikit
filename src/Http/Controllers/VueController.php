@@ -2,24 +2,28 @@
 
 namespace Weikit\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
+use Illuminate\View\ViewName;
+use Illuminate\View\Factory as ViewFactory;
 
 class VueController
 {
 
-    public function __invoke($view)
+    public function __invoke(ViewFactory $factory, string $view)
     {
-        // TODO  only support .vue file
         try {
-
             if (!preg_match('/[\/\:-_A-Za-z0-9]+/', $view)) {
-                throw new \InvalidArgumentException($view . ' is not valid view path');
+                throw new \InvalidArgumentException('Incorrect VUE file format.');
             }
 
-            return view($view);
+            $file = $factory->getFinder()->find(ViewName::normalize($view));
+            $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+            if ($extension !== 'vue') {
+                throw new \InvalidArgumentException('Vue file not found.');
+            }
+
+            return $factory->file($file);
         } catch (\Exception $e) {
-            Log::debug($e->getMessage());
-            abort(404, 'Vue file not found.');
+            abort(404, $e->getMessage());
         }
     }
 }
