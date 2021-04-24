@@ -65,6 +65,9 @@ export const components = {
   grid: {
     componentName: "WGrid",
   },
+  dialog: {
+    componentName: "WTable",
+  },
 };
 
 export function useComponent(options) {
