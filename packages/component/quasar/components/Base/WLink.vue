@@ -3,6 +3,7 @@
     :id="id"
     :class="classes"
     :styles="styles"
+    :href="url"
     v-bind="extra"
     @click.stop="handleClick"
   >
@@ -24,19 +25,21 @@ export default defineComponent({
     url: {
       type: String,
       required: true,
-      default: "button",
+      default: "",
     },
 
     text: {
       type: String,
-      default: "",
       required: true,
+      default: "",
     },
   },
   setup(props) {
     const componentAttrs = useComponentAttrs(props);
     const text = toRef(props, "text");
     const url = toRef(props, "url");
+
+    console.log(props);
 
     const handleClick = () => {};
 

@@ -39,8 +39,8 @@ class UserController extends Controller
                 Text::make('name'),
                 Action::make()
                     ->children([
-                        Link::make('', '编辑'),
-                        Link::make('', '删除')
+                        Link::make('a', '编辑'),
+                        Link::make('a', '删除')
                     ])
             ]);
     }
