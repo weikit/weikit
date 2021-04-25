@@ -66,7 +66,7 @@ export const components = {
     componentName: "WGrid",
   },
   dialog: {
-    componentName: "WTable",
+    componentName: "WDialog",
   },
 };
 

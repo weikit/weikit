@@ -29,4 +29,9 @@ class Link extends Component
     {
         return $this->set('url', $url);
     }
+
+    public function target(Component $component)
+    {
+        return $this->set('target', $component);
+    }
 }

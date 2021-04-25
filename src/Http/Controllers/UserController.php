@@ -4,6 +4,7 @@ namespace Weikit\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Weikit\Component\Base\Link;
+use Weikit\Component\Dialog\Dialog;
 use Weikit\Component\Table\Columns\Action;
 use Weikit\Search\UserSearch;
 use Weikit\Component\Table\Table;
@@ -39,8 +40,14 @@ class UserController extends Controller
                 Text::make('name'),
                 Action::make()
                     ->children([
-                        Link::make('a', '编辑'),
-                        Link::make('a', '删除')
+                        Link::make('a', '编辑')
+                            ->target(Dialog::make([
+                                Link::make('a', 'a')
+                            ])),
+                        Link::make('b', '删除')
+                            ->target(Dialog::make([
+                                Link::make('b', 'b')
+                            ]))
                     ])
             ]);
     }
