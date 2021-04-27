@@ -1,74 +1,20 @@
 <template>
-  <a
-    :id="id"
-    :class="classes"
-    :styles="styles"
-    :href="url"
-    v-bind="extra"
-    @click.stop="handleClick"
-  >
-    {{ text }}
-
-    <component
-      v-model="show"
-      :is="target.componentName"
-      v-bind="target.componentOptions"
-    />
-  </a>
+  <a>123 </a>
 </template>
 
 <script>
-import { defineComponent, ref, toRef, toRefs } from "vue";
-import {
-  makeComponentProps,
-  useComponent,
-  useComponentAttrs,
-} from "../../composables/component";
+import { defineComponent, toRefs } from "vue";
+import { useComponentProps } from "../../composables";
+
+const { componentProps, makeComponentAttrs } = useComponentProps();
 
 export default defineComponent({
-  props: {
-    ...makeComponentProps(),
-
-    url: {
-      type: String,
-      required: true,
-      default: "",
-    },
-
-    text: {
-      type: String,
-      required: true,
-      default: "",
-    },
-
-    target: {
-      type: Object,
-      default: {},
-    },
-  },
-  setup(props) {
-    const componentAttrs = useComponentAttrs(props);
-    const text = toRef(props, "text");
-    const url = toRef(props, "url");
-
-    const show = ref(false);
-
-    setTimeout(function () {
-      show.value = true;
-    }, 3000);
-
-    const target = useComponent(props.target);
-    console.log(target);
-    const handleClick = () => {};
+  props: componentProps,
+  setup(props, {}) {
+    const attrs = makeComponentAttrs(props);
 
     return {
-      ...toRefs(componentAttrs),
-      show,
-      target: ref(target),
-      text,
-      url,
-
-      handleClick,
+      ...toRefs(attrs),
     };
   },
 });

@@ -5,6 +5,7 @@ namespace Weikit\Http\Controllers;
 use Illuminate\Http\Request;
 use Weikit\Component\Base\Link;
 use Weikit\Component\Dialog\Dialog;
+use Weikit\Component\Events\Click;
 use Weikit\Component\Table\Columns\Action;
 use Weikit\Search\UserSearch;
 use Weikit\Component\Table\Table;
@@ -41,9 +42,13 @@ class UserController extends Controller
                 Action::make()
                     ->children([
                         Link::make('a', '编辑')
-                            ->target(Dialog::make([
-                                Link::make('a', 'a')
-                            ])),
+                            ->event(
+                                Click::show(
+                                    Dialog::make([
+                                        Link::make('b', 'b')
+                                    ])
+                                )
+                            ),
                         Link::make('b', '删除')
                             ->target(Dialog::make([
                                 Link::make('b', 'b')

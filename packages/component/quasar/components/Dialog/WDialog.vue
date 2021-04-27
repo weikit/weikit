@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { toRefs } from "@vue/reactivity";
+import { toRefs } from "vue";
 import {
   makeComponentProps,
   useComponentAttrs,

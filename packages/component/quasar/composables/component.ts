@@ -100,7 +100,21 @@ export const defaultComponentProps = {
     type: Object,
     default: {},
   },
+  events: {
+    type: Object,
+    default: {},
+  },
 };
+
+export function useComponentProps(replaceProps = {}) {
+  const componentProps = merge({}, defaultComponentProps, replaceProps);
+
+  const makeComponentAttrs = (props) => {
+    return reactive(pick(props, Object.keys(componentProps)));
+  };
+
+  return { componentProps, makeComponentAttrs };
+}
 
 export function makeComponentProps(replaceProps = {}) {
   return merge({}, defaultComponentProps, replaceProps);
