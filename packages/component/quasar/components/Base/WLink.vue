@@ -4,14 +4,16 @@
 
 <script>
 import { defineComponent, toRefs } from "vue";
-import { useComponentProps } from "../../composables";
+import { makeComponentProps } from "../../composables";
 
-const { componentProps, makeComponentAttrs } = useComponentProps();
+const { componentProps, makeComponent } = makeComponentProps({
+  hasChildren: true,
+});
 
 export default defineComponent({
   props: componentProps,
   setup(props, {}) {
-    const attrs = makeComponentAttrs(props);
+    const { attrs = makeComponent(props);
 
     return {
       ...toRefs(attrs),

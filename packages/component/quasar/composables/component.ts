@@ -100,25 +100,43 @@ export const defaultComponentProps = {
     type: Object,
     default: {},
   },
-  events: {
-    type: Object,
-    default: {},
+};
+
+export const defaultComponentChildrenProps = {
+  children: {
+    type: Array,
+    default: [],
   },
 };
 
-export function useComponentProps(replaceProps = {}) {
-  const componentProps = merge({}, defaultComponentProps, replaceProps);
+export function useComponentProps({
+  replaceProps = {},
+  hasChildren = false,
+} = {}) {
+  const componentProps = merge(
+    {
+      ...(hasChildren ? defaultComponentChildrenProps : {}),
+      ...defaultComponentProps,
+    },
+    replaceProps
+  );
 
-  const makeComponentAttrs = (props) => {
-    return reactive(pick(props, Object.keys(componentProps)));
+  const makeComponent = (props) => {
+    const attrs = reactive(pick(props, Object.keys(componentProps)));
+
+    if (attrs?.children.length) {
+      attrs.children = props.children.map(useComponent);
+    }
+
+    return attrs;
   };
 
-  return { componentProps, makeComponentAttrs };
+  return { componentProps, makeComponent };
 }
 
-export function makeComponentProps(replaceProps = {}) {
-  return merge({}, defaultComponentProps, replaceProps);
-}
+// export function makeComponentProps(replaceProps = {}) {
+//   return merge({}, defaultComponentProps, replaceProps);
+// }
 
 export function useComponentAttrs(props) {
   return reactive(pick(props, Object.keys(defaultComponentProps)));
