@@ -5,31 +5,23 @@
 </template>
 
 <script>
-import { defineComponent, toRefs, toRef } from "vue";
-import {
-  makeComponentProps,
-  useComponentAttrs,
-} from "../../composables/component";
+import { merge } from "lodash-es";
+import { defineComponent, toRefs } from "vue";
+import { defaultComponentProps } from "../../composables";
 
 export default defineComponent({
-  props: {
-    ...makeComponentProps({
-      classes: {
-        default: ["text-center", "text-h6"],
-      },
-    }),
+  props: merge(defaultComponentProps, {
+    classes: {
+      default: ["text-center", "text-h6"],
+    },
     title: {
       type: String,
       default: "",
     },
-  },
+  }),
   setup(props) {
-    const componentAttrs = useComponentAttrs(props);
-    const title = toRef(props, "title");
-
     return {
-      ...toRefs(componentAttrs),
-      title,
+      ...toRefs(props),
     };
   },
 });

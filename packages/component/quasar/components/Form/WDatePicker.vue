@@ -29,36 +29,34 @@
 
 <script>
 import { defineComponent, toRefs } from "vue";
+import {
+  defaultComponentFieldProps,
+  defaultComponentInputFieldProps,
+  defaultComponentProps,
+} from "../../composables";
 
 import {
   useFormInject,
-  makeFieldProps,
-  makeInputFieldProps,
   useFieldAttrs,
   useInputFieldAttrs,
 } from "../../composables/form";
 
 export default defineComponent({
   props: {
-    ...makeFieldProps(),
-    ...makeInputFieldProps(),
+    ...defaultComponentProps,
+    ...defaultComponentFieldProps,
+    ...defaultComponentInputFieldProps,
     type: {
       type: String,
       default: "",
     },
   },
   setup(props, { emit }) {
-    const fieldAttrs = useFieldAttrs(props);
-    const inputFieldAttrs = useInputFieldAttrs(props);
-
     const { updateForm } = useFormInject(fieldAtts, { emit });
 
-    const type = ref(props.type);
-
     return {
-      ...toRefs(fieldAttrs),
+      ...toRefs(props),
       ...toRefs(inputFieldAttrs),
-      type,
     };
   },
 });

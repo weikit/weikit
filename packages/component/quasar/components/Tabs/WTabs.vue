@@ -25,42 +25,32 @@
 </template>
 
 <script>
-import { defineComponent, reactive, ref, toRefs } from "vue";
-
+import { defineComponent, ref, toRefs } from "vue";
 import {
-  makeComponentProps,
-  makeChildrenProps,
-  useChildrenAttrs,
-  useComponent,
-  useComponentAttrs,
-} from "../../composables/component";
+  defaultComponentChildrenProps,
+  defaultComponentProps,
+  useComponentChildren,
+} from "../../composables";
 
 export default defineComponent({
   props: {
-    ...makeComponentProps(),
-    ...makeChildrenProps(),
+    ...defaultComponentProps,
+    ...defaultComponentChildrenProps,
   },
   setup(props) {
-    props.children.forEach(tab => {
-      if (tab.type != "tab") {
-        throw new Error("Tabs only allow Tab to be child components");
-      }
-      return tab;
-    });
-    const componentAttrs = useComponentAttrs(props);
-    const childrenAttrs = useChildrenAttrs(props);
+    const { children } = useComponentChildren(props);
 
     const currentTab = ref("tab1");
 
-    const switchTab = tab => {
+    const switchTab = (tab) => {
       currentTab.value = tab;
     };
 
     return {
+      ...toRefs(props),
       currentTab,
       switchTab,
-      ...toRefs(componentAttrs),
-      ...toRefs(childrenAttrs),
+      children,
     };
   },
 });

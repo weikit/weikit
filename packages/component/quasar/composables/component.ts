@@ -1,5 +1,11 @@
 import { reactive } from "vue";
-import { merge, pick } from "lodash-es";
+import { merge, pick, tap } from "lodash-es";
+import { useDialog } from "./dialog";
+import {
+  defaultComponentChildrenProps,
+  defaultComponentDialogProps,
+  defaultComponentProps,
+} from "./props";
 
 export const components = {
   link: {
@@ -83,52 +89,37 @@ export function useComponent(options) {
   });
 }
 
-export const defaultComponentProps = {
-  id: {
-    type: String,
-    default: "",
-  },
-  classes: {
-    type: [String, Array, Object],
-    default: "",
-  },
-  styles: {
-    type: [String, Array, Object],
-    default: "",
-  },
-  extra: {
-    type: Object,
-    default: {},
-  },
-};
-
-export const defaultComponentChildrenProps = {
-  children: {
-    type: Array,
-    default: [],
-  },
-};
-
 export function useComponentProps({
   replaceProps = {},
+
   hasChildren = false,
+  hasDialog = false,
 } = {}) {
   const componentProps = merge(
     {
-      ...(hasChildren ? defaultComponentChildrenProps : {}),
       ...defaultComponentProps,
+      ...(hasChildren ? defaultComponentChildrenProps : {}),
+      ...(hasDialog ? defaultComponentDialogProps : {}),
     },
     replaceProps
   );
 
   const makeComponent = (props) => {
-    const attrs = reactive(pick(props, Object.keys(componentProps)));
+    const attrs = reactive({ ...props, dialog: undefined, dialogShow: false });
 
-    if (attrs?.children.length) {
+    if (hasChildren && props?.children.length) {
       attrs.children = props.children.map(useComponent);
     }
 
-    return attrs;
+    const dialogMethods: any = {};
+    if (hasDialog && props?.dialog) {
+      attrs.dialog = useDialog(props.dialog);
+      dialogMethods.showDialog = () => {
+        attrs.dialogShow = true;
+      };
+    }
+
+    return { attrs: reactive(attrs), ...dialogMethods };
   };
 
   return { componentProps, makeComponent };
@@ -151,8 +142,8 @@ export function makeChildrenProps() {
   };
 }
 
-export function useChildrenAttrs(props) {
+export function useComponentChildren(props) {
   const children = props.children.map(useComponent);
 
-  return reactive({ children });
+  return { children: reactive(children) };
 }

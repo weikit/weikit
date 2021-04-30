@@ -12,18 +12,16 @@
 </template>
 
 <script>
+import { merge } from "lodash-es";
 import { defineComponent, toRef, toRefs } from "vue";
 import {
-  makeFieldProps,
-  makeInputFieldProps,
-  useFieldAttrs,
-  useFormInject,
-} from "../../composables/form";
+  defaultComponentFieldProps,
+  defaultComponentProps,
+} from "../../composables";
+import { useFieldAttrs, useFormInject } from "../../composables/form";
 
 export default defineComponent({
-  props: {
-    ...makeFieldProps(),
-    ...makeInputFieldProps(),
+  props: merge(defaultComponentProps, defaultComponentFieldProps, {
     cols: {
       type: Number,
       default: 5,
@@ -32,19 +30,12 @@ export default defineComponent({
       type: Number,
       default: 5,
     },
-  },
+  }),
   setup(props, { emit }) {
-    const fieldAttrs = useFieldAttrs(props);
-
-    const cols = toRef(props, "cols");
-    const rows = toRef(props, "rows");
-
     const { updateForm } = useFormInject(fieldAttrs, { emit });
 
     return {
-      ...toRefs(fieldAttrs),
-      cols,
-      rows,
+      ...toRefs(props),
     };
   },
 });

@@ -11,20 +11,15 @@
 
 <script>
 import { toRefs } from "vue";
-import {
-  makeComponentProps,
-  useComponentAttrs,
-} from "../../composables/component";
+import { defaultComponentProps } from "../../composables";
 
 export default {
   props: {
-    ...makeComponentProps(),
+    ...defaultComponentProps,
   },
   setup() {
-    const attrs = useComponentAttrs();
-
     return {
-      ...toRefs(attrs),
+      ...toRefs(props),
     };
   },
 };

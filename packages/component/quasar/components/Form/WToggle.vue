@@ -12,24 +12,22 @@
 
 <script>
 import { defineComponent, toRefs } from "vue";
-
 import {
+  defaultComponentFieldProps,
+  defaultComponentProps,
   useFormInject,
-  makeFieldProps,
-  useFieldAttrs,
-} from "../../composables/form";
+} from "../../composables";
 
 export default defineComponent({
   props: {
-    ...makeFieldProps(),
+    ...defaultComponentProps,
+    ...defaultComponentFieldProps,
   },
   setup(props, { emit }) {
-    const fieldAttrs = useFieldAttrs(props);
-
     const { updateForm } = useFormInject(fieldAttrs, { emit });
 
     return {
-      ...toRefs(fieldAttrs),
+      ...toRefs(props),
     };
   },
 });

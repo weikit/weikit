@@ -16,32 +16,22 @@
 <script>
 import { defineComponent, toRefs } from "vue";
 
-import {
-  makeChildrenProps,
-  makeComponentProps,
-  useComponentAttrs,
-  useChildrenAttrs,
-  useComponent,
-} from "../../composables/component";
+import { defaultComponentProps, useComponent } from "../../composables";
 
 export default defineComponent({
   props: {
-    ...makeComponentProps(),
-    ...makeChildrenProps(),
+    ...defaultComponentProps,
     title: {
       type: Object,
-      default: null,
+      default: "",
     },
   },
   setup(props) {
-    const componentAttrs = useComponentAttrs(props);
-    const childrenAttrs = useChildrenAttrs(props);
-
     const title = props.title && useComponent(props.title);
 
     return {
-      ...toRefs(componentAttrs),
-      ...toRefs(childrenAttrs),
+      ...toRefs(props),
+
       title,
     };
   },

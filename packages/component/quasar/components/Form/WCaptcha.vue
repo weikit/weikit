@@ -18,40 +18,37 @@
 </template>
 
 <script>
+import { merge } from "lodash-es";
 import { defineComponent } from "vue";
 import { toRefs } from "@vue/reactivity";
 import { useCaptcha } from "../../composables/captcha";
+import { useFormInject } from "../../composables/form";
 import {
-  useFormInject,
-  makeFieldProps,
-  useFieldAttrs,
-} from "../../composables/form";
+  defaultComponentFieldProps,
+  defaultComponentProps,
+} from "../../composables";
 
 export default defineComponent({
-  props: {
-    ...makeFieldProps({
-      extra: {
-        default: {
-          filled: true,
-        },
+  props: merge(defaultComponentProps, defaultComponentFieldProps, {
+    extra: {
+      default: {
+        filled: true,
       },
-    }),
+    },
     url: {
       type: String,
       required: true,
     },
-  },
+  }),
   setup(props, { emit }) {
-    const fieldAtts = useFieldAttrs(props);
-
-    const { errors, isValid } = useFormInject(fieldAtts, { emit });
+    const { errors, isValid } = useFormInject(props, { emit });
 
     const { captchaUrl, updateCaptchaUrl } = useCaptcha({
       url: props.url,
     });
 
     return {
-      ...toRefs(fieldAtts),
+      ...toRefs(props),
       captchaUrl,
       updateCaptchaUrl,
       errors,

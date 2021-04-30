@@ -16,7 +16,13 @@
 </template>
 
 <script>
+import { merge } from "lodash-es";
 import { defineComponent, toRefs } from "vue";
+import {
+  defaultComponentChildrenProps,
+  defaultComponentFormProps,
+  defaultComponentProps,
+} from "../../composables";
 import {
   makeFormProps,
   useFormAttrs,
@@ -24,20 +30,21 @@ import {
 } from "../../composables/form";
 
 export default defineComponent({
-  props: {
-    ...makeFormProps({
+  props: merge(
+    defaultComponentProps,
+    defaultComponentChildrenProps,
+    defaultComponentFormProps,
+    {
       classes: {
         default: "q-gutter-sm",
       },
-    }),
-  },
+    }
+  ),
   setup(props) {
-    const formAttrs = useFormAttrs(props);
-
-    const { form } = useFormProvide(formAttrs);
+    const { form } = useFormProvide(props);
 
     return {
-      ...toRefs(formAttrs),
+      ...toRefs(props),
       form,
     };
   },

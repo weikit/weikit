@@ -28,34 +28,32 @@
 </template>
 
 <script>
+import { merge } from "lodash-es";
 import { defineComponent, toRefs } from "vue";
 import {
   useFormInject,
-  makeFieldProps,
-  makeInputFieldProps,
-  useFieldAttrs,
-  useInputFieldAttrs,
-} from "../../composables/form";
+  defaultComponentProps,
+  defaultComponentFieldProps,
+  defaultComponentInputFieldProps,
+} from "../../composables";
 
 export default defineComponent({
-  props: {
-    ...makeFieldProps(),
-    ...makeInputFieldProps(),
-    type: {
-      type: String,
-      default: "",
-    },
-  },
+  props: merge(
+    defaultComponentProps,
+    defaultComponentFieldProps,
+    defaultComponentInputFieldProps,
+    {
+      type: {
+        type: String,
+        default: "",
+      },
+    }
+  ),
   setup(props, { emit }) {
-    const fieldAttrs = useFieldAttrs(props);
-    const inputFieldAttrs = useInputFieldAttrs(props);
-    const type = ref(props.type);
-
     const { updateForm } = useFormInject(fieldAttrs, { emit });
 
     return {
-      ...toRefs(fieldAttrs),
-      ...toRefs(inputFieldAttrs),
+      ...toRefs(props),
       type,
     };
   },

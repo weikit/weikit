@@ -12,52 +12,41 @@
 </template>
 
 <script>
+import { merge } from "lodash-es";
 import { defineComponent, ref, toRef, toRefs } from "vue";
-import {
-  makeComponentProps,
-  useComponentAttrs,
-} from "../../composables/component";
-import { useFormInject } from "../../composables/form";
+import { defaultComponentProps, useFormInject } from "../../composables";
 
 export default defineComponent({
-  props: {
-    ...makeComponentProps({
-      extra: {
-        default: {
-          color: "primary",
-        },
+  props: merge(defaultComponentProps, {
+    extra: {
+      default: {
+        color: "primary",
       },
-      classes: {
-        default: "full-width",
-      },
-    }),
-
+    },
+    classes: {
+      default: "full-width",
+    },
     type: {
       type: String,
       default: "button",
     },
-
     label: {
       type: String,
       default: "",
       required: true,
     },
-  },
+  }),
   setup(props) {
-    const componentAttrs = useComponentAttrs(props);
-    const label = toRef(props, "label");
-    const type = toRef(props, "type");
-
     const { form, submitForm, resetForm } = useFormInject(props);
 
     const handleClick = () => {
-      if (type.value == "submit") {
+      if (props.type == "submit") {
         if (submitForm) {
           submitForm();
         } else {
           console.warn("Cannot submit because the form was not detected");
         }
-      } else if ((type.value = "reset")) {
+      } else if ((props.type = "reset")) {
         if (resetForm) {
           resetForm();
         } else {
@@ -67,9 +56,9 @@ export default defineComponent({
     };
 
     return {
-      ...toRefs(componentAttrs),
+      ...toRefs(props),
       form: ref(form),
-      label,
+
       handleClick,
     };
   },

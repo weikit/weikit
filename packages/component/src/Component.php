@@ -95,7 +95,7 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
         return $this->append('events', $event);
     }
 
-    public function toggleDialog(Dialog $dialog, $on = 'click')
+    public function dialog(Dialog $dialog, $on = 'click')
     {
         return $this->set('dialog', $dialog);
     }

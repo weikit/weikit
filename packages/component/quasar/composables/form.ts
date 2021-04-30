@@ -1,7 +1,8 @@
 import { merge, pick } from "lodash-es";
 import { computed, inject, provide, reactive, readonly, watch } from "vue";
 import { Dialog, Notify } from "quasar";
-import { defaultComponentProps, useChildrenAttrs } from "./component";
+import { defaultComponentProps } from "./props";
+import { useChildrenAttrs } from "./component";
 import { emitComponentEvent } from "./event";
 import { useComponentHttp } from "./http";
 

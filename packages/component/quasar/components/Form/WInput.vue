@@ -16,7 +16,13 @@
 </template>
 
 <script>
+import { merge } from "lodash-es";
 import { defineComponent, toRefs } from "vue";
+import {
+  defaultComponentFieldProps,
+  defaultComponentInputFieldProps,
+  defaultComponentProps,
+} from "../../composables";
 
 import {
   useFormInject,
@@ -27,16 +33,18 @@ import {
 } from "../../composables/form";
 
 export default defineComponent({
-  props: {
-    ...makeFieldProps({
+  props: merge(
+    defaultComponentProps,
+    defaultComponentFieldProps,
+    defaultComponentInputFieldProps,
+    {
       extra: {
         default: {
           filled: true,
         },
       },
-    }),
-    ...makeInputFieldProps(),
-  },
+    }
+  ),
   setup(props, { emit }) {
     const fieldAttrs = useFieldAttrs(props);
     const inputFieldAttrs = useInputFieldAttrs(props);
@@ -44,7 +52,7 @@ export default defineComponent({
     const { errors, isValid } = useFormInject(fieldAttrs, { emit });
 
     return {
-      ...toRefs(fieldAttrs),
+      ...toRefs(props),
       ...toRefs(inputFieldAttrs),
       errors,
       isValid,

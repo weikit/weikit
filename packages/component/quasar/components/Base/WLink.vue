@@ -1,22 +1,36 @@
 <template>
-  <a>123 </a>
+  <a :id="id" :class="classes" :styles="styles" :href="url" v-bind="extra">
+    {{ text }}
+
+    <component
+      v-if="dialog"
+      v-model="dialogShow"
+      :is="dialog.componentName"
+      v-bind="dialog.componentOptions"
+    />
+  </a>
 </template>
 
 <script>
 import { defineComponent, toRefs } from "vue";
-import { makeComponentProps } from "../../composables";
-
-const { componentProps, makeComponent } = makeComponentProps({
-  hasChildren: true,
-});
+import {
+  defaultComponentDialogProps,
+  defaultComponentProps,
+} from "../../composables";
+import { useDialog } from "../../composables/dialog";
 
 export default defineComponent({
-  props: componentProps,
-  setup(props, {}) {
-    const { attrs = makeComponent(props);
+  props: {
+    ...defaultComponentProps,
+    ...defaultComponentDialogProps,
+  },
+  setup(props) {
+    const { dialog, dialogVisible, showDialog, hideDialog } = useDialog(
+      props.dialog
+    );
 
     return {
-      ...toRefs(attrs),
+      ...toRefs(props),
     };
   },
 });

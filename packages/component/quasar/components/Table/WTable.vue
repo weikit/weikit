@@ -5,7 +5,7 @@
     :styles="styles"
     v-bind="extra"
     :columns="columns"
-    :rows="rows"
+    :rows="pagination.rows"
     v-model:pagination="pagination"
     :loading="loading"
     @request="loadData"
@@ -47,21 +47,30 @@
 
 <script>
 import { defineComponent, toRefs } from "vue";
-import { makeTableProps, useTable } from "../../composables/table";
+import {
+  defaultComponentProps,
+  defaultComponentTableProps,
+  useTable,
+  useTableColumns,
+} from "../../composables";
 
 export default defineComponent({
   props: {
-    ...makeTableProps(),
+    ...defaultComponentProps,
+    ...defaultComponentTableProps,
   },
   setup(props) {
-    const { attrs, loadData } = useTable(props);
+    const { loading, pagination, loadData } = useTable(props);
+    loadData({ pagination });
 
-    loadData({ pagination: attrs.pagination });
-
-    console.log(attrs);
+    const { columns } = useTableColumns(props);
 
     return {
-      ...toRefs(attrs),
+      ...toRefs(props),
+      loading,
+      pagination,
+      columns,
+
       loadData,
     };
   },
