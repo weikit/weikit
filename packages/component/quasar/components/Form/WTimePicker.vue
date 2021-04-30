@@ -39,6 +39,7 @@ import {
 
 export default defineComponent({
   props: merge(
+    {},
     defaultComponentProps,
     defaultComponentFieldProps,
     defaultComponentInputFieldProps,

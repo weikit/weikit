@@ -22,18 +22,12 @@ import {
   defaultComponentFieldProps,
   defaultComponentInputFieldProps,
   defaultComponentProps,
-} from "../../composables";
-
-import {
   useFormInject,
-  makeFieldProps,
-  makeInputFieldProps,
-  useFieldAttrs,
-  useInputFieldAttrs,
-} from "../../composables/form";
+} from "../../composables";
 
 export default defineComponent({
   props: merge(
+    {},
     defaultComponentProps,
     defaultComponentFieldProps,
     defaultComponentInputFieldProps,
@@ -46,14 +40,11 @@ export default defineComponent({
     }
   ),
   setup(props, { emit }) {
-    const fieldAttrs = useFieldAttrs(props);
-    const inputFieldAttrs = useInputFieldAttrs(props);
-
-    const { errors, isValid } = useFormInject(fieldAttrs, { emit });
+    const { errors, isValid } = useFormInject(props, { emit });
 
     return {
       ...toRefs(props),
-      ...toRefs(inputFieldAttrs),
+
       errors,
       isValid,
     };

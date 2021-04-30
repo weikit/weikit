@@ -13,11 +13,11 @@
 
 <script>
 import { merge } from "lodash-es";
-import { defineComponent, ref, toRef, toRefs } from "vue";
+import { defineComponent, ref, toRefs } from "vue";
 import { defaultComponentProps, useFormInject } from "../../composables";
 
 export default defineComponent({
-  props: merge(defaultComponentProps, {
+  props: merge({}, defaultComponentProps, {
     extra: {
       default: {
         color: "primary",
@@ -38,6 +38,8 @@ export default defineComponent({
   }),
   setup(props) {
     const { form, submitForm, resetForm } = useFormInject(props);
+    console.log(defaultComponentProps);
+    console.log(props);
 
     const handleClick = () => {
       if (props.type == "submit") {

@@ -3,6 +3,9 @@
     <component v-if="title" :is="title.componentName" v-bind="title" />
 
     <q-card-section v-if="children.length > 0">
+      <div :key="index" v-for="(child, index) in children">
+        {{ child.componentOptions }}
+      </div>
       <component
         :key="index"
         v-for="({ componentName, ...componentOptions }, index) in children"
@@ -14,13 +17,19 @@
 </template>
 
 <script>
-import { defineComponent, toRefs } from "vue";
+import { defineComponent, ref, toRefs } from "vue";
 
-import { defaultComponentProps, useComponent } from "../../composables";
+import {
+  defaultComponentChildrenProps,
+  defaultComponentProps,
+  useComponent,
+  useComponentChildren,
+} from "../../composables";
 
 export default defineComponent({
   props: {
     ...defaultComponentProps,
+    ...defaultComponentChildrenProps,
     title: {
       type: Object,
       default: "",
@@ -28,10 +37,12 @@ export default defineComponent({
   },
   setup(props) {
     const title = props.title && useComponent(props.title);
+    console.log(defaultComponentProps);
+    const { children } = useComponentChildren(props);
 
     return {
       ...toRefs(props),
-
+      children: ref(children),
       title,
     };
   },

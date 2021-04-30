@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" class="row" :class="classes">
+  <div :id="id" :class="classes" :styles="styles" v-bind="extra">
     <div
       class="col"
       :key="index"
@@ -11,11 +11,12 @@
 </template>
 
 <script>
-import { defineComponent, toRefs } from "vue";
+import { defineComponent, ref, toRefs } from "vue";
 import {
   defaultComponentChildrenProps,
   defaultComponentFieldProps,
   defaultComponentProps,
+  useComponentChildren,
 } from "../../composables";
 
 export default defineComponent({
@@ -25,8 +26,12 @@ export default defineComponent({
     ...defaultComponentFieldProps,
   },
   setup(props) {
+    const { children } = useComponentChildren(props);
+
+    console.log(children);
     return {
       ...toRefs(props),
+      children: ref(children),
     };
   },
 });

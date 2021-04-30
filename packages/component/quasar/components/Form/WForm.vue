@@ -17,20 +17,18 @@
 
 <script>
 import { merge } from "lodash-es";
-import { defineComponent, toRefs } from "vue";
+import { defineComponent, toRefs, ref } from "vue";
 import {
   defaultComponentChildrenProps,
   defaultComponentFormProps,
   defaultComponentProps,
-} from "../../composables";
-import {
-  makeFormProps,
-  useFormAttrs,
+  useComponentChildren,
   useFormProvide,
-} from "../../composables/form";
+} from "../../composables";
 
 export default defineComponent({
   props: merge(
+    {},
     defaultComponentProps,
     defaultComponentChildrenProps,
     defaultComponentFormProps,
@@ -43,9 +41,12 @@ export default defineComponent({
   setup(props) {
     const { form } = useFormProvide(props);
 
+    const { children } = useComponentChildren(props);
+
     return {
       ...toRefs(props),
-      form,
+      children: ref(children),
+      form: ref(form),
     };
   },
 });

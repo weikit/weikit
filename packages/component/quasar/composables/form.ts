@@ -1,8 +1,6 @@
 import { merge, pick } from "lodash-es";
 import { computed, inject, provide, reactive, readonly, watch } from "vue";
 import { Dialog, Notify } from "quasar";
-import { defaultComponentProps } from "./props";
-import { useChildrenAttrs } from "./component";
 import { emitComponentEvent } from "./event";
 import { useComponentHttp } from "./http";
 
@@ -18,84 +16,6 @@ const INIT_FORM_PROVIDE_KEY = Symbol("init_form");
 const UPDATE_FORM_PROVIDE_KEY = Symbol("update_form");
 const RESET_FORM_PROVIDE_KEY = Symbol("reset_form");
 const SUBMIT_FORM_PROVIDE_KEY = Symbol("submit_form");
-
-const defaultFormProps = {
-  ...defaultComponentProps,
-  action: {
-    type: String,
-    default: "",
-  },
-  method: {
-    type: String,
-    default: "POST",
-  },
-  messages: {
-    type: Object,
-    default: {},
-  },
-  children: {
-    type: Array,
-    default: [],
-  },
-};
-
-export function makeFormProps(replaceProps = {}) {
-  return merge({}, defaultFormProps, replaceProps);
-}
-
-export function useFormAttrs(props) {
-  return reactive({
-    ...pick(props, Object.keys(defaultFormProps)),
-    ...useChildrenAttrs(props),
-  });
-}
-
-const defaultFieldProps = {
-  ...defaultComponentProps,
-  name: {
-    type: String,
-    default: "",
-  },
-  label: {
-    type: String,
-    default: "",
-  },
-  hint: {
-    type: String,
-    default: "",
-  },
-  value: {
-    type: String,
-    default: "",
-  },
-};
-
-export function makeFieldProps(replaceProps = {}) {
-  return merge({}, defaultFieldProps, replaceProps);
-}
-
-export function useFieldAttrs(props) {
-  return reactive(pick(props, Object.keys(defaultFieldProps)));
-}
-
-const defaultInputFieldProps = {
-  type: {
-    type: String,
-    default: "text",
-  },
-  placeholder: {
-    type: String,
-    default: "",
-  },
-};
-
-export function makeInputFieldProps(replaceProps = {}) {
-  return merge(defaultInputFieldProps, replaceProps);
-}
-
-export function useInputFieldAttrs(props) {
-  return reactive(pick(props, Object.keys(defaultInputFieldProps)));
-}
 
 let useFormCallback;
 export function setForm(callback: Function) {

@@ -21,7 +21,7 @@ import {
 import { useFieldAttrs, useFormInject } from "../../composables/form";
 
 export default defineComponent({
-  props: merge(defaultComponentProps, defaultComponentFieldProps, {
+  props: merge({}, defaultComponentProps, defaultComponentFieldProps, {
     cols: {
       type: Number,
       default: 5,
