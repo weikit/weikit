@@ -25,10 +25,11 @@ export default defineComponent({
     ...defaultComponentFieldProps,
   },
   setup(props, { emit }) {
-    const { updateForm } = useFormInject(props, { emit });
+    const { value, updateForm } = useFormInject(props, { emit });
 
     return {
       ...toRefs(props),
+      value,
     };
   },
 });

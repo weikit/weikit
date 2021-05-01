@@ -38,8 +38,6 @@ export default defineComponent({
   }),
   setup(props) {
     const { form, submitForm, resetForm } = useFormInject(props);
-    console.log(defaultComponentProps);
-    console.log(props);
 
     const handleClick = () => {
       if (props.type == "submit") {

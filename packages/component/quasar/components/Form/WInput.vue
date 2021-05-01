@@ -40,11 +40,11 @@ export default defineComponent({
     }
   ),
   setup(props, { emit }) {
-    const { errors, isValid } = useFormInject(props, { emit });
+    const { value, errors, isValid } = useFormInject(props, { emit });
 
     return {
       ...toRefs(props),
-
+      value,
       errors,
       isValid,
     };

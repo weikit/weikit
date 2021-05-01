@@ -37,7 +37,7 @@ export default defineComponent({
   },
   setup(props) {
     const title = props.title && useComponent(props.title);
-    console.log(defaultComponentProps);
+
     const { children } = useComponentChildren(props);
 
     return {

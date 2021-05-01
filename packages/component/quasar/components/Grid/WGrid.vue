@@ -28,7 +28,6 @@ export default defineComponent({
   setup(props) {
     const { children } = useComponentChildren(props);
 
-    console.log(children);
     return {
       ...toRefs(props),
       children: ref(children),

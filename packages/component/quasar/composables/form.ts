@@ -1,5 +1,5 @@
 import { merge, pick } from "lodash-es";
-import { computed, inject, provide, reactive, readonly, watch } from "vue";
+import { computed, inject, provide, reactive, readonly, ref, watch } from "vue";
 import { Dialog, Notify } from "quasar";
 import { emitComponentEvent } from "./event";
 import { useComponentHttp } from "./http";
@@ -22,16 +22,16 @@ export function setForm(callback: Function) {
   useFormCallback = callback;
 }
 
-function makeForm(attrs) {
+function makeForm(props) {
   const http = useComponentHttp();
 
-  if (useFormCallback) return useFormCallback(attrs, { http });
+  if (useFormCallback) return useFormCallback(props, { http });
 
   const defaultFormData = reactive({});
   const form = reactive({
-    id: attrs.id,
-    url: attrs.url || location.href,
-    method: attrs.method || "POST",
+    id: props.id,
+    url: props.url || location.href,
+    method: props.method || "POST",
     processing: false,
     errors: {},
     data: {},
@@ -53,9 +53,9 @@ function makeForm(attrs) {
         Object.keys(defaultFormData).map((key) =>
           updateForm(key, defaultFormData[key])
         );
-        if (attrs.messages[SCENE_RESET_SUCCESS]) {
+        if (props.messages[SCENE_RESET_SUCCESS]) {
           Notify.create({
-            message: attrs.messages[SCENE_RESET_SUCCESS],
+            message: props.messages[SCENE_RESET_SUCCESS],
             position: "top",
           });
         }
@@ -64,16 +64,16 @@ function makeForm(attrs) {
       }
     };
     const cancel = async () => {
-      if (attrs.messages[SCENE_RESET_CANCEL]) {
+      if (props.messages[SCENE_RESET_CANCEL]) {
         Dialog.create({
-          message: attrs.messages[SCENE_RESET_CANCEL],
+          message: props.messages[SCENE_RESET_CANCEL],
         });
       }
     };
 
-    if (attrs.messages[SCENE_RESET_CONFIRM]) {
+    if (props.messages[SCENE_RESET_CONFIRM]) {
       Dialog.create({
-        message: attrs.messages[SCENE_RESET_CONFIRM],
+        message: props.messages[SCENE_RESET_CONFIRM],
         cancel: true,
       })
         .onOk(confirm)
@@ -95,7 +95,7 @@ function makeForm(attrs) {
           data: form.data,
         });
 
-        const message = data.message || attrs.messages[SCENE_SUBMIT_SUCCESS];
+        const message = data.message || props.messages[SCENE_SUBMIT_SUCCESS];
         if (message) {
           Notify.create({
             message,
@@ -107,7 +107,7 @@ function makeForm(attrs) {
           data: readonly(data),
         };
 
-        if (attrs.id) emitComponentEvent(`form_submit:${attrs.id}`, event);
+        if (props.id) emitComponentEvent(`form_submit:${props.id}`, event);
         emitComponentEvent(`form_submit`, event);
       } catch (e) {
         console.log(e);
@@ -125,16 +125,16 @@ function makeForm(attrs) {
     };
 
     const cancel = async () => {
-      if (attrs.messages[SCENE_SUBMIT_CANCEL]) {
+      if (props.messages[SCENE_SUBMIT_CANCEL]) {
         Dialog.create({
-          message: attrs.messages[SCENE_SUBMIT_CANCEL],
+          message: props.messages[SCENE_SUBMIT_CANCEL],
         });
       }
     };
 
-    if (attrs.messages[SCENE_SUBMIT_CONFIRM]) {
+    if (props.messages[SCENE_SUBMIT_CONFIRM]) {
       Dialog.create({
-        message: attrs.messages[SCENE_SUBMIT_CONFIRM],
+        message: props.messages[SCENE_SUBMIT_CONFIRM],
         cancel: true,
       })
         .onOk(confirm)
@@ -148,8 +148,8 @@ function makeForm(attrs) {
   return { form, initForm, updateForm, resetForm, submitForm };
 }
 
-export function useFormProvide(attrs) {
-  const { form, initForm, updateForm, resetForm, submitForm } = makeForm(attrs);
+export function useFormProvide(props) {
+  const { form, initForm, updateForm, resetForm, submitForm } = makeForm(props);
 
   provide(FORM_PROVIDE_KEY, readonly(form));
   provide(INIT_FORM_PROVIDE_KEY, initForm);
@@ -161,7 +161,7 @@ export function useFormProvide(attrs) {
 }
 
 export function useFormInject(
-  attrs,
+  props,
   { initFormValue = true, watchValue = true, emit = null } = {}
 ) {
   const form: any = inject(FORM_PROVIDE_KEY);
@@ -170,18 +170,20 @@ export function useFormInject(
   const resetForm: Function = inject(RESET_FORM_PROVIDE_KEY);
   const submitForm: Function = inject(SUBMIT_FORM_PROVIDE_KEY);
 
-  if (updateForm && attrs.name) {
+  const value = ref(props.value);
+
+  if (updateForm && props.name) {
     // init value
     if (initFormValue) {
-      initForm(attrs.name, attrs.value);
+      initForm(props.name, props.value);
     }
 
     // watch value two way binging for auto update
     if (watchValue) {
       watch(
-        () => attrs.value,
+        () => props.value,
         (val) => {
-          updateForm(attrs.name, val);
+          updateForm(props.name, val);
 
           if (emit) {
             emit("input", val);
@@ -189,8 +191,8 @@ export function useFormInject(
         }
       );
       watch(
-        () => form.data[attrs.name],
-        (val) => (attrs.value = val)
+        () => form.data[props.name],
+        (val) => (value.value = val)
       );
     }
   }
@@ -199,8 +201,8 @@ export function useFormInject(
     let errors = [];
 
     Object.keys(form.errors).forEach((key) => {
-      if (key == attrs.name) {
-        errors = form.errors[attrs.name];
+      if (key == props.name) {
+        errors = form.errors[props.name];
       }
     });
 
@@ -209,5 +211,14 @@ export function useFormInject(
 
   const isValid = computed(() => !(errors.value.length > 0));
 
-  return { form, errors, isValid, initForm, updateForm, resetForm, submitForm };
+  return {
+    value,
+    form,
+    errors,
+    isValid,
+    initForm,
+    updateForm,
+    resetForm,
+    submitForm,
+  };
 }

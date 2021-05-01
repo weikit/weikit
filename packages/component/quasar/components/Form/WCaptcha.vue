@@ -41,7 +41,7 @@ export default defineComponent({
     },
   }),
   setup(props, { emit }) {
-    const { errors, isValid } = useFormInject(props, { emit });
+    const { value, errors, isValid } = useFormInject(props, { emit });
 
     const { captchaUrl, updateCaptchaUrl } = useCaptcha({
       url: props.url,
@@ -49,6 +49,7 @@ export default defineComponent({
 
     return {
       ...toRefs(props),
+      value,
       captchaUrl,
       updateCaptchaUrl,
       errors,

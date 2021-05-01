@@ -34,7 +34,7 @@ export default defineComponent({
     },
   }),
   setup(props, { emit }) {
-    const { updateForm } = useFormInject(props, { emit });
+    const { value, updateForm } = useFormInject(props, { emit });
 
     const options = reactive(
       Array.isArray(props.options)
@@ -46,6 +46,7 @@ export default defineComponent({
     );
     return {
       ...toRefs(props),
+      value,
       options: toRefs(options),
     };
   },
