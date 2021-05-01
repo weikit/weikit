@@ -3,7 +3,7 @@ import axios from "axios";
 import config from "./config";
 
 const http = axios.create({
-  timeout: config.timeout || 2000,
+  timeout: config.timeout || 20000,
   baseURL: config.baseUrl,
   withCredentials: true,
 });

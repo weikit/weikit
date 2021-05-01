@@ -171,17 +171,18 @@ export function useFormInject(
   const submitForm: Function = inject(SUBMIT_FORM_PROVIDE_KEY);
 
   const value = ref(props.value);
+  console.log(1);
 
   if (updateForm && props.name) {
     // init value
     if (initFormValue) {
-      initForm(props.name, props.value);
+      initForm(props.name, value.value);
     }
 
     // watch value two way binging for auto update
     if (watchValue) {
       watch(
-        () => props.value,
+        () => value.value,
         (val) => {
           updateForm(props.name, val);
 
