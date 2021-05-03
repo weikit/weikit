@@ -10,14 +10,13 @@ export function useTableColumns(props) {
 }
 
 export function useTableColumn(props) {
-  const attrs = props.key == "action" ? props.children.map(useComponent) : {};
   return reactive({
     field: (row) => row[props.name],
     format: (val) => `${val}`,
     align: "center",
 
     ...props,
-    ...attrs,
+    children: props.key == "action" ? props.children.map(useComponent) : [],
   });
 }
 
@@ -63,10 +62,12 @@ export function useTable(props) {
       req.page(page);
     }
 
-    return req.get() as any;
+    const res = await req.all();
+
+    return res as any;
   };
   const loading = ref(false);
-  const pagination = reactive({
+  const pagination = ref({
     rows: [],
     sortBy: "desc",
     descending: false,
@@ -80,12 +81,12 @@ export function useTable(props) {
       loading.value = true;
       const { data, current_page, per_page, total } = await request(search);
 
-      pagination.rows = data;
-      pagination.page = current_page;
-      pagination.rowsPerPage = per_page;
-      pagination.rowsNumber = total;
-      pagination.sortBy = search.pagination.sortBy;
-      pagination.descending = search.pagination.descending;
+      pagination.value.rows = data;
+      pagination.value.page = current_page;
+      pagination.value.rowsPerPage = per_page;
+      pagination.value.rowsNumber = total;
+      pagination.value.sortBy = search.pagination.sortBy;
+      pagination.value.descending = search.pagination.descending;
     } finally {
       loading.value = false;
     }

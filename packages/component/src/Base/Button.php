@@ -3,6 +3,7 @@
 namespace Weikit\Component\Base;
 
 use Weikit\Component\Component;
+use Weikit\Component\Dialog\Traits\HasDialog;
 
 /**
  * Class Button
@@ -13,6 +14,8 @@ use Weikit\Component\Component;
  */
 class Button extends Component
 {
+    use HasDialog;
+
     const TYPE_SUBMIT = 'submit';
     const TYPE_RESET = 'reset';
     const TYPE_BUTTON = 'button';

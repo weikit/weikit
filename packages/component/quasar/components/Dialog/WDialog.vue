@@ -10,16 +10,24 @@
 </template>
 
 <script>
-import { toRefs } from "vue";
-import { defaultComponentProps } from "../../composables";
+import { ref, toRefs } from "vue";
+import {
+  defaultComponentChildrenProps,
+  defaultComponentProps,
+  useComponentChildren,
+} from "../../composables";
 
 export default {
   props: {
     ...defaultComponentProps,
+    ...defaultComponentChildrenProps,
   },
-  setup() {
+  setup(props) {
+    const { children } = useComponentChildren(props);
+
     return {
       ...toRefs(props),
+      children: ref(children),
     };
   },
 };

@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Tappable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Arrayable;
-use Weikit\Component\Dialog\Dialog;
 use Weikit\Component\Events\Event;
 use Weikit\Component\Traits\HasData;
 
@@ -95,8 +94,4 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
         return $this->append('events', $event);
     }
 
-    public function dialog(Dialog $dialog, $on = 'click')
-    {
-        return $this->set('dialog', $dialog);
-    }
 }

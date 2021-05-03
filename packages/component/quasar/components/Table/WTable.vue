@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { defineComponent, toRefs } from "vue";
+import { defineComponent, ref, toRefs } from "vue";
 import {
   defaultComponentProps,
   defaultComponentTableProps,
@@ -64,12 +64,13 @@ export default defineComponent({
     loadData({ pagination });
 
     const { columns } = useTableColumns(props);
+    console.log(columns);
 
     return {
       ...toRefs(props),
+      columns: ref(columns),
       loading,
       pagination,
-      columns,
 
       loadData,
     };

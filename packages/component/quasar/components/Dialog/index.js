@@ -1,3 +1,3 @@
-import WDialog from "./Wdialog";
+import WDialog from "./WDialog";
 
 export { WDialog };

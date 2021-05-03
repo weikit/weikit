@@ -1,13 +1,30 @@
 <template>
-  <a :id="id" :class="classes" :styles="styles" :href="url" v-bind="extra">
+  <a
+    :id="id"
+    :class="classes"
+    :styles="styles"
+    :href="url"
+    v-bind="extra"
+    v-if="dialog"
+    @click="showDialog"
+  >
     {{ text }}
 
     <component
-      v-if="dialog"
-      v-model="dialogShow"
+      v-model="dialogVisible"
       :is="dialog.componentName"
-      v-bind="dialog.componentOptions"
+      v-bind="dialog"
     />
+  </a>
+  <a
+    :id="id"
+    :class="classes"
+    :styles="styles"
+    :href="url"
+    v-bind="extra"
+    v-else
+  >
+    {{ text }}
   </a>
 </template>
 
@@ -23,11 +40,28 @@ export default defineComponent({
   props: {
     ...defaultComponentProps,
     ...defaultComponentDialogProps,
+    text: {
+      type: String,
+      default: "",
+    },
   },
   setup(props) {
-    const { dialog, dialogVisible, showDialog, hideDialog } = useDialog(
-      props.dialog
-    );
+    console.log(props);
+
+    if (props.dialog) {
+      const { dialog, dialogVisible, showDialog, hideDialog } = useDialog(
+        props
+      );
+
+      return {
+        ...toRefs(props),
+
+        dialog,
+        dialogVisible,
+        showDialog,
+        hideDialog,
+      };
+    }
 
     return {
       ...toRefs(props),

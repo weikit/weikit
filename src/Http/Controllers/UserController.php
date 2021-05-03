@@ -42,13 +42,13 @@ class UserController extends Controller
                 Action::make()
                     ->children([
                         Link::make('a', '编辑')
-                            ->toggleDialog(
+                            ->dialog(
                                 Dialog::make([
                                     Link::make('b', 'b')
                                 ])
                             ),
                         Link::make('b', '删除')
-                            ->target(Dialog::make([
+                            ->dialog(Dialog::make([
                                 Link::make('b', 'b')
                             ]))
                     ])

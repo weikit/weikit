@@ -1,3 +1,3 @@
-import WButton from "./Wbutton";
-import WLink from "./Wlink";
+import WButton from "./WButton";
+import WLink from "./WLink";
 export { WButton, WLink };

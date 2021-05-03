@@ -3,9 +3,11 @@
 namespace Weikit\Component\Base;
 
 use Weikit\Component\Component;
+use Weikit\Component\Dialog\Traits\HasDialog;
 
 class Link extends Component
 {
+    use HasDialog;
 
     public function __construct($url, $text)
     {
@@ -28,10 +30,5 @@ class Link extends Component
     public function url(string $url)
     {
         return $this->set('url', $url);
-    }
-
-    public function target(Component $component)
-    {
-        return $this->set('target', $component);
     }
 }
