@@ -40,9 +40,9 @@ import {
 export default defineComponent({
   props: merge(
     {},
-    defaultComponentProps,
-    defaultComponentFieldProps,
-    defaultComponentInputFieldProps,
+    defaultComponentProps(),
+    defaultComponentFieldProps(),
+    defaultComponentInputFieldProps(),
     {
       type: {
         type: String,

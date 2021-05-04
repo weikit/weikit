@@ -4,11 +4,14 @@ namespace Weikit\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Weikit\Component\Base\Button;
 use Weikit\Component\Card\Card;
 use Weikit\Component\Form\Captcha;
 use Weikit\Component\Form\Form;
 use Weikit\Component\Form\TextInput;
+use Weikit\Component\Form\Toggle;
 use Weikit\Component\Form\Traits\HasForm;
+use Weikit\Component\Layout\Grid;
 use Weikit\Http\Controllers\Controller;
 use Weikit\Http\Traits\HasRateLimiting;
 
@@ -58,6 +61,11 @@ class LoginController extends Controller
                    ->label(__('weikit::captcha.input.label'))
                    ->url(captcha_src('math'))
                    ->required(),
+            Grid::make([
+                Toggle::make('remember')
+                    ->label(__('weikit::auth.login.remember')),
+
+            ])
         ], __('weikit::auth.login.submit'))
                    ->id('login_form')
                    ->url(route('admin.auth.login'));

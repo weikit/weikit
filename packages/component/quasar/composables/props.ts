@@ -1,4 +1,4 @@
-export const defaultComponentProps = {
+export const defaultComponentProps = () => ({
   id: {
     type: String,
     default: "",
@@ -15,22 +15,22 @@ export const defaultComponentProps = {
     type: Object,
     default: {},
   },
-};
+});
 
-export const defaultComponentChildrenProps = {
+export const defaultComponentChildrenProps = () => ({
   children: {
     type: Array,
     default: [],
   },
-};
+});
 
-export const defaultComponentDialogProps = {
+export const defaultComponentDialogProps = () => ({
   dialog: {
     type: Object,
   },
-};
+});
 
-export const defaultComponentTableProps = {
+export const defaultComponentTableProps = () => ({
   url: {
     type: String,
     required: true,
@@ -43,9 +43,9 @@ export const defaultComponentTableProps = {
   pagination: {
     type: Object,
   },
-};
+});
 
-export const defaultComponentFormProps = {
+export const defaultComponentFormProps = () => ({
   action: {
     type: String,
     default: "",
@@ -62,9 +62,9 @@ export const defaultComponentFormProps = {
     type: Array,
     default: [],
   },
-};
+});
 
-export const defaultComponentFieldProps = {
+export const defaultComponentFieldProps = () => ({
   name: {
     type: String,
     default: "",
@@ -81,9 +81,9 @@ export const defaultComponentFieldProps = {
     type: String,
     default: "",
   },
-};
+});
 
-export const defaultComponentInputFieldProps = {
+export const defaultComponentInputFieldProps = () => ({
   type: {
     type: String,
     default: "text",
@@ -92,4 +92,4 @@ export const defaultComponentInputFieldProps = {
     type: String,
     default: "",
   },
-};
+});

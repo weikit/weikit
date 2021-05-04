@@ -20,8 +20,8 @@ import { useComponentChildren } from "../../composables/component";
 
 export default defineComponent({
   props: {
-    ...defaultComponentProps,
-    ...defaultComponentChildrenProps,
+    ...defaultComponentProps(),
+    ...defaultComponentChildrenProps(),
   },
   setup(props) {
     const { children } = useComponentChildren(props);

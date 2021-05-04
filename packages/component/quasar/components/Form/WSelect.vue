@@ -21,7 +21,7 @@ import {
 } from "../../composables";
 
 export default defineComponent({
-  props: merge({}, defaultComponentProps, defaultComponentFieldProps, {
+  props: merge({}, defaultComponentProps(), defaultComponentFieldProps(), {
     extra: {
       default: {
         mapOptions: true,

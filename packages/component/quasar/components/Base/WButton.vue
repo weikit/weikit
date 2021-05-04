@@ -17,7 +17,7 @@ import { defineComponent, ref, toRefs } from "vue";
 import { defaultComponentProps, useFormInject } from "../../composables";
 
 export default defineComponent({
-  props: merge({}, defaultComponentProps, {
+  props: merge({}, defaultComponentProps(), {
     extra: {
       default: {
         color: "primary",

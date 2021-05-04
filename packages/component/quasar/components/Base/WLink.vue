@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { merge } from "lodash-es";
 import { defineComponent, toRefs } from "vue";
 import {
   defaultComponentDialogProps,
@@ -37,14 +38,15 @@ import {
 import { useDialog } from "../../composables/dialog";
 
 export default defineComponent({
-  props: {
-    ...defaultComponentProps,
-    ...defaultComponentDialogProps,
+  props: merge({}, defaultComponentProps(), defaultComponentDialogProps(), {
+    classes: {
+      default: "text-primary",
+    },
     text: {
       type: String,
       default: "",
     },
-  },
+  }),
   setup(props) {
     console.log(props);
 

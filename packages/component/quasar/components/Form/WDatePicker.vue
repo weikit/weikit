@@ -43,9 +43,9 @@ import {
 
 export default defineComponent({
   props: {
-    ...defaultComponentProps,
-    ...defaultComponentFieldProps,
-    ...defaultComponentInputFieldProps,
+    ...defaultComponentProps(),
+    ...defaultComponentFieldProps(),
+    ...defaultComponentInputFieldProps(),
     type: {
       type: String,
       default: "",

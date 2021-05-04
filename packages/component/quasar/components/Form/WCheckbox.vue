@@ -20,8 +20,8 @@ import { useFormInject } from "../../composables/form";
 
 export default defineComponent({
   props: {
-    ...defaultComponentProps,
-    ...defaultComponentFieldProps,
+    ...defaultComponentProps(),
+    ...defaultComponentFieldProps(),
   },
   setup(props, { emit }) {
     const { value, updateForm } = useFormInject(fieldAtts, { emit });

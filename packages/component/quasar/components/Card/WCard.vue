@@ -28,8 +28,8 @@ import {
 
 export default defineComponent({
   props: {
-    ...defaultComponentProps,
-    ...defaultComponentChildrenProps,
+    ...defaultComponentProps(),
+    ...defaultComponentChildrenProps(),
     title: {
       type: Object,
       default: "",

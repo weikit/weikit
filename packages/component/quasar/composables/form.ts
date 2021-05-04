@@ -1,4 +1,3 @@
-import { merge, pick } from "lodash-es";
 import { computed, inject, provide, reactive, readonly, ref, watch } from "vue";
 import { Dialog, Notify } from "quasar";
 import { emitComponentEvent } from "./event";

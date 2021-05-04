@@ -19,8 +19,8 @@ import {
 
 export default {
   props: {
-    ...defaultComponentProps,
-    ...defaultComponentChildrenProps,
+    ...defaultComponentProps(),
+    ...defaultComponentChildrenProps(),
   },
   setup(props) {
     const { children } = useComponentChildren(props);

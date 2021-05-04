@@ -29,9 +29,9 @@ import {
 export default defineComponent({
   props: merge(
     {},
-    defaultComponentProps,
-    defaultComponentChildrenProps,
-    defaultComponentFormProps,
+    defaultComponentProps(),
+    defaultComponentChildrenProps(),
+    defaultComponentFormProps(),
     {
       classes: {
         default: "q-gutter-sm",

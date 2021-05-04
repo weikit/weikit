@@ -56,8 +56,8 @@ import {
 
 export default defineComponent({
   props: {
-    ...defaultComponentProps,
-    ...defaultComponentTableProps,
+    ...defaultComponentProps(),
+    ...defaultComponentTableProps(),
   },
   setup(props) {
     const { loading, pagination, loadData } = useTable(props);

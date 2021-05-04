@@ -20,8 +20,8 @@ import {
 
 export default defineComponent({
   props: {
-    ...defaultComponentProps,
-    ...defaultComponentFieldProps,
+    ...defaultComponentProps(),
+    ...defaultComponentFieldProps(),
   },
   setup(props, { emit }) {
     const { value, updateForm } = useFormInject(props, { emit });

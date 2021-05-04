@@ -10,7 +10,7 @@ import { defineComponent, toRefs } from "vue";
 import { defaultComponentProps } from "../../composables";
 
 export default defineComponent({
-  props: merge({}, defaultComponentProps, {
+  props: merge({}, defaultComponentProps(), {
     classes: {
       default: ["text-center", "text-h6"],
     },
