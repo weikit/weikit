@@ -8,7 +8,7 @@
     v-if="dialog"
     @click="showDialog"
   >
-    {{ text }}
+    <span>{{ text }}</span>
 
     <component
       v-model="dialogVisible"
@@ -24,7 +24,7 @@
     v-bind="extra"
     v-else
   >
-    {{ text }}
+    <span>{{ text }}</span>
   </a>
 </template>
 
@@ -39,8 +39,9 @@ import { useDialog } from "../../composables/dialog";
 
 export default defineComponent({
   props: merge({}, defaultComponentProps(), defaultComponentDialogProps(), {
-    classes: {
-      default: "text-primary",
+    url: {
+      type: String,
+      required: true,
     },
     text: {
       type: String,
@@ -48,8 +49,6 @@ export default defineComponent({
     },
   }),
   setup(props) {
-    console.log(props);
-
     if (props.dialog) {
       const { dialog, dialogVisible, showDialog, hideDialog } = useDialog(
         props

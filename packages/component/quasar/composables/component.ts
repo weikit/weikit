@@ -8,6 +8,9 @@ import {
 } from "./props";
 
 export const components = {
+  text: {
+    componentName: "WText",
+  },
   link: {
     componentName: "WLink",
   },
@@ -17,16 +20,7 @@ export const components = {
   form: {
     componentName: "WForm",
   },
-  text: {
-    componentName: "WInput",
-  },
-  number: {
-    componentName: "WInput",
-  },
-  email: {
-    componentName: "WInput",
-  },
-  password: {
+  input: {
     componentName: "WInput",
   },
   checkbox: {
@@ -55,6 +49,9 @@ export const components = {
   },
   table: {
     componentName: "WTable",
+  },
+  tableColumn: {
+    componentName: "WTableColumn",
   },
   card: {
     componentName: "WCard",

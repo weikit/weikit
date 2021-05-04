@@ -15,8 +15,7 @@ export function useTableColumn(props) {
     format: (val) => `${val}`,
     align: "center",
 
-    ...props,
-    children: props.key == "action" ? props.children.map(useComponent) : [],
+    ...useComponent(props),
   });
 }
 

@@ -4,11 +4,10 @@ namespace Weikit\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Weikit\Component\Base\Button;
 use Weikit\Component\Card\Card;
 use Weikit\Component\Form\Captcha;
 use Weikit\Component\Form\Form;
-use Weikit\Component\Form\TextInput;
+use Weikit\Component\Form\Input;
 use Weikit\Component\Form\Toggle;
 use Weikit\Component\Form\Traits\HasForm;
 use Weikit\Component\Layout\Grid;
@@ -50,10 +49,10 @@ class LoginController extends Controller
     protected function form()
     {
         return Form::make([
-            TextInput::make('username')
+            Input::make('username')
                      ->label(__('weikit::auth.login.username'))
                      ->required(),
-            TextInput::make('password')
+            Input::make('password')
                      ->label(__('weikit::auth.login.password'))
                      ->password()
                      ->required(),

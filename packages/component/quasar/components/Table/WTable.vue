@@ -10,13 +10,12 @@
     :loading="loading"
     @request="loadData"
     title="Users"
-    selection="multiple"
   >
     <template v-slot:loading>
       <q-inner-loading showing color="primary" />
     </template>
 
-    <template v-slot:top-right>
+    <!-- <template v-slot:top-right>
       <div class="text-black q-gutter-md text-subtitle1">
         <q-btn color="primary" label="创建" />
         <q-btn color="primary" label="删除" />
@@ -25,21 +24,17 @@
         <q-icon name="settings" />
         <q-icon name="fullscreen" />
       </div>
-    </template>
+    </template> -->
 
     <template
-      v-for="(column, n) in columns.filter(({ key }) => key == 'action')"
+      v-for="(column, n) in columns.filter(
+        (column) => column?.children?.length > 0
+      )"
       :key="n"
       v-slot:[`body-cell-${column.name}`]="props"
     >
       <q-td :props="props">
-        <component
-          :key="index"
-          v-for="({ componentName, ...componentOptions }, index) in props.col
-            .children"
-          :is="componentName"
-          v-bind="componentOptions"
-        />
+        <component :is="props.col.componentName" v-bind="props.col" />
       </q-td>
     </template>
   </q-table>
@@ -64,7 +59,6 @@ export default defineComponent({
     loadData({ pagination });
 
     const { columns } = useTableColumns(props);
-    console.log(columns);
 
     return {
       ...toRefs(props),

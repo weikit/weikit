@@ -2,7 +2,7 @@
 
 namespace Weikit\Component\Form;
 
-class TextInput extends Field
+class Input extends Field
 {
     use Traits\CanBeAutocompleted;
     use Traits\CanBeAutofocused;
@@ -13,7 +13,6 @@ class TextInput extends Field
 
     protected function init()
     {
-        $this->key('text');
         $this->text();
     }
 

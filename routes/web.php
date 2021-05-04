@@ -22,7 +22,7 @@ Route::group([
         'as' => 'user.',
     ], function() {
         // Login
-        Route::get('users', 'UserController@list')->middleware(['auth.admin'])->name('list');
+        Route::get('users', 'UserController@index')->middleware(['auth.admin'])->name('index');
         Route::get('users/search', "UserController@search")->middleware(['auth.admin'])->name('search');
     });
 

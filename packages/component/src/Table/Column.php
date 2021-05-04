@@ -1,9 +1,10 @@
 <?php
 
-namespace Weikit\Component\Table\Columns;
+namespace Weikit\Component\Table;
 
 use Illuminate\Support\Str;
 use Weikit\Component\Component;
+use Weikit\Component\Traits\HasChildren;
 
 /**
  * Class Column
@@ -17,10 +18,13 @@ use Weikit\Component\Component;
  */
 class Column extends Component
 {
+    use HasChildren;
+
     public function __construct($name, $label = null)
     {
         $this->label($label);
         $this->name($name);
+        $this->key('tableColumn');
 
         parent::__construct();
     }

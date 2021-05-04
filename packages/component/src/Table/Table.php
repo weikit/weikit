@@ -2,11 +2,10 @@
 
 namespace Weikit\Component\Table;
 
-use Illuminate\Database\Eloquent\Builder as Query;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Database\Eloquent\Builder as Query;
 use Weikit\Component\Component;
 use Weikit\Component\Traits\HasMake;
-use Weikit\Component\Table\Columns\Column;
 
 class Table extends Component
 {
