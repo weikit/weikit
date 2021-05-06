@@ -24,6 +24,7 @@ Route::group([
         // Login
         Route::get('users', 'UserController@index')->middleware(['auth.admin'])->name('index');
         Route::get('users/search', "UserController@search")->middleware(['auth.admin'])->name('search');
+        Route::get('users/{id}', "UserController@view")->middleware(['auth.admin'])->name('view');
     });
 
 

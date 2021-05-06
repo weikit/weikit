@@ -4,6 +4,8 @@ namespace Weikit\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Weikit\Component\Base\Link;
+use Weikit\Component\Detail\Detail;
+use Weikit\Component\Detail\Field;
 use Weikit\Component\Dialog\Dialog;
 use Weikit\Component\Form\Captcha;
 use Weikit\Component\Form\Form;
@@ -12,16 +14,16 @@ use Weikit\Component\Form\Toggle;
 use Weikit\Component\Form\Traits\HasForm;
 use Weikit\Component\Layout\Grid;
 use Weikit\Component\Table\Column;
-use Weikit\Component\Table\Columns\Action;
 use Weikit\Search\UserSearch;
 use Weikit\Component\Table\Table;
-use Weikit\Component\Table\Columns\Text;
 use Weikit\Component\Table\Traits\HasTable;
+use Weikit\Component\Detail\Traits\HasDetail;
 
 class UserController extends Controller
 {
-    use HasTable;
     use HasForm;
+    use HasTable;
+    use HasDetail;
 
     public function index()
     {
@@ -49,10 +51,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function detail(Request $request)
+    public function view(Request $request)
     {
         return \inertia('weikit::user/detail', [
-            'schema' => []
+            'schema' => $this->getDetail()
         ]);
     }
 
@@ -73,23 +75,22 @@ class UserController extends Controller
 
     protected function table()
     {
-        return Table::make()
-            ->columns([
-                Column::make('username')->sortable(),
-                Column::make('name'),
-                Column::make('action')->children([
-                    Link::make('a', '编辑')
-                        ->dialog(
-                            Dialog::make([
-                                Link::make('b', 'b')
-                            ])
-                        ),
-                    Link::make('b', '删除')
-                        ->dialog(Dialog::make([
+        return Table::make([
+            Column::make('username')->sortable(),
+            Column::make('name'),
+            Column::make('action')->children([
+                Link::make('a', '编辑')
+                    ->dialog(
+                        Dialog::make([
                             Link::make('b', 'b')
-                        ]))
-                ])
-            ]);
+                        ])
+                    ),
+                Link::make('b', '删除')
+                    ->dialog(Dialog::make([
+                        Link::make('b', 'b')
+                    ]))
+            ])
+        ]);
     }
 
     protected function form()
@@ -114,4 +115,13 @@ class UserController extends Controller
 //                   ->id('login_form')
 //                   ->url(route('admin.auth.login'));
     }
+
+    public function detail()
+    {
+        return Detail::make([
+            Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa')
+        ]);
+    }
+
+
 }

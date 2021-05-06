@@ -9,3 +9,5 @@ export * from "./Tabs";
 export * from "./Grid";
 
 export * from "./Dialog";
+
+export * from "./Detail";

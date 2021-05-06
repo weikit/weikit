@@ -71,6 +71,12 @@ export const components = {
   dialog: {
     componentName: "WDialog",
   },
+  detail: {
+    componentName: "WDetail",
+  },
+  detailField: {
+    componentName: "WDetailField",
+  },
 };
 
 export function useComponent(options) {

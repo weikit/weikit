@@ -9,12 +9,16 @@ use Weikit\Component\Traits\HasMake;
 
 class Table extends Component
 {
-    use HasMake;
-
     /**
      * @var Query|QueryBuilder
      */
     protected $query;
+
+    public static function make(array $columns = [])
+    {
+        return (new static())
+            ->columns($columns);
+    }
 
     public function init()
     {
@@ -31,6 +35,7 @@ class Table extends Component
         foreach($columns as $column) {
             $this->column($column);
         }
+
         return $this;
     }
 

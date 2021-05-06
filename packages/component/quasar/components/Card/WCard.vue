@@ -1,5 +1,5 @@
 <template>
-  <q-card :id="id" :class="classes" :style="styles">
+  <q-card :id="id" :class="classes" :style="styles" v-bind="extra">
     <component v-if="title" :is="title.componentName" v-bind="title" />
 
     <q-card-section v-if="children.length > 0">
