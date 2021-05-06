@@ -9,7 +9,7 @@ use Weikit\Component\Detail\Field;
 use Weikit\Component\Dialog\Dialog;
 use Weikit\Component\Form\Captcha;
 use Weikit\Component\Form\Form;
-use Weikit\Component\Form\TextInput;
+use Weikit\Component\Form\Input;
 use Weikit\Component\Form\Toggle;
 use Weikit\Component\Form\Traits\HasForm;
 use Weikit\Component\Layout\Grid;
@@ -96,10 +96,10 @@ class UserController extends Controller
     protected function form()
     {
 //        return Form::make([
-//            TextInput::make('username')
+//            Input::make('username')
 //                     ->label(__('weikit::auth.login.username'))
 //                     ->required(),
-//            TextInput::make('password')
+//            Input::make('password')
 //                     ->label(__('weikit::auth.login.password'))
 //                     ->password()
 //                     ->required(),
@@ -119,7 +119,16 @@ class UserController extends Controller
     public function detail()
     {
         return Detail::make([
-            Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa')
+            Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa'),
+            Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa'),
+            Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa'),
+            Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa'),
+            Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa'),
+            Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa'),
+
+            Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa'),
+            Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa'),
+            Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa'),
         ]);
     }
 

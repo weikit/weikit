@@ -1,6 +1,6 @@
 <template>
   <tr :id="id" :class="classes" :style="styles" v-bind="extra">
-    <td class="text-left">{{ label }}</td>
+    <td class="text-right">{{ label }}</td>
     <td class="text-left">
       <component :is="field.componentName" v-bind="field" />
     </td>
