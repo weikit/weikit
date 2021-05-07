@@ -25,7 +25,7 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
 
     public function __construct()
     {
-        if ($this->key === null) {
+        if ($this->component === null) {
             $this->component(Str::camel(class_basename(get_class($this))));
         }
 

@@ -2,7 +2,7 @@
   <q-layout>
     <q-page-container>
       <q-page class="flex flex-center">
-        <component :is="componentName" v-bind="componentOptions" />
+        <component :is="component" v-bind="componentOptions" />
       </q-page>
     </q-page-container>
   </q-layout>
@@ -17,7 +17,7 @@ export default defineComponent({
     schema: Object,
   },
   setup(props) {
-    const { componentName, ...componentOptions } = useComponent(props.schema);
+    const { component, ...componentOptions } = useComponent(props.schema);
 
     useComponentEvent(
       "form_submit",
@@ -27,7 +27,7 @@ export default defineComponent({
     );
 
     return {
-      componentName,
+      component,
       componentOptions,
     };
   },

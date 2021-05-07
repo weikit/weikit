@@ -1,6 +1,6 @@
 <template>
     <div class="q-pa-md">
-        <component :is="componentName" v-bind="componentOptions" />
+        <component :is="component" v-bind="componentOptions" />
     </div>
 </template>
 
@@ -13,9 +13,9 @@ export default defineComponent({
         schema: Object,
     },
     setup(props) {
-        const { componentName, ...componentOptions } = useComponent(props.schema);
+        const { component, ...componentOptions } = useComponent(props.schema);
         return {
-            componentName,
+            component,
             componentOptions,
         };
     },

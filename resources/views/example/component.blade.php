@@ -4,7 +4,7 @@
     <q-layout>
         <q-page-container>
             <q-page padding>
-                <component :is="componentName" v-bind="componentOptions" ></component>
+                <component :is="component" v-bind="componentOptions" ></component>
                 <remote></remote>
             </q-page>
         </q-page-container>
@@ -22,10 +22,10 @@
             setup() {
                 const { useComponent } = Uses;
 
-                const { componentName, ...componentOptions} = useComponent({!! $components->toJson() !!});
+                const { component, ...componentOptions} = useComponent({!! $components->toJson() !!});
 
                 return {
-                    componentName,
+                    component,
                     componentOptions,
                 }
             },
