@@ -32,6 +32,6 @@ class Detail extends Component
      */
     public function field(Field $field)
     {
-        return $this->append('fields', $field);
+        return $this->append('fields', $field->parent($this));
     }
 }

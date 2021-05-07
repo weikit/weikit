@@ -46,7 +46,7 @@ class Table extends Component
      */
     public function column(Column $column)
     {
-        return $this->append('columns', $column);
+        return $this->append('columns', $column->parent($this));
     }
 
     /**

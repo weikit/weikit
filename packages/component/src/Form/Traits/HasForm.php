@@ -8,7 +8,7 @@ use Weikit\Component\Form\Form;
 
 trait HasForm
 {
-    private $form;
+    private Form $form;
 
     public function validate(Request $request = null, $rules = null, $messages = [], $attributes = [])
     {

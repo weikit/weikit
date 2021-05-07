@@ -2,12 +2,12 @@
 
 namespace Weikit\Component\Form;
 
-use Weikit\Component\Base\Button;
 use Illuminate\Database\Eloquent\Model;
 use Weikit\Component\Component;
+use Weikit\Component\Base\Button;
+use Weikit\Component\Form\Traits\HasModel;
 use Weikit\Component\Layout\Grid;
 use Weikit\Component\Traits\HasChildren;
-use Weikit\Component\Traits\HasMakeChildren;
 
 /**
  * Class Form
@@ -22,10 +22,8 @@ use Weikit\Component\Traits\HasMakeChildren;
  */
 class Form extends Component
 {
+    use HasModel;
     use HasChildren;
-    use HasMakeChildren {
-        HasMakeChildren::make as _make;
-    }
 
     const SCENE_SUBMIT_CONFIRM = "submit_confirm";
     const SCENE_SUBMIT_CANCEL = "submit_cancel";
@@ -40,9 +38,12 @@ class Form extends Component
         $this->url(url()->current());
     }
 
-    public static function make(array $children = [], $button = null)
+    public static function make(array $children, Model $model = null, $button = null)
     {
-        $instance = static::_make($children);
+        $instance = new static();
+
+        $instance->model($model);
+        $instance->children($children);
 
         if ($button !== false) {
             $instance->child(Grid::make([
@@ -150,22 +151,6 @@ class Form extends Component
         }
 
         return $rules;
-    }
-
-    /**
-     * @param Model $model
-     *
-     * @return $this
-     */
-    public function model($model)
-    {
-        $children = collect($this->children)
-            ->map(function ($field) use ($model) {
-                return $field->model($model);
-            })
-            ->toArray();
-
-        return $this->children($children);
     }
 
     /**

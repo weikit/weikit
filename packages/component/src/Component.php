@@ -9,6 +9,7 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Arrayable;
 use Weikit\Component\Events\Event;
 use Weikit\Component\Traits\HasData;
+use Weikit\Component\Traits\HasParent;
 
 /**
  * Class Component
@@ -22,6 +23,7 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
 {
     use Tappable;
     use HasData;
+    use HasParent;
 
     public function __construct()
     {
