@@ -14,7 +14,7 @@ class Field extends Component
     {
         $this->label($label);
         $this->field(!$field instanceof Component ? Text::make($field) : $field);
-        $this->key('detailField');
+        $this->component('detailField');
 
         parent::__construct();
     }

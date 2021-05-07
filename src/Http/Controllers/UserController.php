@@ -40,7 +40,7 @@ class UserController extends Controller
     public function create(Request $request)
     {
         return \inertia('weikit::user/create', [
-            'schema' => []
+            'schema' => $this->getForm()
         ]);
     }
 
@@ -79,13 +79,14 @@ class UserController extends Controller
             Column::make('username')->sortable(),
             Column::make('name'),
             Column::make('action')->children([
-                Link::make('a', '编辑')
+                Link::make('查看', route('admin.user.view', ['id' => 1])),
+                Link::make('编辑', 'a')
                     ->dialog(
                         Dialog::make([
                             Link::make('b', 'b')
                         ])
                     ),
-                Link::make('b', '删除')
+                Link::make('删除', 'b')
                     ->dialog(Dialog::make([
                         Link::make('b', 'b')
                     ]))
@@ -95,25 +96,25 @@ class UserController extends Controller
 
     protected function form()
     {
-//        return Form::make([
-//            Input::make('username')
-//                     ->label(__('weikit::auth.login.username'))
-//                     ->required(),
-//            Input::make('password')
-//                     ->label(__('weikit::auth.login.password'))
-//                     ->password()
-//                     ->required(),
-//            Captcha::make()
-//                   ->label(__('weikit::captcha.input.label'))
-//                   ->url(captcha_src('math'))
-//                   ->required(),
-//            Grid::make([
-//                Toggle::make('remember')
-//                      ->label(__('weikit::auth.login.remember')),
-//            ])
-//        ], __('weikit::auth.login.submit'))
-//                   ->id('login_form')
-//                   ->url(route('admin.auth.login'));
+        return Form::make([
+            Input::make('username')
+                     ->label(__('weikit::auth.login.username'))
+                     ->required(),
+            Input::make('password')
+                     ->label(__('weikit::auth.login.password'))
+                     ->password()
+                     ->required(),
+            Captcha::make()
+                   ->label(__('weikit::captcha.input.label'))
+                   ->url(captcha_src('math'))
+                   ->required(),
+            Grid::make([
+                Toggle::make('remember')
+                      ->label(__('weikit::auth.login.remember')),
+            ])
+        ], __('weikit::auth.login.submit'))
+                   ->id('login_form')
+                   ->url(route('admin.auth.login'));
     }
 
     public function detail()

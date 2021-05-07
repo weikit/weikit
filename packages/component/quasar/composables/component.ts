@@ -9,86 +9,86 @@ import {
 
 export const components = {
   text: {
-    componentName: "WText",
+    component: "WText",
   },
   link: {
-    componentName: "WLink",
+    component: "WLink",
   },
   button: {
-    componentName: "WButton",
+    component: "WButton",
   },
   form: {
-    componentName: "WForm",
+    component: "WForm",
   },
   input: {
-    componentName: "WInput",
+    component: "WInput",
   },
   checkbox: {
-    componentName: "WCheckbox",
+    component: "WCheckbox",
   },
   textarea: {
-    componentName: "WTextarea",
+    component: "WTextarea",
   },
   select: {
-    componentName: "WSelect",
+    component: "WSelect",
   },
   radio: {
-    componentName: "WRadio",
+    component: "WRadio",
   },
   toggle: {
-    componentName: "WToggle",
+    component: "WToggle",
   },
   datePicker: {
-    componentName: "WDatePicker",
+    component: "WDatePicker",
   },
   timePicker: {
-    componentName: "WTimePicker",
+    component: "WTimePicker",
   },
   captcha: {
-    componentName: "WCaptcha",
+    component: "WCaptcha",
   },
   table: {
-    componentName: "WTable",
+    component: "WTable",
   },
   tableColumn: {
-    componentName: "WTableColumn",
+    component: "WTableColumn",
   },
   card: {
-    componentName: "WCard",
+    component: "WCard",
   },
   cardTitle: {
-    componentName: "WCardTitle",
+    component: "WCardTitle",
   },
   tabs: {
-    componentName: "WTabs",
+    component: "WTabs",
   },
   tab: {
-    componentName: "WTab",
+    component: "WTab",
   },
   grid: {
-    componentName: "WGrid",
+    component: "WGrid",
   },
   dialog: {
-    componentName: "WDialog",
+    component: "WDialog",
   },
   detail: {
-    componentName: "WDetail",
+    component: "WDetail",
   },
   detailField: {
-    componentName: "WDetailField",
+    component: "WDetailField",
   },
 };
 
 export function useComponent(options) {
-  if (!components[options.key]) {
+  if (!components[options.component]) {
     throw new Error(
-      `The key type '${options.key}' of component has not been implemented`
+      `The key type '${options.component}' of component has not been implemented`
     );
   }
 
   return reactive({
     ...options,
-    ...components[options.key],
+    ...components[options.component],
   });
 }
 

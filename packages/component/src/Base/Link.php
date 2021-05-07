@@ -9,7 +9,7 @@ class Link extends Component
 {
     use HasDialog;
 
-    public function __construct($url, $text)
+    public function __construct($text, $url)
     {
         $this->text($text);
         $this->url($url);
@@ -17,9 +17,9 @@ class Link extends Component
         parent::__construct();
     }
 
-    public static function make($url, $text)
+    public static function make($text, $url)
     {
-        return new static($url, $text);
+        return new static($text, $url);
     }
 
     public function text($text)

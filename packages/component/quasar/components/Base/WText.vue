@@ -1,5 +1,5 @@
 <template>
-  <span :id="id" :class="classes" :styles="styles" :href="url" v-bind="extra">
+  <span :id="id" :class="classes" :styles="styles" v-bind="extra">
     {{ text }}
   </span>
 </template>

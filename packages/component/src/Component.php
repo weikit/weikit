@@ -26,7 +26,7 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
     public function __construct()
     {
         if ($this->key === null) {
-            $this->key(Str::camel(class_basename(get_class($this))));
+            $this->component(Str::camel(class_basename(get_class($this))));
         }
 
         $this->init();
@@ -38,20 +38,13 @@ abstract class Component implements Arrayable, Jsonable, JsonSerializable
     }
 
     /**
-     * @param $key
+     * @param $component
      *
      * @return $this
      */
-    protected function key($type)
+    protected function component(string $component)
     {
-        $this->data['key'] = $type;
-
-        return $this;
-    }
-
-    public function getKey()
-    {
-        return $this->data['key'] ?? null;
+        $this->set('component', $component);
     }
 
     /**

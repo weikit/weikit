@@ -8,8 +8,8 @@
   >
     <component
       :key="index"
-      v-for="({ componentName, ...componentOptions }, index) in children"
-      :is="componentName"
+      v-for="({ component, ...componentOptions }, index) in children"
+      :is="component"
       v-bind="componentOptions"
     />
   </q-form>

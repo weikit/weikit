@@ -2,8 +2,8 @@
   <q-tab-panel :id="id" :class="classes" :name="name">
     <component
       :key="index"
-      v-for="({ componentName, ...componentOptions }, index) in children"
-      :is="componentName"
+      v-for="({ component, ...componentOptions }, index) in children"
+      :is="component"
       v-bind="componentOptions"
     ></component>
   </q-tab-panel>

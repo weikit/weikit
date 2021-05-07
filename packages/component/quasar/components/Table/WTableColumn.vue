@@ -1,24 +1,30 @@
 <template>
-  <span :id="id" :class="classes" :styles="styles" :href="url" v-bind="extra">
-    {{ text }}
-  </span>
+  <q-td :id="id" :class="classes" :styles="styles" v-bind="extra">
+    <component
+      :key="index"
+      v-for="({ component, ...componentOptions }, index) in children"
+      :is="component"
+      v-bind="componentOptions"
+    />
+  </q-td>
 </template>
 
 <script>
-import { merge } from "lodash-es";
-import { defineComponent, toRefs } from "vue";
-import { defaultComponentProps } from "../../composables";
+import { defineComponent, ref, toRefs } from "vue";
+import {
+  defaultComponentChildrenProps,
+  defaultComponentProps,
+  useComponentChildren,
+} from "../../composables";
 
 export default defineComponent({
-  props: merge({}, defaultComponentProps(), {
-    text: {
-      type: String,
-      default: "",
-    },
-  }),
+  props: { ...defaultComponentProps(), ...defaultComponentChildrenProps() },
   setup(props) {
+    const { children } = useComponentChildren(props);
+
     return {
       ...toRefs(props),
+      children: ref(children),
     };
   },
 });

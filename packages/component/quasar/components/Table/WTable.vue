@@ -28,14 +28,12 @@
 
     <template
       v-for="(column, n) in columns.filter(
-        (column) => column?.children?.length > 0
+        (column) => column?.children?.length > 0 /* must has children */
       )"
       :key="n"
       v-slot:[`body-cell-${column.name}`]="props"
     >
-      <q-td :props="props">
-        <component :is="props.col.componentName" v-bind="props.col" />
-      </q-td>
+      <component :is="props.col.component" v-bind="props.col" :props="props" />
     </template>
   </q-table>
 </template>

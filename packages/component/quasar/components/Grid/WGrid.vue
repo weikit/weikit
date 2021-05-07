@@ -3,9 +3,9 @@
     <div
       class="col"
       :key="index"
-      v-for="({ componentName, ...componentOptions }, index) in children"
+      v-for="({ component, ...componentOptions }, index) in children"
     >
-      <component :is="componentName" v-bind="componentOptions" />
+      <component :is="component" v-bind="componentOptions" />
     </div>
   </div>
 </template>

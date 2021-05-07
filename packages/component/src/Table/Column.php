@@ -24,7 +24,7 @@ class Column extends Component
     {
         $this->label($label);
         $this->name($name);
-        $this->key('tableColumn');
+        $this->component('tableColumn');
 
         parent::__construct();
     }

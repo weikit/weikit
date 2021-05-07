@@ -6,16 +6,12 @@ export function useDialog(props) {
 
   const dialogVisible = ref(false);
 
-  const showDialog = function () {
+  const showDialog = (e) => {
     dialogVisible.value = true;
-
-    return false;
   };
 
-  const hideDialog = function () {
+  const hideDialog = (e) => {
     dialogVisible.value = false;
-
-    return false;
   };
 
   return { dialog, dialogVisible, showDialog, hideDialog };

@@ -3,8 +3,8 @@
     <tbody>
       <component
         :key="index"
-        v-for="({ componentName, ...componentOptions }, index) in fields"
-        :is="componentName"
+        v-for="({ component, ...componentOptions }, index) in fields"
+        :is="component"
         v-bind="componentOptions"
       />
     </tbody>

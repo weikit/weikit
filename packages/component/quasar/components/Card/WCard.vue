@@ -1,6 +1,6 @@
 <template>
   <q-card :id="id" :class="classes" :style="styles" v-bind="extra">
-    <component v-if="title" :is="title.componentName" v-bind="title" />
+    <component v-if="title" :is="title.component" v-bind="title" />
 
     <q-card-section v-if="children.length > 0">
       <div :key="index" v-for="(child, index) in children">
@@ -8,8 +8,8 @@
       </div>
       <component
         :key="index"
-        v-for="({ componentName, ...componentOptions }, index) in children"
-        :is="componentName"
+        v-for="({ component, ...componentOptions }, index) in children"
+        :is="component"
         v-bind="componentOptions"
       />
     </q-card-section>

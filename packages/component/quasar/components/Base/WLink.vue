@@ -6,15 +6,11 @@
     :href="url"
     v-bind="extra"
     v-if="dialog"
-    @click="showDialog"
+    @click.prevent="showDialog"
   >
     <span>{{ text }}</span>
 
-    <component
-      v-model="dialogVisible"
-      :is="dialog.componentName"
-      v-bind="dialog"
-    />
+    <component v-model="dialogVisible" :is="dialog.component" v-bind="dialog" />
   </a>
   <a
     :id="id"

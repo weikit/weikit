@@ -3,8 +3,8 @@
     <q-tabs :id="id" :class="classes" v-model="currentTab">
       <q-tab
         :key="index"
-        v-for="({ componentName, ...componentOptions }, index) in children"
-        :k="componentName"
+        v-for="({ component, ...componentOptions }, index) in children"
+        :k="component"
         v-bind="componentOptions"
       ></q-tab>
     </q-tabs>
@@ -16,8 +16,8 @@
     <q-tab-panels :id="id" :class="classes" v-model="currentTab">
       <component
         :key="index"
-        v-for="({ componentName, ...componentOptions }, index) in children"
-        :is="componentName"
+        v-for="({ component, ...componentOptions }, index) in children"
+        :is="component"
         v-bind="componentOptions"
       ></component>
     </q-tab-panels>
