@@ -5,7 +5,7 @@ namespace Weikit\Component\Form;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Weikit\Component\Component;
-use Weikit\Component\Form\Traits\HasModel;
+use Weikit\Component\Traits\HasModel;
 
 /**
  * Class Field
@@ -51,11 +51,6 @@ abstract class Field extends Component
     public static function make($name)
     {
         return new static($name);
-    }
-
-    public function parent(Component $parent)
-    {
-        return parent::parent($parent);
     }
 
     /**

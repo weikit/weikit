@@ -10,7 +10,7 @@ use Weikit\Component\Traits\HasChildren;
  * Class Card
  * @package Weikit\Component
  *
- * @property CardTitle $title
+ * @property Title $title
  */
 class Card extends Component
 {
@@ -18,14 +18,14 @@ class Card extends Component
     use HasChildren;
 
     /**
-     * @param string|CardTitle $title
+     * @param string|Title $title
      *
      * @return $this
      */
     public function title($title)
     {
-        if (!($title instanceof CardTitle)) {
-            $title = CardTitle::make($title);
+        if (!($title instanceof Title)) {
+            $title = Title::make($title);
         }
 
         return $this->set('title', $title);

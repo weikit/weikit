@@ -4,10 +4,11 @@ namespace Weikit\Component\Card;
 
 use Weikit\Component\Component;
 
-class CardTitle extends Component
+class Title extends Component
 {
     public function __construct(string $title)
     {
+        $this->component('cardTitle');
         $this->title($title);
 
         parent::__construct();

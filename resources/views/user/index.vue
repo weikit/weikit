@@ -5,7 +5,7 @@
 </template>
 
 <script>
-const { defineComponent } = Vue;
+import { defineComponent } from 'vue';
 const { useComponent } = Uses;
 
 export default defineComponent({

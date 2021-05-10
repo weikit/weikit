@@ -24,7 +24,12 @@ Route::group([
         // Login
         Route::get('users', 'UserController@index')->middleware(['auth.admin'])->name('index');
         Route::get('users/search', "UserController@search")->middleware(['auth.admin'])->name('search');
-        Route::get('users/{id}', "UserController@view")->middleware(['auth.admin'])->name('view');
+        Route::get('users/create', "UserController@create")->middleware(['auth.admin'])->name('create');
+        Route::post('users', "UserController@store")->middleware(['auth.admin'])->name('store');
+        Route::get('users/{user}', "UserController@view")->middleware(['auth.admin'])->name('view');
+        Route::get('users/{user}/edit', "UserController@edit")->middleware(['auth.admin'])->name('edit');
+        Route::put('users/{user}', "UserController@update")->middleware(['auth.admin'])->name('update');
+        Route::delete('users/{user}', "UserController@delete")->middleware(['auth.admin'])->name('delete');
     });
 
 

@@ -15,13 +15,13 @@ use Weikit\Component\Traits\HasMakeChildren;
 class Grid extends Component
 {
     use HasChildren {
-        child as _child;
+        HasChildren::child as addChild;
     }
     use HasMakeChildren;
 
     public function child(Component $component)
     {
-        $return = $this->_child($component);
+        $return = $this->addChild($component);
 
         $this->set('columns', count($this->children));
 

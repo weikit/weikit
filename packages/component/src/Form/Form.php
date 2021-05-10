@@ -5,7 +5,7 @@ namespace Weikit\Component\Form;
 use Illuminate\Database\Eloquent\Model;
 use Weikit\Component\Component;
 use Weikit\Component\Base\Button;
-use Weikit\Component\Form\Traits\HasModel;
+use Weikit\Component\Traits\HasModel;
 use Weikit\Component\Layout\Grid;
 use Weikit\Component\Traits\HasChildren;
 
@@ -22,8 +22,11 @@ use Weikit\Component\Traits\HasChildren;
  */
 class Form extends Component
 {
-    use HasModel;
+    use HasModel {
+        HasModel::model as setModel;
+    }
     use HasChildren;
+
 
     const SCENE_SUBMIT_CONFIRM = "submit_confirm";
     const SCENE_SUBMIT_CANCEL = "submit_cancel";
@@ -38,13 +41,11 @@ class Form extends Component
         $this->url(url()->current());
     }
 
-    public static function make(array $children, Model $model = null, $button = null)
+    public static function make(array $children, $button = null)
     {
         $instance = new static();
 
-        $instance->model($model);
         $instance->children($children);
-
         if ($button !== false) {
             $instance->child(Grid::make([
                 Button::make($button ?: __('weikit::component.form.button.label'))
@@ -52,6 +53,37 @@ class Form extends Component
         }
 
         return $instance;
+    }
+
+    /**
+     * @param Model $model
+     *
+     * @return $this
+     */
+    public function model(Model $model)
+    {
+        $this->setModel($model);
+
+        $this->fillNestedFieldModel($this, $model);
+
+        return $this;
+    }
+
+    /**
+     * @param Component $parent
+     * @param Model $model
+     */
+    protected function fillNestedFieldModel(Component $parent, Model $model)
+    {
+        foreach ($parent->components as $component) {
+            if ($component instanceof Field) {
+                $component->model($model);
+            }
+
+            if (count($component->components) > 0) {
+                $this->fillNestedFieldModel($component, $model);
+            }
+        }
     }
 
     /**

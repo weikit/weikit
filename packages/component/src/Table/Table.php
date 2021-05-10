@@ -9,10 +9,6 @@ use Weikit\Component\Traits\HasMake;
 
 class Table extends Component
 {
-    /**
-     * @var Query|QueryBuilder
-     */
-    protected $query;
 
     public static function make(array $columns = [])
     {

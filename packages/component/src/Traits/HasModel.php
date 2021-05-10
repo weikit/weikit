@@ -1,10 +1,14 @@
 <?php
 
-namespace Weikit\Component\Form\Traits;
-
+namespace Weikit\Component\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Trait HasModel
+ * @package Weikit\Component\Form\Traits
+ * @property Model $model
+ */
 trait HasModel
 {
     protected Model $_model;

@@ -36,7 +36,9 @@ trait HasData
         $data = $this->get($key, []);
         $data[] = $value;
 
-        return $this->set($key, $data);
+        Arr::set($this->data, $key, $data);
+
+        return $this;
     }
 
     /**
@@ -50,7 +52,9 @@ trait HasData
         $data = $this->get($key, []);
         $data = array_merge([$value], $data);
 
-        return $this->set($key, $data);
+        Arr::set($this->data, $key, $data);
+
+        return $this;
     }
 
     /**

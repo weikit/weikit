@@ -2,6 +2,7 @@
 
 namespace Weikit\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Weikit\Component\Base\Link;
 use Weikit\Component\Detail\Detail;
@@ -28,7 +29,7 @@ class UserController extends Controller
     public function index()
     {
         return \inertia('weikit::user/index', [
-            'schema' => $this->getTable()->url(route('admin.user.search')),
+            'schema' => $this->getTable()
         ]);
     }
 
@@ -37,21 +38,21 @@ class UserController extends Controller
         return $search->search($request);
     }
 
-    public function create(Request $request)
+    public function create()
     {
         return \inertia('weikit::user/create', [
             'schema' => $this->getForm()
         ]);
     }
 
-    public function edit(Request $request)
+    public function edit(Request $request, User $user)
     {
         return \inertia('weikit::user/edit', [
-            'schema' => $this->getForm()
+            'schema' => $this->getForm()->model($user)
         ]);
     }
 
-    public function view(Request $request)
+    public function view(Request $request, User $user)
     {
         return \inertia('weikit::user/detail', [
             'schema' => $this->getDetail()
@@ -79,7 +80,7 @@ class UserController extends Controller
             Column::make('username')->sortable(),
             Column::make('name'),
             Column::make('action')->children([
-                Link::make('查看', route('admin.user.view', ['id' => 1])),
+                Link::make('查看', route('admin.user.view', ['user' => 1])),
                 Link::make('编辑', 'a')
                     ->dialog(
                         Dialog::make([
@@ -91,7 +92,7 @@ class UserController extends Controller
                         Link::make('b', 'b')
                     ]))
             ])
-        ]);
+        ])->url(route('admin.user.search'));
     }
 
     protected function form()
@@ -112,9 +113,7 @@ class UserController extends Controller
                 Toggle::make('remember')
                       ->label(__('weikit::auth.login.remember')),
             ])
-        ], __('weikit::auth.login.submit'))
-                   ->id('login_form')
-                   ->url(route('admin.auth.login'));
+        ], __('weikit::auth.login.submit'));
     }
 
     public function detail()

@@ -4,27 +4,27 @@
     :class="classes"
     :styles="styles"
     v-bind="extra"
+    :title="title"
     :columns="columns"
     :rows="pagination.rows"
     v-model:pagination="pagination"
     :loading="loading"
     @request="loadData"
-    title="Users"
   >
     <template v-slot:loading>
       <q-inner-loading showing color="primary" />
     </template>
 
-    <!-- <template v-slot:top-right>
+    <template v-slot:top-right>
       <div class="text-black q-gutter-md text-subtitle1">
-        <q-btn color="primary" label="创建" />
-        <q-btn color="primary" label="删除" />
+        <a class="q-btn" href="users/create">创建</a>
+
         <q-icon name="refresh" />
         <q-icon name="format_line_spacing" />
         <q-icon name="settings" />
         <q-icon name="fullscreen" />
       </div>
-    </template> -->
+    </template>
 
     <template
       v-for="(column, n) in columns.filter(
@@ -51,6 +51,10 @@ export default defineComponent({
   props: {
     ...defaultComponentProps(),
     ...defaultComponentTableProps(),
+    title: {
+      type: String,
+      default: "user",
+    },
   },
   setup(props) {
     const { loading, pagination, loadData } = useTable(props);
