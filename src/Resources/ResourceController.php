@@ -1,26 +1,24 @@
 <?php
 
-namespace Weikit\Http\Controllers;
+namespace Weikit\Resources;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Weikit\Component\Base\Link;
 use Weikit\Component\Detail\Detail;
 use Weikit\Component\Detail\Field;
+use Weikit\Component\Detail\Traits\HasDetail;
 use Weikit\Component\Dialog\Dialog;
-use Weikit\Component\Form\Captcha;
 use Weikit\Component\Form\Form;
 use Weikit\Component\Form\Input;
-use Weikit\Component\Form\Toggle;
 use Weikit\Component\Form\Traits\HasForm;
-use Weikit\Component\Layout\Grid;
 use Weikit\Component\Table\Column;
-use Weikit\Search\UserSearch;
 use Weikit\Component\Table\Table;
 use Weikit\Component\Table\Traits\HasTable;
-use Weikit\Component\Detail\Traits\HasDetail;
+use Weikit\Search\UserSearch;
 
-class UserController extends Controller
+class ResourceController extends Controller
 {
     use HasForm;
     use HasTable;
@@ -28,7 +26,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return \inertia('weikit::user/index', [
+        return \inertia('weikit::resource/index', [
             'schema' => $this->getTable()
         ]);
     }
@@ -40,28 +38,28 @@ class UserController extends Controller
 
     public function create()
     {
-        return \inertia('weikit::user/create', [
+        return \inertia('weikit::resource/create', [
             'schema' => $this->getForm()
-        ]);
-    }
-
-    public function edit(Request $request, User $user)
-    {
-        return \inertia('weikit::user/edit', [
-            'schema' => $this->getForm()->model($user)
-        ]);
-    }
-
-    public function view(Request $request, User $user)
-    {
-        return \inertia('weikit::user/detail', [
-            'schema' => $this->getDetail()
         ]);
     }
 
     public function store(Request $request)
     {
 
+    }
+
+    public function show(Request $request, User $user)
+    {
+        return \inertia('weikit::resource/show', [
+            'schema' => $this->getDetail()
+        ]);
+    }
+
+    public function edit(Request $request, User $user)
+    {
+        return \inertia('weikit::resource/edit', [
+            'schema' => $this->getForm()->model($user)
+        ]);
     }
 
     public function update(Request $request, User $user)
@@ -99,11 +97,11 @@ class UserController extends Controller
     {
         return Form::make([
             Input::make('username')
-                     ->label(__('weikit::auth.login.username'))
-                     ->required(),
+                 ->label(__('weikit::auth.login.username'))
+                 ->required(),
             Input::make('name')
-                     ->label(__('weikit::auth.login.password'))
-                     ->required(),
+                 ->label(__('weikit::auth.login.password'))
+                 ->required(),
             Input::make('email')
                  ->label(__('weikit::auth.login.password'))
                  ->required(),
@@ -125,6 +123,4 @@ class UserController extends Controller
             Field::make('aaa', 'asfasfasfasfsafasfasfasfasfsfasfsdfsafffffffffffffffffffffffffffffffffffffffffa'),
         ]);
     }
-
-
 }

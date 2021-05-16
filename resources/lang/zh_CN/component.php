@@ -1,14 +1,14 @@
 <?php
 
 return [
-  'form' => [
-      'button' => [
-          'label' => '提交'
-      ]
-  ],
-    'table'=> [
+    'form'  => [
+        'button' => [
+            'label' => '提交',
+        ],
+    ],
+    'table' => [
         'action' => [
-            'label' => '操作'
-        ]
-    ]
+            'label' => '操作',
+        ],
+    ],
 ];

@@ -2,6 +2,7 @@
 
 namespace Weikit\Component\Form;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Weikit\Component\Component;
@@ -14,7 +15,7 @@ use Weikit\Component\Traits\HasModel;
  * @property string $name
  * @property bool $disabled
  *
- * @property mixed $default
+ * @property mixed $value
  * @property array $rules
  * @property string $label
  * @property string $hint
@@ -25,7 +26,11 @@ use Weikit\Component\Traits\HasModel;
  */
 abstract class Field extends Component
 {
-    use HasModel;
+    use HasModel {
+     HasModel::model as setModel;
+    }
+
+    public $attribute;
 
     /**
      * Field constructor.
@@ -54,6 +59,34 @@ abstract class Field extends Component
     }
 
     /**
+     * @param Model $model
+     *
+     * @return $this
+     */
+    public function model(Model $model)
+    {
+        $this->setModel($model);
+
+        if ($this->value === null) {
+            $this->value($model->{$this->attribute});
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $attribute
+     *
+     * @return $this
+     */
+    public function attribute(string $attribute)
+    {
+        $this->attribute = $attribute;
+
+        return $this;
+    }
+
+    /**
      * @param string $label
      *
      * @return Field
@@ -70,6 +103,10 @@ abstract class Field extends Component
      */
     public function name(string $name)
     {
+        if ($this->attribute === null) {
+            $this->attribute($name);
+        }
+
         return $this->set('name', $name);
     }
 
